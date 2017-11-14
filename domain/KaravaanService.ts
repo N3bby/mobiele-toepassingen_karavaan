@@ -1,5 +1,6 @@
 import { Currency } from './Currency';
 import { Trip } from './Trip';
+import { Person } from './Person';
 
 export class KaravaanService
 {
@@ -101,5 +102,27 @@ export class KaravaanService
         return newTrip;
     }
     
+    public getTripById(id : number) : Trip
+    {
+        return this.tripMap.get(id);
+    }
     
+    public addNewParticipantToTripById(tripId : number, firstName : string, lastName : string) : Person
+    {
+        let newPerson = new Person(this.idCounter++, firstName, lastName);
+        let trip = this.getTripById(tripId);
+        return this.addParticipantToTrip(trip, newPerson);
+    }
+    
+    private addParticipantToTrip(trip : Trip, person : Person) : Person
+    {
+        if (person.id < 0) trip.id = this.idCounter++;
+        trip.addParticipant(person);
+        return person;
+    }
+    
+    getParticipantsByTripId(tripId : number) : Array<Person>
+    {
+        return this.getTripById(tripId).participants;
+    }
 }

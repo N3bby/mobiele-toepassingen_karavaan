@@ -41,3 +41,51 @@ function adding_multiple_trips_works()
     functionalityWorks("Add multiple trips", result);
 }
 adding_multiple_trips_works();
+
+// Add participant to trip
+function adding_participants_to_trip_works()
+{
+    let service = new KaravaanService();
+    
+    let newTrip = service.addNewTrip("A night out");
+    let newPerson = service.addNewParticipantToTripById(newTrip.id, "Bob", "Marley");
+    
+    let personIsAdded = service.getParticipantsByTripId(newTrip.id).length > 0;
+    let personHasId = newPerson.id >= 0;
+    let personFirstNameIsCorrect = newPerson.firstName == "Bob";
+    let personLastNameIsCorrect = newPerson.lastName == "Marley";
+    
+    // Concat booleans
+    let result = personIsAdded && personHasId && personFirstNameIsCorrect && personLastNameIsCorrect;
+    
+    functionalityWorks("Add person to trip", result);
+}
+adding_participants_to_trip_works();
+
+function adding_multiple_participants_to_trip_works()
+{
+    let service = new KaravaanService();
+    
+    let newTrip = service.addNewTrip("A night out");
+    let newPerson = service.addNewParticipantToTripById(newTrip.id, "Bob", "Marley");
+    
+    let personIsAdded = service.getParticipantsByTripId(newTrip.id).length > 0;
+    let personHasId = newPerson.id >= 0;
+    let personFirstNameIsCorrect = newPerson.firstName == "Bob";
+    let personLastNameIsCorrect = newPerson.lastName == "Marley";
+    
+    // Concat booleans
+    let result = personIsAdded && personHasId && personFirstNameIsCorrect && personLastNameIsCorrect;
+    
+    let secondPerson = service.addNewParticipantToTripById(newTrip.id, "Jim", "Morrisson");
+    
+    let secondIsAdded = service.getParticipantsByTripId(newTrip.id);
+    let secondHasId = secondPerson.id >= 0;
+    let secondFirstNameIsCorrect = secondPerson.firstName == "Jim";
+    let secondLastNameIsCorrect = secondPerson.lastName == "Morrisson";
+    
+    result = result && secondIsAdded && secondHasId && secondFirstNameIsCorrect && secondLastNameIsCorrect;
+    
+    functionalityWorks("Adding multiple persons to trip", result);
+}
+adding_multiple_participants_to_trip_works();
