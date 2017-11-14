@@ -27,12 +27,17 @@ function adding_multiple_trips_works()
     
     let firstTrip = service.addNewTrip("Another night out");
 
-    let fistHasId = firstTrip.id >= 0;
+    let firstHasId = firstTrip.id >= 0;
     let firstIsAddedToService = service.trips.length > 0;
     
     let secondTrip = service.addNewTrip("Another night out");
 
-    let secondHasId = firstTrip.id > firstTrip.id;
+    let secondHasId = secondTrip.id > firstTrip.id;
     let secondIsAddedToService = service.trips.length > 1;
+    
+    // Concat booleans
+    let result = firstHasId && firstIsAddedToService && secondHasId && secondIsAddedToService;
+    
+    functionalityWorks("Add multiple trips", result);
 }
 adding_multiple_trips_works();

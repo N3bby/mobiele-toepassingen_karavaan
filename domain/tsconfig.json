@@ -1,6 +1,15 @@
 {
   "compilerOptions": {
-    "target": "esNext"
+    "target": "ES6",
+    "outDir": "target",
+    "module": "CommonJS"
   },
-  "files": []
+  "files": [
+      "Currency.ts",
+      "Expense.ts",
+      "Trip.ts",
+      "Person.ts",
+      "KaravaanService.ts",
+      "KaravaanTests.ts"
+  ]
 }
