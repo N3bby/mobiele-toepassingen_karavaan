@@ -1,43 +1,44 @@
 export class Person {
 
-    private name:string;
-    private email:string;
-    private id:number;
-    private firstName:string;
-    private person:Person;
+    private _id : number;
+    
+    private _lastName : string;
+    private _firstName : string;
 
-    constructor(name:string,email:string,id:number,firstName:string){
-        this.name=name;
-        this.email=email;
-        this.id=id;
-        this.firstName=firstName;
+    constructor(id : number = -1, firstName : string = "", lastName : string = "")
+    {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
-
-    Person(person:Person){
-        this.person=person;
+    
+    get id() : number
+    {
+        return this._id;
     }
-
-    getName():string{
-        return this.name;
+    
+    set id(newId : number)
+    {
+        this._id = newId;
     }
-
-    getEmail():string{
-        return this.email;
+    
+    get firstName() : string
+    {
+        return this._firstName;
     }
-
-    getId():number{
-        return this.id;
+    
+    set firstName(newFirstName : string)
+    {
+        this._firstName = newFirstName;
     }
-
-    getFirstName():string{
-        return this.firstName;
+    
+    get lastName() : string
+    {
+        return this._lastName;
     }
-
-    getPerson():Person{
-        return this.person;
-    }
-
-    getPersonInText():String{
-        return "Name:"+this.getName+"\nFirstName:"+this.getFirstName+"\nEmail:"+this.getEmail+"\nId:"+this.getId;
+    
+    set lastName(newLastName : string)
+    {
+        this._lastName = newLastName;
     }
 }

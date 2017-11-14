@@ -1,12 +1,22 @@
+/**
+* Currency class. 
+*
+* This class will be used to hold individual currency information.
+*/
 export class Currency 
 {
     private _name : string;
-    private _rateComparedToUSD : number; 
+    private _rateComparedToEUR : number; 
 
-    constructor(name : string, rateComparedToUSD : number)
+    /**
+    * @constructs Currency
+    * @param {string} name - The name of the currency in ISO 4217 format.
+    * @param {number} rateComparedToEUR - The rate of the currency compared to EUR.
+    */
+    constructor(name : string, rateComparedToEUR : number)
     {
         this.name = name;
-        this.rateComparedToUSD = rateComparedToUSD;
+        this.rateComparedToEUR = rateComparedToEUR;
     }
     
     /**
@@ -28,20 +38,20 @@ export class Currency
     }
     
     /**
-    * Set the rate of the currency compared to USD.
-    * @param {number} rate - The rate of the currency compared to USD.
+    * Set the rate of the currency compared to EUR.
+    * @param {number} rate - The rate of the currency compared to EUR.
     */
-    set rateComparedToUSD(rate : number)
+    set rateComparedToEUR(rate : number)
     {
-        this._rateComparedToUSD = rate;
+        this._rateComparedToEUR = rate;
     }
 
     /**
-    * Get the rate of the currency compared to USD.
-    * @returns {number} The rate of the currency compared to USD.
+    * Get the rate of the currency compared to EUR.
+    * @returns {number} The rate of the currency compared to EUR.
     */
-    get rateComparedToUSD() : number
+    get rateComparedToEUR() : number
     {
-        return this._rateComparedToUSD;
+        return this._rateComparedToEUR;
     }
 }

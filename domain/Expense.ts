@@ -1,66 +1,102 @@
 import { Person } from './Person';
+import { Trip } from './Trip';
+import { Currency } from './Currency';
 
-export class Expense{
-//TODO: npm install typescript-map
-private notes:string;
-private id:number;
-private categories: TSMap<Person,number>();
-private expensePerPerson:Person[]
-private currency:string; //change type to other
-private date:Date;
-private receiver:string;
-private amount:number;
-private expense:Expense;
+export class Expense
+{
+    private _id : number = 0;
+    private _notes : string = "";
+    private _expensePerPerson : Map<Person, number>;
+    private _payedPerPerson : Map<Person, number>;
+    private _category : string;
+    private _date : Date;
+    private _currency : Currency;
 
-constructor(notes:string, id:number,categories:TSMap<Person,number>,expensePerPerson:Person[], 
-            currency:string,date:Date,receiver:string,amount:number){
-                this.notes = notes;
-                this.id=id;
-                this.categories=categories;
-                this.expensePerPerson=expensePerPerson;
-                this.currency=currency;
-                this.date=date;
-                this.receiver=receiver;
-                this.amount=amount;
-            }
-
-            Expense(expense:Expense){
-                this.expense=expense;
-            }
-
-            getExpense():Expense{
-                return this.expense;
-            }
-
-            getNotes():string{
-                return this.notes;
-            }
-
-            getId():number{
-                return this.id;
-            }
-            
-            getCategories():TSMap<Person,number>{
-                return this.categories;
-            }
-            
-            getExpensePerPerson():Person[]{
-                return this.expensePerPerson;
-            }
-
-            getCurrency():string{
-                return this.currency;
-            }
-
-            getDate():Date{
-                return this.date;
-            }
-
-            getReceiver():string{
-                return this.receiver;
-            }
-
-            getAmount():number{
-                return this.amount;
-            }
+    constructor(id : number = -1, 
+                notes : string = "No description yet.",
+                expensePerPerson : Map<Person, number> = new Map<Person, number>(),
+                payedPerPerson : Map<Person, number> = new Map<Person, number>(),
+                category : string = "Expense",
+                date : Date = new Date(),
+                currency : Currency = new Currency("EUR", 1)
+               )
+    {
+        this.id = id;
+        this.notes = notes;
+        this.expensePerPerson = expensePerPerson;
+        this.payedPerPerson = payedPerPerson;
+        this.category = category;
+        this.date = date;
+        this.currency = currency;
+    }
+                
+    get id() : number
+    {
+        return this._id;
+    }
+    
+    set id(newId : number)
+    {
+        this._id = newId;
+    }
+    
+    get notes() : string
+    {
+        return this._notes;
+    }
+    
+    set notes(newNotes : string)
+    {
+        this._notes = newNotes;
+    }
+    
+    get expensePerPerson() : Map<Person, number>
+    {
+        return this._expensePerPerson;
+    }
+    
+    set expensePerPerson(newExpensePerPerson : Map<Person, number>)
+    {
+        this._expensePerPerson = newExpensePerPerson;
+    }
+    
+    get payedPerPerson() : Map<Person, number>
+    {
+        return this._payedPerPerson;
+    }
+    
+    set payedPerPerson(newPayedPerPerson : Map<Person, number>)
+    {
+        this._payedPerPerson = newPayedPerPerson;
+    }
+    
+    get category() : string
+    {
+        return this._category;
+    }
+    
+    set category(newCategory : string)
+    {
+        this._category = newCategory;
+    }
+    
+    get date() : Date
+    {
+        return this._date;
+    }
+    
+    set date(newDate : Date)
+    {
+        this._date = newDate;
+    }
+    
+    get currency() : Currency
+    {
+        return this._currency;
+    }
+    
+    set currency(newCurrency : Currency)
+    {
+        this._currency = newCurrency;
+    }
 }
