@@ -57,17 +57,31 @@ let newExpense = karavaanService.addNewExpenseByTripId(newTrip.id, "Eating at su
 An expense keeps track of who pays (payments) what and who owes (debts) what. In the next example, John Lennon has eaten something but has not payed yet.
 We will add his debt to the expense.
 
-```
+```javascript
 // Add a debt of 6.50 to an expense of a trip for a certain participant
 let johnDebt = karavaanService.addNewDebtToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 6.50);
 
-console.log(johnDebt) // 6.50
+console.log(johnDebt); // 6.50
 ```
 
 Imagine John Lennon orders more then just one meal. We will add a new debt to his name and the amount will automatically be added to his current debt.
 
-```
+```javascript
 let johnDebt = karavaanService.addNewDebtToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 3);
 
-console.log(johnDebt) // 9.50
+console.log(johnDebt); // 9.50
 ```
+
+What if a new person joins the table but is not a known participant to the trip yet? 
+The service handles this for you. If you add an unknown participant to an expense, he will automatically be created with 'New participant' as name.
+> NOTE: The personal details of the person should manually be edited later.
+> NOTE: This scenario should not happen in real life, but it is implemented for you. Please add participants before adding a debt that participant.
+
+```javascript
+let newParticipantDebt = karavaanService.addNewDebtToExpenseById(newTrip.id, newExpense.id, 99, 5) // Added to participant with id 99, which does not exist
+
+console.log(newParticipantDebt); // 5
+```
+The new participant will automatically be added to the participant list for the given trip.
+
+> under construction
