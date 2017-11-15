@@ -42,6 +42,16 @@ function adding_multiple_trips_works()
 }
 adding_multiple_trips_works();
 
+function requesting_nonexisting_trip_returns_undefined_works()
+{
+    let service = new KaravaanService();
+    
+    let isUndefined = typeof service.getTripById(1) === 'undefined';
+    
+    functionalityWorks("Requesting nonexisting trip returns unefined.", isUndefined);
+}
+requesting_nonexisting_trip_returns_undefined_works();
+
 // Add participant to trip
 function adding_participants_to_trip_works()
 {
@@ -90,6 +100,17 @@ function adding_multiple_participants_to_trip_works()
 }
 adding_multiple_participants_to_trip_works();
 
+function requesting_nonexisting_participants_return_undefin_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let isUndefined = typeof service.getParticipantById(newTrip.id, 5) === 'undefined';
+    
+    functionalityWorks("Requesting nonexistant participant returns undefined", isUndefined);
+}
+requesting_nonexisting_participants_return_undefin_works();
+
 // Add expense to trip
 function adding_expense_to_trip_works()
 {
@@ -132,3 +153,33 @@ function adding_multiple_expenses_to_trip_works()
     functionalityWorks("Adding multiple expenses to trip", result);
 }
 adding_multiple_expenses_to_trip_works();
+
+function requesting_nonexisting_expense_returns_undefined_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let newExpense = service.getExpenseById(newTrip.id, 5);
+    
+    let isUndefined = typeof newExpense === 'undefined';
+    
+    functionalityWorks("Requesting nonexisting expense returns undefined.", isUndefined);
+}
+requesting_nonexisting_expense_returns_undefined_works();
+
+function adding_debt_to_expense_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, "Café Den Allée", "Café");
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    
+    let debts = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 5);
+    
+    let debtAdded = service.getDebtsByExpenseId(newTrip.id, newExpense.id).size > 0;
+    let debtForPersonIsCorrect = service.getDebtForParticipantByExpenseId(newTrip.id, newExpense.id, newParticipant.id) == 5;
+    
+    functionalityWorks("Adding debt to expense works.", debtAdded && debtForPersonIsCorrect);
+}
+adding_debt_to_expense_works();

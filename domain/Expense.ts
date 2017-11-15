@@ -14,8 +14,8 @@ export class Expense
 
     constructor(id : number = -1, 
                 description : string = "No description yet.",
-                expensePerPerson : Map<Person, number> = new Map<Person, number>(),
-                payedPerPerson : Map<Person, number> = new Map<Person, number>(),
+                expensePerPerson : Map<Person, number> = undefined,
+                payedPerPerson : Map<Person, number> = undefined,
                 category : string = "Expense",
                 date : Date = new Date(),
                 currency : Currency = new Currency("EUR", 1)
@@ -23,11 +23,15 @@ export class Expense
     {
         this.id = id;
         this.description = description;
-        this.expensePerPerson = expensePerPerson;
-        this.payedPerPerson = payedPerPerson;
         this.category = category;
         this.date = date;
         this.currency = currency;
+        
+        if (typeof expensePerPerson === 'undefined') expensePerPerson = new Map<Person, number>();
+        if (typeof payedPerPerson === 'undefined') payedPerPerson = new Map<Person, number>();
+        
+        this.expensePerPerson = expensePerPerson;
+        this.payedPerPerson = payedPerPerson;
     }
                 
     get id() : number
@@ -98,5 +102,22 @@ export class Expense
     set currency(newCurrency : Currency)
     {
         this._currency = newCurrency;
+    }
+
+    // Methods
+    
+    addDebt(participant : Person, amount : number)
+    {
+        // If a person has no debt yet, it will be added as a new debt.
+        // If a person already has an expense, it will be added to it's amount
+        if (typeof this.expensePerPerson.get(participant) === 'undefined')
+        {
+            this.expensePerPerson.set(participant, amount);
+        }
+        else
+        {
+            amount = this.expensePerPerson.get(participant);
+            this.expensePerPerson.set(participant, amount);
+        }
     }
 }

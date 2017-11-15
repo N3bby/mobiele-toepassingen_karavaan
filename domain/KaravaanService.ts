@@ -127,6 +127,14 @@ export class KaravaanService
         return this.getTripById(tripId).participants;
     }
     
+    getParticipantById(tripId : number, participantId : number) : Person
+    {
+        for (let participant of this.getTripById(tripId).participants)
+        {
+            if (participant.id == participantId) return participant;
+        }
+    }
+    
     addNewExpenseByTripId(tripId : number, description : string, category : string) : Expense
     {
         let newExpense = new Expense();
@@ -146,5 +154,49 @@ export class KaravaanService
     getExpensesByTripId(tripId : number)
     {
         return this.getTripById(tripId).expenses;
+    }
+    
+    getExpenseById(tripId : number, expenseId : number) : Expense
+    {
+        for (let expense of this.getTripById(tripId).expenses)
+        {
+            if (expense.id == expenseId) return expense;
+        }
+    }
+    
+    addNewDebtToExpenseById(tripId : number, expenseId : number, participantId : number, amount : number) : Expense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        
+        // Check if expense exists
+        if (typeof expense === 'undefined')
+        {
+            // If it does not, add a new expense
+            expense = this.addNewExpenseByTripId(tripId, "New Expense", "Expense");
+            expense.id = expenseId;
+        }
+        
+        // Check if this participant already exists
+        if (typeof participant === 'undefined')
+        {
+            // If it does not, add a new participant
+            participant = this.addNewParticipantToTripById(tripId, "New Participant", "");
+            participant.id = participantId;
+        }
+        
+        expense.addDebt(participant, amount);
+        return expense;
+    }
+    
+    getDebtsByExpenseId(tripId : number, expenseId : number) : Map<Person, number>
+    {
+        return this.getExpenseById(tripId, expenseId).expensePerPerson;
+    }
+    
+    getDebtForParticipantByExpenseId(tripId : number, expenseId : number, participantId : number) : number
+    {
+        let participant = this.getParticipantById(tripId, participantId);
+        return this.getDebtsByExpenseId(tripId, expenseId).get(participant);
     }
 }
