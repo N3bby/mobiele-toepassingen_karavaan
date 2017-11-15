@@ -89,3 +89,46 @@ function adding_multiple_participants_to_trip_works()
     functionalityWorks("Adding multiple persons to trip", result);
 }
 adding_multiple_participants_to_trip_works();
+
+// Add expense to trip
+function adding_expense_to_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, "Café Den Allée", "Café");
+    
+    let isAdded = service.getExpensesByTripId(newTrip.id).length > 0;
+    let hasId = newExpense.id >= 0;
+    
+    // Concat booleans
+    let result = isAdded && hasId;
+    
+    functionalityWorks("Adding expense to trip", result);
+}
+adding_expense_to_trip_works();
+
+function adding_multiple_expenses_to_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, "Café Den Allée", "Café");
+    
+    let isAdded = service.getExpensesByTripId(newTrip.id).length == 1;
+    let hasId = newExpense.id >= 0;
+    
+    // Concat booleans
+    let result = isAdded && hasId;
+    
+    let secondExpense = service.addNewExpenseByTripId(newTrip.id, "Restaurant", "Restaurant");
+    
+    let secondAdded = service.getExpensesByTripId(newTrip.id).length == 2;
+    let secondId = secondExpense.id >= 0;
+    
+    // Concat booleans again
+    result = result && secondAdded && secondId;
+    
+    functionalityWorks("Adding multiple expenses to trip", result);
+}
+adding_multiple_expenses_to_trip_works();

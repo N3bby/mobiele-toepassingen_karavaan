@@ -1,6 +1,7 @@
 import { Currency } from './Currency';
 import { Trip } from './Trip';
 import { Person } from './Person';
+import { Expense } from './Expense';
 
 export class KaravaanService
 {
@@ -102,12 +103,12 @@ export class KaravaanService
         return newTrip;
     }
     
-    public getTripById(id : number) : Trip
+    getTripById(id : number) : Trip
     {
         return this.tripMap.get(id);
     }
     
-    public addNewParticipantToTripById(tripId : number, firstName : string, lastName : string) : Person
+    addNewParticipantToTripById(tripId : number, firstName : string, lastName : string) : Person
     {
         let newPerson = new Person(this.idCounter++, firstName, lastName);
         let trip = this.getTripById(tripId);
@@ -124,5 +125,26 @@ export class KaravaanService
     getParticipantsByTripId(tripId : number) : Array<Person>
     {
         return this.getTripById(tripId).participants;
+    }
+    
+    addNewExpenseByTripId(tripId : number, description : string, category : string) : Expense
+    {
+        let newExpense = new Expense();
+        newExpense.description = description;
+        newExpense.category = category;
+            
+        return this.addExpenseToTrip(this.getTripById(tripId), newExpense);
+    }
+    
+    private addExpenseToTrip(trip : Trip, expense : Expense) : Expense
+    {
+        if (expense.id < 0) expense.id = this.idCounter++;
+        trip.addExpense(expense);
+        return expense;
+    }
+    
+    getExpensesByTripId(tripId : number)
+    {
+        return this.getTripById(tripId).expenses;
     }
 }

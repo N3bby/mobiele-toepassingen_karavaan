@@ -5,7 +5,7 @@ import { Currency } from './Currency';
 export class Expense
 {
     private _id : number = 0;
-    private _notes : string = "";
+    private _description : string = "";
     private _expensePerPerson : Map<Person, number>;
     private _payedPerPerson : Map<Person, number>;
     private _category : string;
@@ -13,7 +13,7 @@ export class Expense
     private _currency : Currency;
 
     constructor(id : number = -1, 
-                notes : string = "No description yet.",
+                description : string = "No description yet.",
                 expensePerPerson : Map<Person, number> = new Map<Person, number>(),
                 payedPerPerson : Map<Person, number> = new Map<Person, number>(),
                 category : string = "Expense",
@@ -22,7 +22,7 @@ export class Expense
                )
     {
         this.id = id;
-        this.notes = notes;
+        this.description = description;
         this.expensePerPerson = expensePerPerson;
         this.payedPerPerson = payedPerPerson;
         this.category = category;
@@ -40,14 +40,14 @@ export class Expense
         this._id = newId;
     }
     
-    get notes() : string
+    get description() : string
     {
-        return this._notes;
+        return this._description;
     }
     
-    set notes(newNotes : string)
+    set description(newDescription : string)
     {
-        this._notes = newNotes;
+        this._description = newDescription;
     }
     
     get expensePerPerson() : Map<Person, number>
