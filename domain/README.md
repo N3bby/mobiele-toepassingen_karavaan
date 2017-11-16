@@ -75,6 +75,7 @@ console.log(johnDebt); // 9.50
 What if a new person joins the table but is not a known participant to the trip yet? 
 The service handles this for you. If you add an unknown participant to an expense, he will automatically be created with 'New participant' as name.
 > NOTE: The personal details of the person should manually be edited later.
+
 > NOTE: This scenario should not happen in real life, but it is implemented for you. Please add participants before adding a debt that participant.
 
 ```javascript

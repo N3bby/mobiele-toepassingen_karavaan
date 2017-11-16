@@ -10,6 +10,7 @@
       "Trip.ts",
       "Person.ts",
       "KaravaanService.ts",
-      "KaravaanTests.ts"
+      "KaravaanTests.ts",
+      "CurrencyService"
   ]
 }

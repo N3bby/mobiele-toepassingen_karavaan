@@ -2,6 +2,7 @@ import { Currency } from './Currency';
 import { Trip } from './Trip';
 import { Person } from './Person';
 import { Expense } from './Expense';
+import { CurrencyService } from './CurrencyService';
 
 export class KaravaanService
 {

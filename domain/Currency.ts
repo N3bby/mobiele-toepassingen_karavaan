@@ -13,7 +13,7 @@ export class Currency
     * @param {string} name - The name of the currency in ISO 4217 format.
     * @param {number} rateComparedToEUR - The rate of the currency compared to EUR.
     */
-    constructor(name : string, rateComparedToEUR : number)
+    constructor(name : string = "EUR", rateComparedToEUR : number = 1)
     {
         this.name = name;
         this.rateComparedToEUR = rateComparedToEUR;

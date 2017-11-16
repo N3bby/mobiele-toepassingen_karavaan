@@ -6,7 +6,7 @@ export class Trip
 {
     private _id : number;
     private _name:string;
-    private _currency : Currency;
+    private _currencies : Array<Currency>;
     private _expenses : Array<Expense>;
     private _participants : Array<Person>;
     
@@ -19,7 +19,8 @@ export class Trip
     {
         this.id = id;
         this.name = name;
-        this.currency = currency;
+        this.currencies = new Array<Currency>();
+        this.currencies.push(currency);
         this.expenses = expenses;
         this.participants = participants;
     }
@@ -44,14 +45,14 @@ export class Trip
         this._name = newName;
     }
     
-    get currency() : Currency
+    get currencies() : Array<Currency>
     {
-        return this._currency;
+        return this._currencies;
     }
     
-    set currency(newCurrency : Currency)
+    set currencies(newCurrencyList : Array<Currency>)
     {
-        this._currency = newCurrency;
+        this._currencies = newCurrencyList;
     }
     
     get expenses() : Array<Expense>
@@ -85,4 +86,11 @@ export class Trip
     {
         this.expenses.push(newExpense);
     }
+    
+    addCurrency(newCurrency : Currency) : Currency
+    {
+        this.currencies.push(newCurrency);
+        return newCurrency;
+    }
+   
 }
