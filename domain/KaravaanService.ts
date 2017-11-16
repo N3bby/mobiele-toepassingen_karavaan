@@ -8,13 +8,13 @@ export class KaravaanService
 {
     private _idCounter : number = 0;
     
-    private _currencyMap : Map<string, Currency>;
     private _tripMap : Map<number, Trip>;
+    private _currencyService : CurrencyService;
     
     constructor()
     {
-        this.currencyMap = new Map<string, Currency>();
         this.tripMap = new Map<number, Trip>();
+        this.currencyService = new CurrencyService();
     }
     
     // Getters and Setters
@@ -29,21 +29,22 @@ export class KaravaanService
         return this._idCounter;
     }
     
-    get currencyMap() : Map<string, Currency>
+    private get currencyService() : CurrencyService
     {
-        return this._currencyMap;
+        return this._currencyService;
     }
     
-    set currencyMap(newCurrencyMap : Map<string, Currency>)
+    private set currencyService(newCurrencyService : CurrencyService)
     {
-        this._currencyMap = newCurrencyMap;
+        this._currencyService = newCurrencyService;
     }
     
     get currencies() : Array<Currency>
     {
         let currencyList = new Array<Currency>();
-        
-        for (let currency of this.currencyMap.values())
+        let currencyMap = this.currencyService.currencies;
+         
+        for (let currency of currencyMap.values())
         {
             currencyList.push(currency);
         }
@@ -75,15 +76,9 @@ export class KaravaanService
     
     // Methods
     
-    addCurrency(newCurrency : Currency) : Currency
-    {
-        this.currencyMap.set(newCurrency.name, newCurrency);
-        return newCurrency;
-    }
-    
     getCurrency(currencyName : string) : Currency
     {
-        return this.currencyMap.get(currencyName);
+        return this.currencyService.currencies.get(currencyName);
     }
     
     addNewTrip(name : string) : Trip

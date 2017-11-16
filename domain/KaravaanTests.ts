@@ -183,3 +183,25 @@ function adding_debt_to_expense_works()
     functionalityWorks("Adding debt to expense works.", debtAdded && debtForPersonIsCorrect);
 }
 adding_debt_to_expense_works();
+
+function pulling_currencies_works_offline()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let hasCurrencies = service.currencies.length > 0;
+    
+    functionalityWorks("Pulling currencies works offline", hasCurrencies);
+}
+pulling_currencies_works_offline();
+
+function pulling_currencies_works_online()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("A night out");
+    
+    let hasCurrencies = service.currencies.length > 4;
+    
+    functionalityWorks("Pulling currencies works online", hasCurrencies);
+}
+pulling_currencies_works_online();
