@@ -14,6 +14,7 @@ export class CurrencyService
     
     get currencies() : Map<string, Currency>
     {
+        if (this._currencies.size == 0) return this.getMockData();
         return this._currencies;
     }
 
@@ -24,9 +25,6 @@ export class CurrencyService
     
     getMockData() : Map<string, Currency>
     {
-        // It could be that previously pulled data is still in the currency service. Serve that data instead.
-        if (this.currencies.size > 0) return this.currencies;
-        
         let mockMap = new Map<string, Currency>();
         
         mockMap.set("EUR", new Currency("EUR", 1));
