@@ -216,13 +216,16 @@ ee.expenseAmount = 100;
 let firstPayer = new Person(0, "Artus", "Vranken");
 let secondPayer = new Person(1, "John", "Lennon");
 let thirdPart = new Person(2, "Laila", "dsd");
+//ee.addParticipant(thirdPart);
 
-ee.addPayment(new Payment(0, firstPayer, 70));
-ee.addPayment(new Payment(1, secondPayer, 30));
+ee.addPayment(new Payment(0, firstPayer, 50));
+//ee.addPayment(new Payment(1, secondPayer, 20));
+ee.addParticipant(secondPayer);
 
-ee.addParticipant(thirdPart);
-ee.addParticipant(new Person(3, "kaka", "pipi"));
+//ee.addParticipant(new Person(3, "kaka", "pipi"));
 
 
 
 console.log(ee.debts);
+/*console.log(ee.creditByCreditor);
+console.log(ee.debtByDebtor); */

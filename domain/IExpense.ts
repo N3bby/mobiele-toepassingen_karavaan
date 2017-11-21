@@ -133,5 +133,5 @@ export interface IExpense
     /**
     * A list of all the total amount paid to the third party categorized the creditors.
     */
-    creditByCreditors : Map<Person, number>;
+    creditByCreditor : Map<Person, number>;
 }
