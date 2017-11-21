@@ -7,13 +7,16 @@ export class Debt
     private _creditor : Person;
     private _amount : number;
     private _description : string;
+    private _isPaid : boolean;
     
-    constructor(id : number, debtor : Person, creditor : Person, amount : number, description : string)
+    constructor(id : number = -1, debtor : Person = new Person(), creditor : Person = new Person(), amount : number = 0, description : string = "New Debt.", isPaid : boolean = false)
     {
         this.id = id;
         this.debtor = debtor;
         this.creditor = creditor;
         this.amount = amount;
+        this.description = description;
+        this.isPaid = isPaid;
     }
     
     get id() : number
@@ -64,5 +67,15 @@ export class Debt
     set description(newDescription : string)
     {
         this._description = newDescription;
+    }
+    
+    get isPaid() : boolean
+    {
+        return this._isPaid;
+    }
+    
+    set isPaid(newPaidState : boolean)
+    {
+        this._isPaid = newPaidState;
     }
 }

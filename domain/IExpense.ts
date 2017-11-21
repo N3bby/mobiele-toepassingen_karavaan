@@ -4,8 +4,27 @@ import { Debt } from './Debt';
 import { Person } from './Person';
 import { Currency } from './Currency';
 
+/**
+* An Expense is an object that holds information about a certain bill to a thrid party.
+* Contained in this information is who paid to the third party (creditors) and who needs to redeem the creditors (debtors).
+*/
 export interface IExpense
 {
+    /**
+    * The id of the expense.
+    */
+    id : number;
+    
+    /**
+    * Category of the expense.
+    */
+    category : string;
+    
+    /**
+    * Description of the expense.
+    */
+    description : string;
+    
     /**
     * The total price for the expense, e.g. what needs to be payed in total to the thrid party.
     */

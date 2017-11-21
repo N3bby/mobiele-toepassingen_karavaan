@@ -6,6 +6,12 @@ export class Payment
     private _creditor : Person;
     private _amount : number;
     
+    constructor(id : number = -1, creditor : Person = new Person(), amount : number = 0)
+    {
+        this.id = id;
+        this.creditor = creditor;
+        this.amount = amount;
+    }
     
     get id() : number
     {
