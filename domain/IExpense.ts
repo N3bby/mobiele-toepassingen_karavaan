@@ -3,6 +3,7 @@ import { Payment } from './Payment';
 import { Debt } from './Debt';
 import { Person } from './Person';
 import { Currency } from './Currency';
+import { Expenses } from './Expenses';
 
 /**
 * An Expense is an object that holds information about a certain bill to a thrid party.
@@ -14,6 +15,11 @@ export interface IExpense
     * The id of the expense.
     */
     id : number;
+    
+    /**
+    *
+    */
+    readonly expenseType : Expenses;
     
     /**
     * Category of the expense.

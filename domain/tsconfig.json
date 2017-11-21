@@ -5,17 +5,17 @@
     "module": "CommonJS"
   },
   "files": [
-      "Currency.ts",
-      "Expense.ts",
-      "Trip.ts",
-      "Person.ts",
-      "KaravaanService.ts",
-      "KaravaanTests.ts",
+      "Currency",
+      "Trip",
+      "Person",
+      "KaravaanService",
+      "KaravaanTests",
       "CurrencyService",
       "IExpense",
       "EvenExpense",
       "Payment",
       "Debt",
-      "BillItem"
+      "BillItem",
+      "Expenses"
   ]
 }

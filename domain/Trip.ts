@@ -1,19 +1,19 @@
-import { Expense } from './Expense';
+import { IExpense } from './IExpense';
 import { Person } from './Person';
 import { Currency } from './Currency';
 
 export class Trip 
 {
     private _id : number;
-    private _name:string;
+    private _name : string;
     private _currencies : Array<Currency>;
-    private _expenses : Array<Expense>;
+    private _expenses : Array<IExpense>;
     private _participants : Array<Person>;
     
     constructor(id : number = -1,
                 name : string = "",
                 currency : Currency = new Currency("EUR", 1),
-                expenses : Array<Expense> = new Array<Expense>(),
+                expenses : Array<IExpense> = new Array<IExpense>(),
                 participants : Array<Person> = new Array<Person>()
                )
     {
@@ -55,12 +55,12 @@ export class Trip
         this._currencies = newCurrencyList;
     }
     
-    get expenses() : Array<Expense>
+    get expenses() : Array<IExpense>
     {
         return this._expenses;
     }
     
-    set expenses(newExpenses : Array<Expense>)
+    set expenses(newExpenses : Array<IExpense>)
     {
         this._expenses = newExpenses;
     }
@@ -82,7 +82,7 @@ export class Trip
         this.participants.push(newParticipant);
     }
     
-    addExpense(newExpense : Expense)
+    addExpense(newExpense : IExpense)
     {
         this.expenses.push(newExpense);
     }

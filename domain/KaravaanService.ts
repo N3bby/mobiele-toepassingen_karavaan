@@ -1,8 +1,11 @@
 import { Currency } from './Currency';
 import { Trip } from './Trip';
 import { Person } from './Person';
-import { Expense } from './Expense';
+import { IExpense } from './IExpense';
 import { CurrencyService } from './CurrencyService';
+import { Expenses } from './Expenses';
+import { EvenExpense } from './EvenExpense';
+import { Debt } from './Debt';
 
 export class KaravaanService
 {
@@ -131,28 +134,33 @@ export class KaravaanService
         }
     }
     
-    addNewExpenseByTripId(tripId : number, description : string, category : string) : Expense
+    addNewExpenseByTripId(tripId : number, expenseType : Expenses, description : string, category : string) : IExpense
     {
-        let newExpense = new Expense();
+        let newExpense;
+        
+        if (expenseType == Expenses.EvenExpense)
+        {
+            newExpense = new EvenExpense();
+        }
         newExpense.description = description;
         newExpense.category = category;
             
         return this.addExpenseToTrip(this.getTripById(tripId), newExpense);
     }
     
-    private addExpenseToTrip(trip : Trip, expense : Expense) : Expense
+    private addExpenseToTrip(trip : Trip, expense : IExpense) : IExpense
     {
         if (expense.id < 0) expense.id = this.idCounter++;
         trip.addExpense(expense);
         return expense;
     }
     
-    getExpensesByTripId(tripId : number)
+    getExpensesByTripId(tripId : number) : Array<IExpense>
     {
         return this.getTripById(tripId).expenses;
     }
     
-    getExpenseById(tripId : number, expenseId : number) : Expense
+    getExpenseById(tripId : number, expenseId : number) : IExpense
     {
         for (let expense of this.getTripById(tripId).expenses)
         {
@@ -160,7 +168,7 @@ export class KaravaanService
         }
     }
     
-    addNewDebtToExpenseById(tripId : number, expenseId : number, participantId : number, amount : number) : Expense
+    addNewDebtToExpenseById(tripId : number, expenseId : number, participantId : number, amount : number) : IExpense
     {
         let expense = this.getExpenseById(tripId, expenseId);
         let participant = this.getParticipantById(tripId, participantId);
@@ -169,7 +177,7 @@ export class KaravaanService
         if (typeof expense === 'undefined')
         {
             // If it does not, add a new expense
-            expense = this.addNewExpenseByTripId(tripId, "New Expense", "Expense");
+            expense = this.addNewExpenseByTripId(tripId, Expenses.ShareExpense, "New Expense", "Expense");
             expense.id = expenseId;
         }
         
@@ -181,13 +189,15 @@ export class KaravaanService
             participant.id = participantId;
         }
         
-        expense.addDebt(participant, amount);
+        // Create debt and add to trip
+        let newDebt = new Debt();
+        expense.addDebt(newDebt);
         return expense;
     }
     
     getDebtsByExpenseId(tripId : number, expenseId : number) : Map<Person, number>
     {
-        return this.getExpenseById(tripId, expenseId).expensePerPerson;
+        return this.getExpenseById(tripId, expenseId).debtByDebtor;
     }
     
     getDebtForParticipantByExpenseId(tripId : number, expenseId : number, participantId : number) : number

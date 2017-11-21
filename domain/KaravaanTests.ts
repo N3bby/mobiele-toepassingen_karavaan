@@ -6,6 +6,8 @@ import { Debt } from './Debt';
 import { Person } from './Person';
 import { Payment } from './Payment';
 
+import { Expenses } from './Expenses';
+
 function functionalityWorks(functionality : string, works : boolean)
 {
     /*let result = works ? "pass" : "fail";
@@ -116,79 +118,6 @@ function requesting_nonexisting_participants_return_undefin_works()
 }
 requesting_nonexisting_participants_return_undefin_works();
 
-// Add expense to trip
-function adding_expense_to_trip_works()
-{
-    let service = new KaravaanService();
-    let newTrip = service.addNewTrip("A night out");
-    
-    let newExpense = service.addNewExpenseByTripId(newTrip.id, "Café Den Allée", "Café");
-    
-    let isAdded = service.getExpensesByTripId(newTrip.id).length > 0;
-    let hasId = newExpense.id >= 0;
-    
-    // Concat booleans
-    let result = isAdded && hasId;
-    
-    functionalityWorks("Adding expense to trip", result);
-}
-adding_expense_to_trip_works();
-
-function adding_multiple_expenses_to_trip_works()
-{
-    let service = new KaravaanService();
-    let newTrip = service.addNewTrip("A night out");
-    
-    let newExpense = service.addNewExpenseByTripId(newTrip.id, "Café Den Allée", "Café");
-    
-    let isAdded = service.getExpensesByTripId(newTrip.id).length == 1;
-    let hasId = newExpense.id >= 0;
-    
-    // Concat booleans
-    let result = isAdded && hasId;
-    
-    let secondExpense = service.addNewExpenseByTripId(newTrip.id, "Restaurant", "Restaurant");
-    
-    let secondAdded = service.getExpensesByTripId(newTrip.id).length == 2;
-    let secondId = secondExpense.id >= 0;
-    
-    // Concat booleans again
-    result = result && secondAdded && secondId;
-    
-    functionalityWorks("Adding multiple expenses to trip", result);
-}
-adding_multiple_expenses_to_trip_works();
-
-function requesting_nonexisting_expense_returns_undefined_works()
-{
-    let service = new KaravaanService();
-    let newTrip = service.addNewTrip("A night out");
-    
-    let newExpense = service.getExpenseById(newTrip.id, 5);
-    
-    let isUndefined = typeof newExpense === 'undefined';
-    
-    functionalityWorks("Requesting nonexisting expense returns undefined.", isUndefined);
-}
-requesting_nonexisting_expense_returns_undefined_works();
-
-function adding_debt_to_expense_works()
-{
-    let service = new KaravaanService();
-    let newTrip = service.addNewTrip("A night out");
-    
-    let newExpense = service.addNewExpenseByTripId(newTrip.id, "Café Den Allée", "Café");
-    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
-    
-    let debts = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 5);
-    
-    let debtAdded = service.getDebtsByExpenseId(newTrip.id, newExpense.id).size > 0;
-    let debtForPersonIsCorrect = service.getDebtForParticipantByExpenseId(newTrip.id, newExpense.id, newParticipant.id) == 5;
-    
-    functionalityWorks("Adding debt to expense works.", debtAdded && debtForPersonIsCorrect);
-}
-adding_debt_to_expense_works();
-
 function pulling_currencies_works_offline()
 {
     let service = new KaravaanService();
@@ -222,10 +151,7 @@ ee.addPayment(new Payment(0, firstPayer, 50));
 //ee.addPayment(new Payment(1, secondPayer, 20));
 ee.addParticipant(secondPayer);
 
-//ee.addParticipant(new Person(3, "kaka", "pipi"));
+ee.addParticipant(new Person(3, "kaka", "pipi"));
 
 
-
-console.log(ee.debts);
-/*console.log(ee.creditByCreditor);
-console.log(ee.debtByDebtor); */
+console.log(Expenses.EvenExpense);
