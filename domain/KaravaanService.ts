@@ -24,6 +24,7 @@ export class KaravaanService
     
     /**
     * Set the idCounter, which is responsible for handling ID assignment in the KaravaanService.
+    *
     * @param {number} newIndex - The new starting ID.
     */
     private set idCounter(newIndex : number)
@@ -33,6 +34,7 @@ export class KaravaanService
     
     /**
     * Get the idCounter, which is responsible for handling ID assignment in the KaravaanService.
+    *
     * @returns {number} The currenct ID.
     */
     private get idCounter() : number
@@ -42,6 +44,7 @@ export class KaravaanService
     
     /**
     * Get the CurrencyService, which is used for retrieving a list of currencies.
+    *
     * @returns {CurrencyService} The current CurrencyService.
     */
     private get currencyService() : CurrencyService
@@ -51,6 +54,7 @@ export class KaravaanService
     
     /**
     * Set the CurrencyService, which is used for retrieving a list of currencies.
+    *
     * @param {CurrencyService} newCurrencyService - The new CurrencyService.
     */
     private set currencyService(newCurrencyService : CurrencyService)
@@ -60,6 +64,7 @@ export class KaravaanService
     
     /**
     * Get an Array of the currencies.
+    *
     * @returns {Array<Currency>} An Array of currencies.
     */
     get currencies() : Array<Currency>
@@ -77,6 +82,7 @@ export class KaravaanService
     
     /**
     * Get a Map of the Trips that this KaravaanService contains.
+    *
     * @returns {Map<number, Trip>} A Map of all the Trips.
     */
     get tripMap() : Map<number, Trip>
@@ -86,6 +92,7 @@ export class KaravaanService
     
     /**
     * Set the Map of Trips that this KaravaanService contains.
+    *
     * @param {Map<number, Trip>} newTripMap - The new map containing all the Trips.
     */
     set tripMap(newTripMap : Map<number, Trip>)
@@ -95,6 +102,7 @@ export class KaravaanService
     
     /**
     * Get an Array of all the Trips.
+    *
     * @returns {Array<Trip>} An Array containing all the Trips.
     */
     get trips() : Array<Trip>
@@ -113,17 +121,26 @@ export class KaravaanService
     
     /**
     * Get a currency from the CurrencyService.
+    *
     * @param {string} currencyName - The name of the desired currency.
+    *
     * @returns {Currency} The currency returned by the CurrencyService.
     */
     getCurrency(currencyName : string) : Currency
     {
-        return this.currencyService.currencies.get(currencyName);
+        let currency = this.currencyService.currencies.get(currencyName);
+        
+        // Check if the currency exists. If not, throw error.
+        if (typeof currency == 'undefined') throw new Error("Currency with name " + currencyName + " does not exist.");
+        
+        return currency;
     }
     
     /**
     * Add a new Trip by name.
+    *
     * @param {string} name - The name of the Trip to be created.
+    *
     * @returns {Trip} The created Trip, with all properties set to the default values and an ID assigned by the KaravaanService.
     */
     addNewTrip(name : string) : Trip
@@ -135,7 +152,9 @@ export class KaravaanService
     
     /**
     * Add a trip by object, which can be used to replace trips after updating properties.
+    *
     * @param {Trip} newTrip - The Trip object to be added or updated.
+    *
     * @returns {Trip} The added Trip, with an assigned ID if it didn't have one already.
     */
     private addTrip(newTrip : Trip) : Trip
@@ -151,19 +170,28 @@ export class KaravaanService
     
     /**
     * Get a trip by its ID.
+    *
     * @param {number} id - The id of the desired Trip.
+    *
     * @returns {Trip} The desired trip, or 'undefined' if none was found.
     */
     getTripById(id : number) : Trip
     {
-        return this.tripMap.get(id);
+        let trip = this.tripMap.get(id);
+        
+        // Check if Trip exists. If not, throw error.
+        if (typeof trip == 'undefined') throw new Error("Trip with ID " + id + " does not exist.");
+        
+        return trip;
     }
     
     /**
     * Add a new participant to the Trip by using the Trips ID.
+    *
     * @param {number} tripId - The ID of the Trip this participant has to be added to.
     * @param {string} firstName - The first name of the participant to be added.
     * @param {string} lastName - The last name of the participant to be added.
+    *
     * @returns {Person} The newly created and added participant, with a new ID assigned to it.
     */
     addNewParticipantToTripById(tripId : number, firstName : string, lastName : string) : Person
@@ -175,8 +203,10 @@ export class KaravaanService
     
     /**
     * Add a participant to a Trip by using objects.
+    *
     * @param {Trip} trip - The Trip where the participant should be added to.
     * @param {Person} person - The Person object that needs to be added to the Trip.
+    *
     * @returns {Person} The person object, with an assigned ID if it didn't have one yet.
     */
     private addParticipantToTrip(trip : Trip, person : Person) : Person
