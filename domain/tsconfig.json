@@ -11,6 +11,11 @@
       "Person.ts",
       "KaravaanService.ts",
       "KaravaanTests.ts",
-      "CurrencyService"
+      "CurrencyService",
+      "IExpense",
+      "EvenExpense",
+      "Payment",
+      "Debt",
+      "BillItem"
   ]
 }
