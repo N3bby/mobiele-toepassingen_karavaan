@@ -2,14 +2,14 @@
 
 ## As a *user* I want to:
 
-// ✔✗✘✓
+> ✔ = Functionality works and is implemented.
 
-1. Create a KaravaanService :white_check_mark:
-2. Add a Trip :white_check_mark:
-3. Get a list of Trips :white_check_mark:
-4. Get a single Trip by its ID :white_check_mark:
-5. Add a participant to a Trip :white_check_mark:
-6. Get a list of participants to a Trip :white_check_mark:
+1. Create a KaravaanService ✔
+2. Add a Trip ✔
+3. Get a list of Trips ✔
+4. Get a single Trip by its ID ✔
+5. Add a participant to a Trip ✔
+6. Get a list of participants to a Trip ✔
 7. Get a single participant to a Trip by using the Trip ID and the participant ID
 6. Add an Expense to a Trip 
 7. Add a participant to an Expense
