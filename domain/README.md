@@ -10,12 +10,19 @@
 4. Get a single Trip by its ID ✔
 5. Remove a Trip ✔
 6. Add a participant to a Trip ✔
-7. Get a list of participants to a Trip ✔
-8. Get a single participant to a Trip by using the Trip ID and the participant ID ✔
-9. Remove a participant from a Trip
-9. Add an Expense to a Trip 
-10. Add a participant to an Expense
-11. Add a Payment to an Expense
+7. Get a list of participants from a Trip ✔
+8. Get a single participant from a Trip ✔
+9. Remove a participant from a Trip ✔
+10. Add an Expense to a Trip 
+11. Remove an Expense from a Trip
+12. Add a participant to an Expense
+13. Remove a participant from an Expense
+13. Add a Payment to an Expense
+14. Remove a Payment from an Expense
+15. Add a BillItem to an Expense
+16. Remove a BillItem from an Expense
+17. Assign a participant to a BillItem
+15. Get a list of debts from an Expense
 
 ## 1. Create KaravaanService
 
@@ -121,7 +128,7 @@ Above code will output:
 ## 5. Remove a Trip
 
 Removing a `Trip` can be done by using the `removeTripById(tripId)` facade method, where `tripId` is the ID of the `Trip` you need to be removed.
-This method returns the amount of `Trip`s maintained by the `KaravaanService` after deletion.
+This method returns the amount of `Trips` maintained by the `KaravaanService` after deletion.
 
 ```javascript
 // Let's say that there are currently 3 Trips.
@@ -176,7 +183,7 @@ let participantList = service.getParticipantsByTripId(1);
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > See "Get a single Trip by its ID" for more information about Error handling.
 
-## 8. Get a single participant from a Trip by using the Trip ID and the participant ID
+## 8. Get a single participant from a Trip 
 
 Retrieving a participant from a `Trip` can be done by using the `getParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the `Trip` and `participantId` is the ID of the participant to this `Trip`.
 This method returns a `Person` object that contains all information about this participant.
@@ -209,3 +216,30 @@ Above code will output:
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > This method will throw an Error when supplying an ID that does not belong to a participant.
 > See "Get a single Trip by its ID" for more information about Error handling.
+
+## 9. Remove a participant from a Trip
+
+Removing a participant from a `Trip` can be done using the `removeParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the Trip the participant needs to be removed from, and `participantId` the ID of the participant.
+This method returns the amount of participants still participating to the `Trip` after removal.
+
+```javascript
+// Given a Trip with ID 0 and no participants yet.
+let newTrip = service.addNewTrip("Rome");
+
+// Add a new participant to the Trip
+let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+
+console.log(service.getParticipantsByTripId(newTrip.id).length); // 1
+
+// Remove newly created participant from the Trip
+let after = service.removeParticipantById(newTrip.id, newParticipant.id); // 0
+
+console.log(after);
+```
+
+Above code will output:
+
+```
+1
+2
+```

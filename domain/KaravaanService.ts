@@ -247,7 +247,9 @@ export class KaravaanService
     removeParticipantById(tripId : number, participantId : number) : number
     {
         let trip = this.getTripById(tripId);
-        let participant = this.getParticipantById(participantId);
+        let participant = this.getParticipantById(trip.id, participantId);
+        
+        return trip.removeParticipant(participant);
     }
     
     /**

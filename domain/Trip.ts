@@ -24,7 +24,7 @@ export class Trip
         this.id = id;
         this.name = name;
         this.currencies = new Array<Currency>();
-        this.currencies.push(currency);
+        this.addCurrency(currency);
         this.expenses = expenses;
         this.participants = participants;
     }
@@ -64,6 +64,18 @@ export class Trip
         return Array.from(this.currencyMap.values());
     }
     
+    set currencies(newCurrencies : Array<Currency>)
+    {
+        let newCurrencyMap = new Map<string, Currency>();
+        
+        for (let currency of newCurrencies)
+        {
+            newCurrencyMap.set(currency.name, currency);
+        }
+        
+        this.currencyMap = newCurrencyMap;
+    }
+                                         
     get currencyMap() : Map<string, Currency>
     {
         return this._currencies;
@@ -79,6 +91,18 @@ export class Trip
         return Array.from(this.expenseMap.values());
     }
     
+    set expenses(newExpenses : Array<IExpense>)
+    {
+        let newExpenseMap = new Map<number, IExpense>();
+        
+        for (let expense of newExpenses)
+        {
+            newExpenseMap.set(expense.id, expense);
+        }
+        
+        this.expenseMap = newExpenseMap;
+    }
+    
     get expenseMap() : Map<number, IExpense>
     {
         return this._expenses;
@@ -92,6 +116,18 @@ export class Trip
     get participants() : Array<Person>
     {
         return Array.from(this.participantMap.values());
+    }
+    
+    set participants(newParticipants : Array<Person>)
+    {
+        let newParticipantsMap = new Map<number, Person>();
+        
+        for (let participant of newParticipants)
+        {
+            newParticipantsMap.set(participant.id, participant);
+        }
+        
+        this.participantMap = newParticipantsMap;
     }
     
     get participantMap() : Map<number, Person>
@@ -116,14 +152,16 @@ export class Trip
     
     // Methods
     
-    addParticipant(newParticipant : Person)
+    addParticipant(newParticipant : Person) : Person
     {
         this.participantMap.set(newParticipant.id, newParticipant);
+        return newParticipant;
     }
     
-    removeParticipant(participant : Person)
+    removeParticipant(participant : Person) : number
     {
         this.participantMap.delete(participant.id);
+        return this.participantMap.size;
     }
     
     addExpense(newExpense : IExpense) : IExpense
