@@ -243,3 +243,7 @@ Above code will output:
 1
 2
 ```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> This method will throw an Error when supplying an ID that does not belong to a participant.
+> See "Get a single Trip by its ID" for more information about Error handling.
