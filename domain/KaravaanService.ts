@@ -3,7 +3,7 @@ import { Trip } from './Trip';
 import { Person } from './Person';
 import { IExpense } from './IExpense';
 import { CurrencyService } from './CurrencyService';
-import { ExpenseType } from './Expenses';
+import { ExpenseType } from './ExpenseType';
 import { EvenExpense } from './EvenExpense';
 import { Debt } from './Debt';
 
@@ -107,14 +107,7 @@ export class KaravaanService
     */
     get trips() : Array<Trip>
     {
-        let tripList = new Array<Trip>();
-        
-        for (let trip of this.tripMap.values())
-        {
-            tripList.push(trip);
-        }
-        
-        return tripList;
+        return Array.from(this.tripMap.values());
     }
     
     // Methods
@@ -143,10 +136,11 @@ export class KaravaanService
     *
     * @returns {Trip} The created Trip, with all properties set to the default values and an ID assigned by the KaravaanService.
     */
-    addNewTrip(name : string) : Trip
+    addNewTrip(name : string, description : string = "") : Trip
     {
         let newTrip = new Trip();
         newTrip.name = name;
+        newTrip.description = description;
         return this.addTrip(newTrip);
     }
     

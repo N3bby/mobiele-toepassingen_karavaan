@@ -6,12 +6,11 @@ import { Debt } from './Debt';
 import { Person } from './Person';
 import { Payment } from './Payment';
 
-import { Expenses } from './Expenses';
 
 function functionalityWorks(functionality : string, works : boolean)
 {
-    /*let result = works ? "pass" : "fail";
-    console.log(result + ": " + functionality);*/
+    let result = works ? "pass" : "fail";
+    console.log(result + ": " + functionality);
 }
 
 // Add a trip
@@ -27,7 +26,7 @@ function adding_trip_works()
 }
 adding_trip_works();
 
-// Add multiple trips
+/*// Add multiple trips
 function adding_multiple_trips_works()
 {
     let service = new KaravaanService();
@@ -138,7 +137,7 @@ function pulling_currencies_works_online()
     
     functionalityWorks("Pulling currencies works online", hasCurrencies);
 }
-pulling_currencies_works_online();
+pulling_currencies_works_online();*/
 
 let ee = new EvenExpense();
 ee.expenseAmount = 100;
@@ -148,10 +147,10 @@ let thirdPart = new Person(2, "Laila", "dsd");
 //ee.addParticipant(thirdPart);
 
 ee.addPayment(new Payment(0, firstPayer, 50));
-//ee.addPayment(new Payment(1, secondPayer, 20));
-ee.addParticipant(secondPayer);
+ee.addPayment(new Payment(1, secondPayer, 50));
+//ee.addParticipant(secondPayer);
 
 ee.addParticipant(new Person(3, "kaka", "pipi"));
 
 
-console.log(Expenses.EvenExpense);
+console.log(ee.debts);

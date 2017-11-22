@@ -4,7 +4,7 @@ import { Payment } from './Payment';
 import { BillItem } from './BillItem';
 import { Person } from './Person';
 import { Currency } from './Currency';
-import { Expenses } from './Expenses';
+import { ExpenseType } from './ExpenseType';
 
 /**
 * An EvenExpense is an expense where the debt gets evenly divided by participant.
@@ -12,7 +12,7 @@ import { Expenses } from './Expenses';
 */
 export class EvenExpense implements IExpense
 {
-    readonly expenseType = Expenses.EvenExpense;
+    readonly expenseType = ExpenseType.EvenExpense;
     
     private _id : number;
     private _category : string;

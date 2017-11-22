@@ -6,15 +6,19 @@ export class Trip
 {
     private _id : number;
     private _name : string;
+    private _description : string;
     private _currencies : Array<Currency>;
     private _expenses : Array<IExpense>;
     private _participants : Array<Person>;
+    private _date : Date;
     
     constructor(id : number = -1,
                 name : string = "",
+                description : string = "",
                 currency : Currency = new Currency("EUR", 1),
                 expenses : Array<IExpense> = new Array<IExpense>(),
-                participants : Array<Person> = new Array<Person>()
+                participants : Array<Person> = new Array<Person>(),
+                date : Date = new Date()
                )
     {
         this.id = id;
@@ -45,6 +49,16 @@ export class Trip
         this._name = newName;
     }
     
+    get description() : string
+    {
+        return this._description;
+    }
+    
+    set description(newDescription : string)
+    {
+        this._description = newDescription;
+    }
+    
     get currencies() : Array<Currency>
     {
         return this._currencies;
@@ -73,6 +87,16 @@ export class Trip
     set participants(newParticipants : Array<Person>)
     {
         this._participants = newParticipants;
+    }
+    
+    get date() : Date
+    {
+        return this._date;
+    }
+    
+    set date(newDate : Date)
+    {
+        this._date = newDate;
     }
     
     // Methods
