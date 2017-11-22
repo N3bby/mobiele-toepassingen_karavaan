@@ -8,7 +8,9 @@
 2. Add a Trip :white_check_mark:
 3. Get a list of Trips :white_check_mark:
 4. Get a single Trip by its ID :white_check_mark:
-5. Add a participant to a Trip 
+5. Add a participant to a Trip :white_check_mark:
+6. Get a list of participants to a Trip :white_check_mark:
+7. Get a single participant to a Trip by using the Trip ID and the participant ID
 6. Add an Expense to a Trip 
 7. Add a participant to an Expense
 7. Add a Payment to an Expense
@@ -91,4 +93,12 @@ let newTrip = service.addNewTrip("Rome");
 let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
 ```
 
+### 6. Get a list of participants to a Trip
 
+We can retrieve a list of participants to a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.
+This method will return an `Array<Person>` containing all the participants to this `Trip`.
+
+```javascript
+// Get a list of participants from Trip with ID = 1.
+let participantList = service.getParticipantsByTripId(1);
+```
