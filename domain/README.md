@@ -11,7 +11,8 @@
 5. Remove a Trip ✔
 6. Add a participant to a Trip ✔
 7. Get a list of participants to a Trip ✔
-8. Get a single participant to a Trip by using the Trip ID and the participant ID
+8. Get a single participant to a Trip by using the Trip ID and the participant ID ✔
+9. Remove a participant from a Trip
 9. Add an Expense to a Trip 
 10. Add a participant to an Expense
 11. Add a Payment to an Expense
@@ -162,10 +163,10 @@ let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Le
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > See "Get a single Trip by its ID" for more information about Error handling.
 
-## 7. Get a list of participants to a Trip
+## 7. Get a list of participants from a Trip
 
-We can retrieve a list of participants to a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.
-This method will return an `Array<Person>` containing all the participants to this `Trip`.
+We can retrieve a list of participants from a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.
+This method will return an `Array<Person>` containing all the participants from this `Trip`.
 
 ```javascript
 // Get a list of participants from Trip with ID = 1.
@@ -175,7 +176,7 @@ let participantList = service.getParticipantsByTripId(1);
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > See "Get a single Trip by its ID" for more information about Error handling.
 
-## 8. Get a single participant to a Trip by using the Trip ID and the participant ID
+## 8. Get a single participant from a Trip by using the Trip ID and the participant ID
 
 Retrieving a participant from a `Trip` can be done by using the `getParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the `Trip` and `participantId` is the ID of the participant to this `Trip`.
 This method returns a `Person` object that contains all information about this participant.

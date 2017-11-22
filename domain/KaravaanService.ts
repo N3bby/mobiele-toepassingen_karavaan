@@ -234,6 +234,23 @@ export class KaravaanService
     }
     
     /**
+    * Remove a participant from a Trip by using the ID of the Trip and the ID of the participant.
+    *
+    * @param {number} tripId - The ID of the Trip this participant needs to be removed from.
+    * @param {number} participantId - The ID of the participant that needs to be removed.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no participant with supplied ID is found.
+    *
+    * @returns The amount of participants from the Trip with supplied ID.
+    */
+    removeParticipantById(tripId : number, participantId : number) : number
+    {
+        let trip = this.getTripById(tripId);
+        let participant = this.getParticipantById(participantId);
+    }
+    
+    /**
     * Get an Array of all the participants for a given Trip by using the Trips ID.
     *
     * @param {number} tripId - The ID of the desired Trip.

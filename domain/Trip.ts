@@ -7,9 +7,9 @@ export class Trip
     private _id : number;
     private _name : string;
     private _description : string;
-    private _currencies : Array<Currency>;
-    private _expenses : Array<IExpense>;
-    private _participants : Array<Person>;
+    private _currencies : Map<string, Currency>;
+    private _expenses : Map<number, IExpense>;
+    private _participants : Map<number, Person>;
     private _date : Date;
     
     constructor(id : number = -1,
@@ -61,30 +61,45 @@ export class Trip
     
     get currencies() : Array<Currency>
     {
+        return Array.from(this.currencyMap.values());
+    }
+    
+    get currencyMap() : Map<string, Currency>
+    {
         return this._currencies;
     }
     
-    set currencies(newCurrencyList : Array<Currency>)
+    set currencyMap(newCurrencyMap : Map<string, Currency>)
     {
-        this._currencies = newCurrencyList;
+        this._currencies = newCurrencyMap;
     }
     
     get expenses() : Array<IExpense>
     {
+        return Array.from(this.expenseMap.values());
+    }
+    
+    get expenseMap() : Map<number, IExpense>
+    {
         return this._expenses;
     }
     
-    set expenses(newExpenses : Array<IExpense>)
+    set expenseMap(newExpenses : Map<number, IExpense>)
     {
         this._expenses = newExpenses;
     }
     
     get participants() : Array<Person>
     {
+        return Array.from(this.participantMap.values());
+    }
+    
+    get participantMap() : Map<number, Person>
+    {
         return this._participants;
     }
     
-    set participants(newParticipants : Array<Person>)
+    set participantMap(newParticipants : Map<number, Person>)
     {
         this._participants = newParticipants;
     }
@@ -103,18 +118,35 @@ export class Trip
     
     addParticipant(newParticipant : Person)
     {
-        this.participants.push(newParticipant);
+        this.participantMap.set(newParticipant.id, newParticipant);
     }
     
-    addExpense(newExpense : IExpense)
+    removeParticipant(participant : Person)
     {
-        this.expenses.push(newExpense);
+        this.participantMap.delete(participant.id);
+    }
+    
+    addExpense(newExpense : IExpense) : IExpense
+    {
+        this.expenseMap.set(newExpense.id, newExpense);
+        return newExpense;
+    }
+    
+    removeExpense(expense : IExpense) : number
+    {
+        this.expenseMap.delete(expense.id);
+        return this.expenseMap.size;
     }
     
     addCurrency(newCurrency : Currency) : Currency
     {
-        this.currencies.push(newCurrency);
+        this.currencyMap.set(newCurrency.name, newCurrency);
         return newCurrency;
     }
-   
+    
+    removeCurrency(currency : Currency) : number
+    {
+        this.currencyMap.delete(currency.name);
+        return this.currencyMap.size;
+    }
 }
