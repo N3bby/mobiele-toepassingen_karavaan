@@ -167,6 +167,8 @@ export class KaravaanService
     *
     * @param {number} id - The id of the desired Trip.
     *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
     * @returns {Trip} The desired trip, or 'undefined' if none was found.
     */
     getTripById(id : number) : Trip
@@ -180,11 +182,30 @@ export class KaravaanService
     }
     
     /**
+    * Remove a Trip by its ID.
+    * 
+    * @param {number} tripId - The ID of the Trip to be removed.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
+    * @returns {number} The amount of Trips currently maintained by the KaravaanService.
+    */
+    removeTripById(tripId : number) : number
+    {
+        let trip = this.getTripById(tripId);
+        this.tripMap.delete(trip.id);
+        
+        return this.tripMap.size;
+    }
+    
+    /**
     * Add a new participant to the Trip by using the Trips ID.
     *
     * @param {number} tripId - The ID of the Trip this participant has to be added to.
     * @param {string} firstName - The first name of the participant to be added.
     * @param {string} lastName - The last name of the participant to be added.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
     *
     * @returns {Person} The newly created and added participant, with a new ID assigned to it.
     */
@@ -201,6 +222,8 @@ export class KaravaanService
     * @param {Trip} trip - The Trip where the participant should be added to.
     * @param {Person} person - The Person object that needs to be added to the Trip.
     *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
     * @returns {Person} The person object, with an assigned ID if it didn't have one yet.
     */
     private addParticipantToTrip(trip : Trip, person : Person) : Person
@@ -215,6 +238,8 @@ export class KaravaanService
     *
     * @param {number} tripId - The ID of the desired Trip.
     *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
     * @returns {Array<Person>} An Array containing all the participants for Trip with given ID.
     */
     getParticipantsByTripId(tripId : number) : Array<Person>
@@ -227,6 +252,9 @@ export class KaravaanService
     *
     * @param {number} tripId - The ID of the Trip.
     * @param {number} participantId - The ID of the desired participant.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no participant with supplied ID is found.
     *
     * @returns {Person} The desired participant.
     */

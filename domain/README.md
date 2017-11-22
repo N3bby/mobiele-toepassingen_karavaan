@@ -8,12 +8,13 @@
 2. Add a Trip ✔
 3. Get a list of Trips ✔
 4. Get a single Trip by its ID ✔
-5. Add a participant to a Trip ✔
-6. Get a list of participants to a Trip ✔
-7. Get a single participant to a Trip by using the Trip ID and the participant ID
-6. Add an Expense to a Trip 
-7. Add a participant to an Expense
-7. Add a Payment to an Expense
+5. Remove a Trip ✔
+6. Add a participant to a Trip ✔
+7. Get a list of participants to a Trip ✔
+8. Get a single participant to a Trip by using the Trip ID and the participant ID
+9. Add an Expense to a Trip 
+10. Add a participant to an Expense
+11. Add a Payment to an Expense
 
 ### 1. Create KaravaanService
 
@@ -77,13 +78,78 @@ You can retrieve a single `Trip` object by using its ID, using the `getTripById(
 let tokyoTrip = service.getTripById(id);
 ```
 
-### 5. Add a participant to a Trip
+This method will throw an `Error` when no `Trip` with supplied ID is found. Make sure to handle this when you use it.
+
+```javascript
+// We will create a service from scratch and move on from that point to display the flow of logic.
+let service = new KaravaanService();
+
+// Add a new Trip
+let newTrip = service.addNewTrip("Rome");
+
+// Retrieve a Trip by using the ID from an existing Trip.
+try
+{
+    console.log(service.getTripById(newTrip.id).name);
+}
+catch (e)
+{
+    // This will not fire because no error is thrown, the Trip with supplied ID exists.
+    console.log(e.message);
+}
+
+// Retrieve a Trip by using an unknown ID.
+try
+{
+    // This Trip does not exist. Error will be thrown.
+    console.log(service.getTripById(1000).name);
+}
+catch (e)
+{
+    console.log(e.message);
+}
+```
+
+Above code will output:
+
+```
+"Rome"
+"Trip with ID 1000 does not exist."
+```
+
+### 5. Remove a Trip
+
+Removing a `Trip` can be done by using the `removeTripById(tripId)` facade method, where `tripId` is the ID of the `Trip` you need to be removed.
+This method returns the amount of `Trip`s maintained by the `KaravaanService` after deletion.
+
+```javascript
+// Let's say that there are currently 3 Trips.
+let before = service.trips.length; // 3
+
+// Remove a Trip with ID 1. (It does exist)
+let after = service.removeTripById(1);
+
+console.log(before);
+console.log(after);
+```
+
+Above code will output:
+
+```
+3
+2
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+### 6. Add a participant to a Trip
 
 Ofcourse we want to add participants to this Trip (including ourselves). 
 This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.
 
 The `tripId` is the ID of the Trip you want to add the participant to, the other parameters speak for themselves.
-This method will return the newly created `Person` object.
+This method will return the newly created `Person` object, with an ID assigned to it by the `KaravaanService`.
 
 ```javascript
 // Let's create a new Trip first, to show the flow of logic.
@@ -93,7 +159,10 @@ let newTrip = service.addNewTrip("Rome");
 let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
 ```
 
-### 6. Get a list of participants to a Trip
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+### 7. Get a list of participants to a Trip
 
 We can retrieve a list of participants to a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.
 This method will return an `Array<Person>` containing all the participants to this `Trip`.
@@ -102,3 +171,40 @@ This method will return an `Array<Person>` containing all the participants to th
 // Get a list of participants from Trip with ID = 1.
 let participantList = service.getParticipantsByTripId(1);
 ```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+### 8. Get a single participant to a Trip by using the Trip ID and the participant ID
+
+Retrieving a participant from a `Trip` can be done by using the `getParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the `Trip` and `participantId` is the ID of the participant to this `Trip`.
+This method returns a `Person` object that contains all information about this participant.
+
+```javascript
+// Add a Trip to the service
+let newTrip = service.addNewTrip("Versailles");
+
+// Add a participant to the newly created Trip.
+let newParticipant = service.addNewParticipantToTrip(newTrip.id, "Louis", "XIV");
+
+// Get a single participant by using its ID and the ID of the Trip it participates to.
+let retrievedParticipant = service.getParticipantById(newTrip.id, newParticipant.id);
+
+// Display some information about this participant.
+console.log(retrievedParticipant.firstName);
+console.log(retrievedParticipant.lastName);
+
+// Using the Person.name property will return the full name.
+console.log(retrievedParticipant + " was a pretty rich man.");
+```
+
+Above code will output:
+```
+"Louis"
+"XIV"
+"Louis XIV was a pretty rich man."
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> This method will throw an Error when supplying an ID that does not belong to a participant.
+> See "Get a single Trip by its ID" for more information about Error handling.

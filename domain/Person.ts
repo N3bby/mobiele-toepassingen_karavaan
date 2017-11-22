@@ -41,4 +41,9 @@ export class Person {
     {
         this._lastName = newLastName;
     }
+    
+    get name() : string
+    {
+        return this.firstName + " " + this.lastName;
+    }
 }
