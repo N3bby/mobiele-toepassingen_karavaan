@@ -16,7 +16,7 @@
 10. Add a participant to an Expense
 11. Add a Payment to an Expense
 
-### 1. Create KaravaanService
+## 1. Create KaravaanService
 
 Creating a KaravaanService is pretty easy, just initialise the object using its constructor.
 Only one KaravaanService object should be required per app. 
@@ -28,7 +28,7 @@ let service = new KaravaanService;
 
 This will create a new KaravaanService object with an empy list of Trips and a CurrencyService that can be used to get a list of Currencies.
 
-### 2. Add a Trip
+## 2. Add a Trip
 
 Adding a Trip can be done by using the `addNewTrip(name, description)` method, which takes the name of the New Trip as a required parameter, and the description of the new Trip as an optional parameter.
 This methods returns the newly created Trip object. You can use this object as you like, as javascript objects are passed by reference. I do however advise to manipulate the objects by using the facade methods supplied by the KaravaanService in combination with the assigned IDs.
@@ -43,7 +43,7 @@ let newTrip = service.addNewTrip("Tokyo");
 
 The Trip object returned will contain an ID assigned by the KaravaanService. This ID can be used in the future to manipulate it using the facade methods.
 
-### 3. Get a list of Trips
+## 3. Get a list of Trips
 
 There are multiple ways to get a list of Trips.
 
@@ -69,7 +69,7 @@ let trips = service.tripMap;
 > These methods can be used to access a single Trip, but should not.
 > The correct method is by using the method below.
 
-### 4. Get a single Trip by its ID
+## 4. Get a single Trip by its ID
 
 You can retrieve a single `Trip` object by using its ID, using the `getTripById(id)` facade method. This can be done for displaying all the information of the `Trip` in the front-end.
 
@@ -117,7 +117,7 @@ Above code will output:
 "Trip with ID 1000 does not exist."
 ```
 
-### 5. Remove a Trip
+## 5. Remove a Trip
 
 Removing a `Trip` can be done by using the `removeTripById(tripId)` facade method, where `tripId` is the ID of the `Trip` you need to be removed.
 This method returns the amount of `Trip`s maintained by the `KaravaanService` after deletion.
@@ -143,7 +143,7 @@ Above code will output:
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > See "Get a single Trip by its ID" for more information about Error handling.
 
-### 6. Add a participant to a Trip
+## 6. Add a participant to a Trip
 
 Ofcourse we want to add participants to this Trip (including ourselves). 
 This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.
@@ -162,7 +162,7 @@ let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Le
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > See "Get a single Trip by its ID" for more information about Error handling.
 
-### 7. Get a list of participants to a Trip
+## 7. Get a list of participants to a Trip
 
 We can retrieve a list of participants to a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.
 This method will return an `Array<Person>` containing all the participants to this `Trip`.
@@ -175,7 +175,7 @@ let participantList = service.getParticipantsByTripId(1);
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > See "Get a single Trip by its ID" for more information about Error handling.
 
-### 8. Get a single participant to a Trip by using the Trip ID and the participant ID
+## 8. Get a single participant to a Trip by using the Trip ID and the participant ID
 
 Retrieving a participant from a `Trip` can be done by using the `getParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the `Trip` and `participantId` is the ID of the participant to this `Trip`.
 This method returns a `Person` object that contains all information about this participant.
