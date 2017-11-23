@@ -35,7 +35,7 @@
 
 ## 1. Create KaravaanService
 
-Creating a KaravaanService is pretty easy, just initialise the object using its constructor.
+Creating a KaravaanService is pretty easy, just initialise the object using its constructor.  
 Only one KaravaanService object should be required per app. 
 
 ```javascript
@@ -47,7 +47,7 @@ This will create a new KaravaanService object with an empy list of Trips and a C
 
 ## 2. Add a Trip
 
-Adding a Trip can be done by using the `addNewTrip(name, description)` method, which takes the name of the New Trip as a required parameter, and the description of the new Trip as an optional parameter.
+Adding a Trip can be done by using the `addNewTrip(name, description)` method, which takes the name of the New Trip as a required parameter, and the description of the new Trip as an optional parameter.  
 This methods returns the newly created Trip object. You can use this object as you like, as javascript objects are passed by reference. I do however advise to manipulate the objects by using the facade methods supplied by the KaravaanService in combination with the assigned IDs.
 
 ```javascript
@@ -75,7 +75,7 @@ let trips = service.trips;
 
 #### Retrieving a Map of Trips
 
-The second option is to get a `Map<number, Trip>` by using the `tripMap` property.
+The second option is to get a `Map<number, Trip>` by using the `tripMap` property.  
 This will return a `Map<number, Trip>` object where `number` is the ID of the `Trip`.
 
 ```javascript
@@ -136,7 +136,7 @@ Above code will output:
 
 ## 5. Remove a Trip
 
-Removing a `Trip` can be done by using the `removeTripById(tripId)` facade method, where `tripId` is the ID of the `Trip` you need to be removed.
+Removing a `Trip` can be done by using the `removeTripById(tripId)` facade method, where `tripId` is the ID of the `Trip` you need to be removed.  
 This method returns the amount of `Trips` maintained by the `KaravaanService` after deletion.
 
 ```javascript
@@ -162,10 +162,10 @@ Above code will output:
 
 ## 6. Add a participant to a Trip
 
-Ofcourse we want to add participants to this Trip (including ourselves). 
-This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.
+Ofcourse we want to add participants to this Trip (including ourselves).  
+This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.  
 
-The `tripId` is the ID of the Trip you want to add the participant to, the other parameters speak for themselves.
+The `tripId` is the ID of the Trip you want to add the participant to, the other parameters speak for themselves.  
 This method will return the newly created `Person` object, with an ID assigned to it by the `KaravaanService`.
 
 ```javascript
@@ -181,8 +181,8 @@ let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Le
 
 ## 7. Get a list of participants from a Trip
 
-We can retrieve a list of participants from a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.
-This method will return an `Array<Person>` containing all the participants from this `Trip`.
+We can retrieve a list of participants from a Trip by using the `getParticipantsByTripId(tripId)` facade method, where `tripId` is the ID of the Trip we want to get the participants from.  
+This method will return an `Array<Person>` containing all the participants from this `Trip`.  
 
 ```javascript
 // Get a list of participants from Trip with ID = 1.
@@ -194,8 +194,8 @@ let participantList = service.getParticipantsByTripId(1);
 
 ## 8. Get a single participant from a Trip 
 
-Retrieving a participant from a `Trip` can be done by using the `getParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the `Trip` and `participantId` is the ID of the participant to this `Trip`.
-This method returns a `Person` object that contains all information about this participant.
+Retrieving a participant from a `Trip` can be done by using the `getParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the `Trip` and `participantId` is the ID of the participant to this `Trip`.  
+This method returns a `Person` object that contains all information about this participant.  
 
 ```javascript
 // Add a Trip to the service
@@ -216,6 +216,7 @@ console.log(retrievedParticipant + " was a pretty rich man.");
 ```
 
 Above code will output:
+ 
 ```
 "Louis"
 "XIV"
@@ -228,8 +229,8 @@ Above code will output:
 
 ## 9. Remove a participant from a Trip
 
-Removing a participant from a `Trip` can be done using the `removeParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the Trip the participant needs to be removed from, and `participantId` the ID of the participant.
-This method returns the amount of participants still participating to the `Trip` after removal.
+Removing a participant from a `Trip` can be done using the `removeParticipantById(tripId, participantId)` facade method, where `tripId` is the ID of the Trip the participant needs to be removed from, and `participantId` the ID of the participant.  
+This method returns the amount of participants still participating to the `Trip` after removal.  
 
 ```javascript
 // Given a Trip with ID 0 and no participants yet.
@@ -259,9 +260,9 @@ Above code will output:
 
 ## 10. Get a list of all Currencies
 
-The `KaravaanService` maintains a `CurrencyService`, which has the ability to pull a list of `Currencies` from a Rest api. If no connection is present, the `CurrencyService` will return the cashed list of `Currencies` pulled in the past. If no cahched list is present, The `CurrencyService` will return a list of hardcoded `Currencies`.
+The `KaravaanService` maintains a `CurrencyService`, which has the ability to pull a list of `Currencies` from a Rest api. If no connection is present, the `CurrencyService` will return the cashed list of `Currencies` pulled in the past. If no cahched list is present, The `CurrencyService` will return a list of hardcoded `Currencies`.  
 
-There are 2 ways of getting list of `Currencies`
+There are 2 ways of getting list of `Currencies`  
 
 * Retrieving an Array<Currency>
 * Retrieving a Map<string, Currency>
@@ -290,8 +291,8 @@ This method is preferable because with the retrieved `Map` you can quickly get a
 
 ## 11. Add a Currency to a Trip
 
-By default, when a `Trip` is created, it already contains one `Currency`, the Euro. You can easily add other `Currencies` by reference from the `CurrencyService`.
-You can use the `addCurrencyToTrip(tripId, newCurrency)` facade method, where `tripId` is the ID of the `Trip` the `Currency` needs to be added to, and `newCurrency` is the `Currency` instance that needs to be added.
+By default, when a `Trip` is created, it already contains one `Currency`, the Euro. You can easily add other `Currencies` by reference from the `CurrencyService`.  
+You can use the `addCurrencyToTrip(tripId, newCurrency)` facade method, where `tripId` is the ID of the `Trip` the `Currency` needs to be added to, and `newCurrency` is the `Currency` instance that needs to be added.  
 
 ```javascript
 // Create a new service from scratch to show the flow of logic.
@@ -318,10 +319,10 @@ console.log(service.getCurrenciesByTripId(newTrip.id).length === 2) // true
 
 ## 12. Remove a Currency from a Trip
 
-Removing a `Currency` from a `Trip` can be done using the `removeCurrencyFromTrip(tripId, currencyName)` facade method, where `tripId` is the ID of the `Trip` this `Currency` needs to be removed from, and `currencyName` the name of the `Currency` to be removed (e.g. "EUR").
-**This method does not remove a `Currency` from the `CurrencyService`, only from the `Trip`. The removed `Currency` is still available globally.**
+Removing a `Currency` from a `Trip` can be done using the `removeCurrencyFromTrip(tripId, currencyName)` facade method, where `tripId` is the ID of the `Trip` this `Currency` needs to be removed from, and `currencyName` the name of the `Currency` to be removed (e.g. "EUR").  
+**This method does not remove a `Currency` from the `CurrencyService`, only from the `Trip`. The removed `Currency` is still available globally.**  
 
-This method will return the amount of `Currencies` still maintained by the `Trip` after removal.
+This method will return the amount of `Currencies` still maintained by the `Trip` after removal.  
 
 ```javascript
 // Let's say we created a Trip before and it got assigned the ID '0'.
@@ -351,8 +352,8 @@ Above code will output:
 
 ## 13. Get a list of Currencies from a Trip
 
-Getting a list of `Currencies` from a `Trip` can be done using the `getCurrenciesByTripId(tripId)` method, where `tripId` is the ID of the `Trip` we want to retrieve the `Currencies` from.
-This method will return an `Array` of `Currencies`.
+Getting a list of `Currencies` from a `Trip` can be done using the `getCurrenciesByTripId(tripId)` method, where `tripId` is the ID of the `Trip` we want to retrieve the `Currencies` from.  
+This method will return an `Array` of `Currencies`.  
 
 ```javascript
 // Get an Array of Currencies from a previously created Trip with ID 0.
@@ -364,8 +365,8 @@ let currencyList = service.getCurrenciesByTripId(0);
 
 ## 14. Get a single Currency from a Trip
 
-Getting a single `Currency` from a `Trip` can be done using the `getCurrencyFromTripByName(tripId, currencyName)` facade method.
-This method will return a `Currency` instance corresponding to the supplied `currencyName`. (e.g. "EUR")
+Getting a single `Currency` from a `Trip` can be done using the `getCurrencyFromTripByName(tripId, currencyName)` facade method.  
+This method will return a `Currency` instance corresponding to the supplied `currencyName`. (e.g. "EUR")  
 
 ```javascript 
 // Retrieve a Currency from an existing Trip with ID 0.
