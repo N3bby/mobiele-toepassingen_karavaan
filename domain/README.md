@@ -83,9 +83,8 @@ This will return a `Map<number, Trip>` object where `number` is the ID of the `T
 let trips = service.tripMap;
 ```
 
-> These methods can be used to access a single Trip, but should not.
-
-> The correct method is by using the method below.
+> These methods can be used to access a single Trip, but should not.  
+> The correct method is by using the method below.  
 
 ## 4. Get a single Trip by its ID
 
@@ -158,9 +157,8 @@ Above code will output:
 2
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 6. Add a participant to a Trip
 
@@ -178,9 +176,8 @@ let newTrip = service.addNewTrip("Rome");
 let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 7. Get a list of participants from a Trip
 
@@ -192,9 +189,8 @@ This method will return an `Array<Person>` containing all the participants from 
 let participantList = service.getParticipantsByTripId(1);
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 8. Get a single participant from a Trip 
 
@@ -226,11 +222,9 @@ Above code will output:
 "Louis XIV was a pretty rich man."
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> This method will throw an Error when supplying an ID that does not belong to a participant.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> This method will throw an Error when supplying an ID that does not belong to a participant.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 9. Remove a participant from a Trip
 
@@ -259,11 +253,9 @@ Above code will output:
 2
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> This method will throw an Error when supplying an ID that does not belong to a participant.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> This method will throw an Error when supplying an ID that does not belong to a participant.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 10. Get a list of all Currencies
 
@@ -321,9 +313,8 @@ service.addCurrencyToTrip(newTrip.id, newCurrency);
 console.log(service.getCurrenciesByTripId(newTrip.id).length === 2) // true
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 12. Remove a Currency from a Trip
 
@@ -354,11 +345,9 @@ Above code will output:
 1
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 13. Get a list of Currencies from a Trip
 
@@ -370,9 +359,8 @@ This method will return an `Array` of `Currencies`.
 let currencyList = service.getCurrenciesByTripId(0);
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 14. Get a single Currency from a Trip
 
@@ -384,11 +372,9 @@ This method will return a `Currency` instance corresponding to the supplied `cur
 let currency = service.getCurrencyFromTripByName(0, "EUR");
 ```
 
-> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
-
-> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.
-
-> See "Get a single Trip by its ID" for more information about Error handling.
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 15. Override the details of a Currency
 
