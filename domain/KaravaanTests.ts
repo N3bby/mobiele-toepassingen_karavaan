@@ -26,7 +26,7 @@ function adding_trip_works()
 }
 adding_trip_works();
 
-/*// Add multiple trips
+// Add multiple trips
 function adding_multiple_trips_works()
 {
     let service = new KaravaanService();
@@ -48,15 +48,37 @@ function adding_multiple_trips_works()
 }
 adding_multiple_trips_works();
 
-function requesting_nonexisting_trip_returns_undefined_works()
+function requesting_nonexisting_trip_throws_error_works()
 {
     let service = new KaravaanService();
     
-    let isUndefined = typeof service.getTripById(1) === 'undefined';
+    let throwsError = false;
     
-    functionalityWorks("Requesting nonexisting trip returns unefined.", isUndefined);
+    try
+    {
+        service.getTripById(0);
+    }
+    catch(e)
+    {
+        throwsError = true;
+    }
+    
+    functionalityWorks("Requesting nonexisting trip throws error.", throwsError);
 }
-requesting_nonexisting_trip_returns_undefined_works();
+requesting_nonexisting_trip_throws_error_works();
+
+function removing_a_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    let before = service.trips.length;
+    
+    let after = service.removeTripById(newTrip.id);
+    
+    functionalityWorks("Removing a trip works.", before > after);
+}
+removing_a_trip_works();
 
 // Add participant to trip
 function adding_participants_to_trip_works()
@@ -106,16 +128,39 @@ function adding_multiple_participants_to_trip_works()
 }
 adding_multiple_participants_to_trip_works();
 
-function requesting_nonexisting_participants_return_undefin_works()
+function requesting_nonexisting_participants_throws_error()
 {
     let service = new KaravaanService();
     let newTrip = service.addNewTrip("A night out");
     
-    let isUndefined = typeof service.getParticipantById(newTrip.id, 5) === 'undefined';
+    let throwsError = false;
     
-    functionalityWorks("Requesting nonexistant participant returns undefined", isUndefined);
+    try
+    {
+        service.getParticipantById(newTrip.id, 0);
+    }
+    catch(e)
+    {
+        throwsError = true;
+    }
+    
+    functionalityWorks("Requesting nonexistant participant throws error.", throwsError);
 }
-requesting_nonexisting_participants_return_undefin_works();
+requesting_nonexisting_participants_throws_error();
+
+function removing_participant_from_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    
+    let before = service.getParticipantsByTripId(newTrip.id).length;
+    let after = service.removeParticipantById(newTrip.id, newParticipant.id);
+    
+    functionalityWorks("Removing a participant from a trip works.", before > after);
+}
+removing_participant_from_trip_works();
 
 function pulling_currencies_works_offline()
 {
@@ -128,18 +173,80 @@ function pulling_currencies_works_offline()
 }
 pulling_currencies_works_offline();
 
-function pulling_currencies_works_online()
+function adding_currencies_to_a_trip_works()
 {
     let service = new KaravaanService();
-    let newTrip = service.addNewTrip("A night out");
+    let newTrip = service.addNewTrip("Rome");
     
-    let hasCurrencies = service.currencies.length > 4;
+    service.addCurrencyToTrip(newTrip.id, service.getCurrency("USD"));
+    service.addCurrencyToTrip(newTrip.id, service.getCurrency("GBP"));
     
-    functionalityWorks("Pulling currencies works online", hasCurrencies);
+    functionalityWorks("Adding a currencies to a trip.", service.getCurrenciesByTripId(newTrip.id).length == 3);
 }
-pulling_currencies_works_online();
+adding_currencies_to_a_trip_works();
 
-let ee = new EvenExpense();
+function removing_a_currency_from_a_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    service.addCurrencyToTrip(newTrip.id, service.getCurrency("USD"));
+    service.addCurrencyToTrip(newTrip.id, service.getCurrency("GBP"));
+    
+    service.removeCurrencyFromTrip(newTrip.id, "EUR");
+    
+    functionalityWorks("Removing a Currency from a Trip works.", service.getCurrenciesByTripId(newTrip.id).length == 2);
+}
+removing_a_currency_from_a_trip_works();
+
+function getting_a_list_of_currencies_from_a_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    let works = typeof service.getCurrenciesByTripId(newTrip.id) != 'undefined';
+    
+    functionalityWorks("Getting a list of currencies from a trip works.", works);
+}
+getting_a_list_of_currencies_from_a_trip_works();
+
+function requesting_non_existing_currency_from_a_trip_throws_error()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    let throwsError = false;
+    
+    try
+    {
+        service.getCurrencyFromTripByName(newTrip.id, "DHDKKD");
+    }
+    catch(e)
+    {
+        throwsError = true;
+    }
+    
+    functionalityWorks("Requesting non existing currency from trip throws error.", throwsError);
+}
+requesting_non_existing_currency_from_a_trip_throws_error();
+
+function overriding_the_details_from_a_currency_from_a_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    let currency = service.getCurrencyFromTripByName(newTrip.id, "EUR");
+    currency.rateComparedToEUR = 1.5;
+    
+    var isChanged = service.getCurrencyFromTripByName(newTrip.id, "EUR").rateComparedToEUR == 1.5;
+    
+    functionalityWorks("Overriding details from a currency from a trip works.", isChanged);
+}
+overriding_the_details_from_a_currency_from_a_trip_works();
+
+
+
+/*let ee = new EvenExpense();
 ee.expenseAmount = 100;
 let firstPayer = new Person(0, "Artus", "Vranken");
 let secondPayer = new Person(1, "John", "Lennon");
@@ -154,6 +261,3 @@ ee.addParticipant(new Person(3, "kaka", "pipi"));
 
 
 console.log(ee.debts);*/
-
-let service = new KaravaanService();
-console.log(service.currencies[0]);

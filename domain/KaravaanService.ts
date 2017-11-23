@@ -145,6 +145,7 @@ export class KaravaanService
         let newTrip = new Trip();
         newTrip.name = name;
         newTrip.description = description;
+        newTrip.addCurrency(this.currencyMap.get("EUR"));
         return this.addTrip(newTrip);
     }
     
