@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EvenExpense.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Currency.html">Currency</a></li><li><a href="EvenExpense.html">EvenExpense</a><ul class='methods'><li data-type='method'><a href="EvenExpense.html#addParticipant">addParticipant</a></li><li data-type='method'><a href="EvenExpense.html#addPayment">addPayment</a></li><li data-type='method'><a href="EvenExpense.html#removeParticipant">removeParticipant</a></li><li data-type='method'><a href="EvenExpense.html#removePayment">removePayment</a></li></ul></li><li><a href="KaravaanService.html">KaravaanService</a><ul class='methods'><li data-type='method'><a href="KaravaanService.html#addCurrencyToTrip">addCurrencyToTrip</a></li><li data-type='method'><a href="KaravaanService.html#addExpenseToTrip">addExpenseToTrip</a></li><li data-type='method'><a href="KaravaanService.html#addNewDebtToExpenseById">addNewDebtToExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#addNewExpenseByTripId">addNewExpenseByTripId</a></li><li data-type='method'><a href="KaravaanService.html#addNewParticipantToTripById">addNewParticipantToTripById</a></li><li data-type='method'><a href="KaravaanService.html#addNewTrip">addNewTrip</a></li><li data-type='method'><a href="KaravaanService.html#addParticipantToExpenseById">addParticipantToExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#addParticipantToTrip">addParticipantToTrip</a></li><li data-type='method'><a href="KaravaanService.html#addTrip">addTrip</a></li><li data-type='method'><a href="KaravaanService.html#getCurrenciesByTripId">getCurrenciesByTripId</a></li><li data-type='method'><a href="KaravaanService.html#getCurrency">getCurrency</a></li><li data-type='method'><a href="KaravaanService.html#getCurrencyFromTripByName">getCurrencyFromTripByName</a></li><li data-type='method'><a href="KaravaanService.html#getDebtsByExpenseId">getDebtsByExpenseId</a></li><li data-type='method'><a href="KaravaanService.html#getDebtsForParticipantByExpenseId">getDebtsForParticipantByExpenseId</a></li><li data-type='method'><a href="KaravaanService.html#getExpenseById">getExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#getExpensesByTripId">getExpensesByTripId</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantById">getParticipantById</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantFromExpenseById">getParticipantFromExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantsByExpenseId">getParticipantsByExpenseId</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantsByTripId">getParticipantsByTripId</a></li><li data-type='method'><a href="KaravaanService.html#getTripById">getTripById</a></li><li data-type='method'><a href="KaravaanService.html#removeCurrencyFromTrip">removeCurrencyFromTrip</a></li><li data-type='method'><a href="KaravaanService.html#removeExpenseFromTripById">removeExpenseFromTripById</a></li><li data-type='method'><a href="KaravaanService.html#removeParticipantById">removeParticipantById</a></li><li data-type='method'><a href="KaravaanService.html#removeParticipantFromExpenseById">removeParticipantFromExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#removeTripById">removeTripById</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">EvenExpense.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Debt_1 = require("./Debt");
+const Currency_1 = require("./Currency");
+const ExpenseType_1 = require("./ExpenseType");
+/**
+* An EvenExpense is an expense where the debt gets evenly divided by participant.
+* First, the total expenseAmount needs to be set, then it is possible to add payments and after that it is possible to add participants for debt calculation.
+*/
+class EvenExpense {
+    constructor(id = -1, expenseAmount = 100, category = "category", description = "New Evenly divided Expense.") {
+        this.expenseType = ExpenseType_1.ExpenseType.EvenExpense;
+        this.idCounter = 0;
+        this.currency = new Currency_1.Currency("EUR", 1);
+        this._payments = new Map();
+        this._debts = new Map();
+        this.id = id;
+        this.expenseAmount = expenseAmount;
+        this.category = category;
+        this.description = description;
+    }
+    get id() {
+        return this._id;
+    }
+    set id(newId) {
+        this._id = newId;
+    }
+    get category() {
+        return this._category;
+    }
+    set category(newCategory) {
+        this._category = newCategory;
+    }
+    get description() {
+        return this._description;
+    }
+    set description(newDescription) {
+        this._description = newDescription;
+    }
+    get expenseAmount() {
+        return this._expenseAmount;
+    }
+    set expenseAmount(newExpenseAmount) {
+        this._expenseAmount = newExpenseAmount;
+        this.recalculateDividedDebt();
+    }
+    get expenseUnpaid() {
+        let amountToPay = this.expenseAmount;
+        for (let payment of this.payments.values()) {
+            amountToPay -= payment.amount;
+        }
+        return amountToPay;
+    }
+    get expensePaid() {
+        return this.expenseAmount - this.expenseUnpaid;
+    }
+    get amountUnpaid() {
+        return this.expenseAmount - this.amountPaid;
+    }
+    get amountPaid() {
+        let amountAlreadyPaid = 0;
+        for (let debt of this.debts.values()) {
+            amountAlreadyPaid += debt.amount;
+        }
+        return amountAlreadyPaid;
+    }
+    get currency() {
+        return this._currency;
+    }
+    set currency(newCurrency) {
+        this._currency = newCurrency;
+    }
+    /**
+    * Get a list of participants for this expense. This list includes creditors and debtors.
+    */
+    get participants() {
+        let participantSet = new Set();
+        for (let payment of this.payments.values()) {
+            participantSet.add(payment.creditor);
+        }
+        for (let debt of this.debts.values()) {
+            participantSet.add(debt.debtor);
+        }
+        return Array.from(participantSet);
+    }
+    get participantMap() {
+        let newParticipantMap = new Map();
+        for (let participant of this.participants) {
+            newParticipantMap.set(participant.id, participant);
+        }
+        return newParticipantMap;
+    }
+    /**
+    * Add a participant to the expense. Under the hood, this will add a new debt and evenly distribute the amountUnpaid.
+    */
+    addParticipant(newParticipant) {
+        if (!(this.participants.indexOf(newParticipant) > -1)) {
+            let newDebt = new Debt_1.Debt(this.idCounter++, newParticipant);
+            this.debts.set(newDebt.id, newDebt);
+            this.recalculateDividedDebt();
+        }
+    }
+    recalculateDividedDebt() {
+        if (this._payments.size > 0) {
+            let newDebts = new Map();
+            // Add debts for all payments
+            for (let payment of this.payments.values()) {
+                let paidPercentage = payment.amount / this.expensePaid;
+                // Calculate new Debt for payment for all participants based on paidPercentage
+                for (let participant of this.participants) {
+                    let amountPerParticipant = this.expensePaid / this.participants.length;
+                    let amountPerParticipantForThisPayment = amountPerParticipant * paidPercentage;
+                    let debtDescription = participant.firstName + " owes " + payment.creditor.firstName + " " + amountPerParticipantForThisPayment.toFixed(2) + "% of total payment of " + this.expensePaid + ".";
+                    let newDebt = new Debt_1.Debt(this.idCounter++, participant, payment.creditor, amountPerParticipantForThisPayment, debtDescription);
+                    newDebts.set(newDebt.id, newDebt);
+                }
+            }
+            // Remove debts that creditors owe to themselves
+            for (let debtId of newDebts.keys()) {
+                let currentDebt = newDebts.get(debtId);
+                if (currentDebt.creditor == currentDebt.debtor)
+                    newDebts.delete(debtId);
+            }
+            // Subtract debts that cancel eachother out
+            for (let debtId of newDebts.keys()) {
+                let currentDebt = newDebts.get(debtId);
+                for (let otherDebtId of newDebts.keys()) {
+                    let otherDebt = newDebts.get(otherDebtId);
+                    if (currentDebt.creditor === otherDebt.debtor) {
+                        if (currentDebt.amount > otherDebt.amount) {
+                            let newAmount = currentDebt.amount - otherDebt.amount;
+                            currentDebt.amount = newAmount;
+                            currentDebt.description = currentDebt.debtor.firstName + " owes " + currentDebt.creditor.firstName + " " + newAmount.toFixed(2) + " of " + this.expenseAmount + ".";
+                            newDebts.delete(otherDebt.id);
+                        }
+                        if (currentDebt.amount === otherDebt.amount) {
+                            newDebts.delete(currentDebt.id);
+                            newDebts.delete(otherDebt.id);
+                        }
+                    }
+                }
+            }
+            this._debts = newDebts;
+        }
+    }
+    /**
+    * Remove a participant from the list of debtors. Removing a participant that paid does not work with this method, use removePayment first.
+    */
+    removeParticipant(participant) {
+        for (let debtId of this.debts.keys()) {
+            let currentDebt = this.debts.get(debtId);
+            if (currentDebt.debtor == participant)
+                this.debts.delete(debtId);
+        }
+        this.recalculateDividedDebt();
+        return this.participants.length;
+    }
+    get payments() {
+        return this._payments;
+    }
+    /**
+    * Add a payment. Debt gets recalculated.
+    */
+    addPayment(newPayment) {
+        if (newPayment.id &lt; 0)
+            newPayment.id = this.idCounter++;
+        if (this.expensePaid + newPayment.amount > this.expenseAmount) {
+            throw new Error("Can not pay more than the total price of the expense.");
+        }
+        this.payments.set(newPayment.id, newPayment);
+        this.recalculateDividedDebt();
+        return newPayment.id;
+    }
+    /**
+    * Remove a payment. Debt gets recalculated.
+    */
+    removePayment(paymentId) {
+        this.payments.delete(paymentId);
+        return this.payments.size;
+    }
+    addDebt(newDebt) {
+        throw new Error("EvenExpense does not support adding debts, add participants or payments instead.");
+    }
+    removeDebt(debtId) {
+        throw new Error("EvenExpense does not support removing debts, remove participants or payments instead.");
+    }
+    addBillItem(billItem) {
+        throw new Error("EvenExpense does not support adding billItems.");
+    }
+    removeBillItem(billItemId) {
+        throw new Error("EvenExpense does not support removing billItems.");
+    }
+    get debts() {
+        return this._debts;
+    }
+    get billItems() {
+        throw new Error("EvenExpense does not support billItems.");
+    }
+    get creditors() {
+        let creditorSet = new Set();
+        for (let payment of this.payments.values()) {
+            creditorSet.add(payment.creditor);
+        }
+        return Array.from(creditorSet);
+    }
+    get debtors() {
+        let debtorSet = new Set();
+        for (let debt of this.debts.values()) {
+            debtorSet.add(debt.debtor);
+        }
+        return Array.from(debtorSet);
+    }
+    get debtByDebtor() {
+        let debtMap = new Map();
+        for (let debt of this.debts.values()) {
+            if (debtMap.has(debt.debtor)) {
+                let newAmount = debtMap.get(debt.debtor) + debt.amount;
+                debtMap.set(debt.debtor, newAmount);
+            }
+            else
+                debtMap.set(debt.debtor, debt.amount);
+        }
+        return debtMap;
+    }
+    get creditByCreditor() {
+        let creditMap = new Map();
+        /**
+        * Add whatever the creditor paid already.
+        */
+        for (let debt of this.debts.values()) {
+            if (creditMap.has(debt.creditor)) {
+                let newAmount = creditMap.get(debt.creditor) + debt.amount;
+                creditMap.set(debt.creditor, newAmount);
+            }
+            else
+                creditMap.set(debt.creditor, debt.amount);
+        }
+        return creditMap;
+    }
+}
+exports.EvenExpense = EvenExpense;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Nov 23 2017 21:18:30 GMT+0100 (Romance Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
