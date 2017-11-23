@@ -5,6 +5,7 @@ import { EvenExpense } from './EvenExpense';
 import { Debt } from './Debt';
 import { Person } from './Person';
 import { Payment } from './Payment';
+import { ExpenseType } from './ExpenseType';
 
 
 function functionalityWorks(functionality : string, works : boolean)
@@ -244,6 +245,92 @@ function overriding_the_details_from_a_currency_from_a_trip_works()
 }
 overriding_the_details_from_a_currency_from_a_trip_works();
 
+function adding_EvenExpense_to_a_trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    
+    let newEvenExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 50);
+    let secondEvenExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 70);
+    
+    let expenseExists = typeof service.getExpenseById(newTrip.id, newEvenExpense.id) != 'undefined';
+    let expenseHasId = service.getExpenseById(newTrip.id, newEvenExpense.id).id > -1;
+    let expenseAmountIsCorrect = service.getExpenseById(newTrip.id, newEvenExpense.id).expenseAmount == 50;
+    
+    let secondExists = typeof service.getExpenseById(newTrip.id, newEvenExpense.id) != 'undefined';
+    let secondHasId = service.getExpenseById(newTrip.id, secondEvenExpense.id).id > -1;
+    let secondAmountIsCorrect = service.getExpenseById(newTrip.id, secondEvenExpense.id).expenseAmount == 70;
+    
+    // Concatenate booleans
+    let result = expenseExists && expenseHasId && expenseAmountIsCorrect;
+    result = result && secondExists && secondHasId && secondAmountIsCorrect;
+    
+    functionalityWorks("Adding new EvenExpense to Trip works.", result);
+}
+adding_EvenExpense_to_a_trip_works();
+
+function adding_participants_to_EvenExpense_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    
+    let newEvenExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 50);
+    
+    let expenseExists = typeof service.getExpenseById(newTrip.id, newEvenExpense.id) != 'undefined';
+    let expenseHasId = service.getExpenseById(newTrip.id, newEvenExpense.id).id > -1;
+    let expenseAmountIsCorrect = service.getExpenseById(newTrip.id, newEvenExpense.id).expenseAmount == 50;
+   
+    let returnedParticipant = service.addParticipantToExpenseById(newTrip.id, newEvenExpense.id, newParticipant.id);
+    
+    let participantIdReturned = typeof returnedParticipant != 'undefined';
+    let participantsAreEqual = returnedParticipant === newParticipant;
+    let participantAdded = service.getParticipantFromExpenseById(newTrip.id, newEvenExpense.id, returnedParticipant.id) === newParticipant;
+    
+    // Concatenate booleans
+    let result = expenseExists && expenseHasId && expenseAmountIsCorrect && participantAdded;
+    result = result && participantIdReturned && participantsAreEqual;
+    
+    functionalityWorks("Adding participants to new EvenExpense works.", result);
+}
+adding_participants_to_EvenExpense_works();
+
+function removing_a_participant_from_EvenExpense_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    
+    let newEvenExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 50);
+    let returnedParticipant = service.addParticipantToExpenseById(newTrip.id, newEvenExpense.id, newParticipant.id);
+    
+    let before = service.getParticipantsByExpenseId(newTrip.id, newEvenExpense.id).length;
+    let after = service.removeParticipantFromExpenseById(newTrip.id, newEvenExpense.id, returnedParticipant.id);
+    
+    let result = before > after;
+    
+    functionalityWorks("Removing participant from EvenExpense works.", result);
+}
+removing_a_participant_from_EvenExpense_works();
+
+function editing_info_of_participants_of_expense_is_enforced_globally()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    
+    // Check if it works with EvenExpense
+    let newEvenExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 50);
+    let returnedParticipant = service.addParticipantToExpenseById(newTrip.id, newEvenExpense.id, newParticipant.id);
+    
+    returnedParticipant.firstName = "Mike";
+    returnedParticipant.lastName = "Tyson";
+    
+    let result = newParticipant === returnedParticipant;
+    
+    functionalityWorks("Editing info of a participant of an expense is enforced globally.", result);
+}
+editing_info_of_participants_of_expense_is_enforced_globally();
 
 
 /*let ee = new EvenExpense();

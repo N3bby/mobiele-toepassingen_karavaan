@@ -67,6 +67,11 @@ export interface IExpense
     participants : Array<Person>;
     
     /**
+    * Map of all participants for this expense.
+    */
+    participantMap : Map<number, Person>;
+    
+    /**
     * Adds a new participant to this expense.
     */
     addParticipant(newParticipant : Person);
@@ -74,7 +79,7 @@ export interface IExpense
     /**
     * Removes a participant to this expense.
     */
-    removeParticipant(participant : Person);
+    removeParticipant(participant : Person) : number;
     
     /**
     * Add a payment to this expense.
@@ -94,17 +99,17 @@ export interface IExpense
     /**
     * Remove a payment from this expense.
     */
-    removePayment(paymentId : number);
+    removePayment(paymentId : number) : number;
     
     /**
     * Remove a debt from this expense.
     */
-    removeDebt(debtId : number);
+    removeDebt(debtId : number) : number;
     
     /**
     * Remove a billItem from this expense.
     */
-    removeBillItem(billItemId : number);
+    removeBillItem(billItemId : number) : number;
     
     /**
     * Map containing all payments already done to this expense.

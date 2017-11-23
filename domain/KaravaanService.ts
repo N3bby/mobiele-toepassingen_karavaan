@@ -368,16 +368,20 @@ export class KaravaanService
     }
     
     /**
-    * Add a new Expense to a Trip by using the Trips ID and specifying the Expenses information.
+    * Add a new Expense to a Trip by using the Trips ID and specifying the ExpenseType.
     *
     * @param {number} tripId - The ID of the Trip this Expense needs to be added to.
     * @param {ExpenseType} expenseType - The ExpenseType of the Expense. Types can be found in the ExpenseType enumeration.
-    * @param {string} description - The description for the Expense.
-    * @param {string} category - The category for the Expense.
+    * @param {number} [expenseAmount=100] - Optional total price of the Expense.
+    * @param {string} [description] - Optional description for the Expense.
+    * @param {string} [category] - Optional category for the Expense.
+    *
+    * @throws Will throw an Error when an no Trip with supplied ID is found.
+    * @throws Will throw an Error when an unknow ExpenseType is supplied.
     *
     * @returns {IExpense} The newly created IExpense of given ExpenseType.
     */
-    addNewExpenseByTripId(tripId : number, expenseType : ExpenseType, description : string, category : string) : IExpense
+    addNewExpenseByTripId(tripId : number, expenseType : ExpenseType, expenseAmount : number = 100, description : string = "", category : string = "") : IExpense
     {
         let newExpense;
         
@@ -386,8 +390,13 @@ export class KaravaanService
             case ExpenseType.EvenExpense:
                 newExpense = new EvenExpense();
             break;
+                
+            // No expenseType found
+            default: 
+                throw new Error("ExpenseType " + expenseType + " not found.");
         }
         
+        newExpense.expenseAmount = expenseAmount;
         newExpense.description = description;
         newExpense.category = category;
             
@@ -414,6 +423,8 @@ export class KaravaanService
     *
     * @param {number} tripId - The ID of the Trip.
     *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
     * @returns {Array<IExpense>} An Array containing all of the IExpenses for Trip with given ID.
     */
     getExpensesByTripId(tripId : number) : Array<IExpense>
@@ -427,14 +438,126 @@ export class KaravaanService
     * @param {number} tripId - The ID of the Trip this IExpense belongs to.
     * @param {number} expenseId - The ID of the desired IExpense.
     *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no IExpense with supplied ID is found.
+    *
     * @returns {IExpense} The desired IExpense.
     */
     getExpenseById(tripId : number, expenseId : number) : IExpense
     {
-        for (let expense of this.getTripById(tripId).expenses)
-        {
-            if (expense.id == expenseId) return expense;
-        }
+        let expenseToReturn = this.getTripById(tripId).expenseMap.get(expenseId);
+        
+        // Check if an IExpens was returned.
+        if (typeof expenseToReturn == 'undefined') throw new Error("Trip with id " + tripId + " does not contain an IExpense with ID " + expenseId + ".");
+        
+        return expenseToReturn;
+    }
+    
+    /**
+    * Remove an IExpense from a Trip by its ID and the ID of the Trip it should be removed from.
+    *
+    * @param {number} tripId - The ID of the Trip the IExpense should be removed from.
+    * @param {number} expenseId - The ID of the IExpense that should be removed.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no IExpense with supplied ID is found.
+    *
+    * @returns {number} The amount of IExpenses maintained by Trip with supplied ID after removal.
+    */
+    removeExpenseFromTripById(tripId : number, expenseId : number) : number
+    {
+        let trip = this.getTripById(tripId);
+        let expense = this.getExpenseById(tripId, expenseId);
+        
+        return trip.removeExpense(expense);
+    }
+    
+    /**
+    * Add participant to an IExpense of a Trip by using the ID of the Trip the IExpense belongs to, the ID of the IExpense and the ID of the participant.
+    *
+    * @param {number} tripId - The ID of the Trip the IExpense and the participant belong to.
+    * @param {number} expenseId - The ID of the IExpense the participant should be added to.
+    * @param {number} participantId - The ID of the participant that should be added to the IExpense.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    * @throws Will throw an error when no participant with supplied ID is found.
+    *
+    * @returns {IExpense} The IExpense after the participant has been added.
+    */
+    addParticipantToExpenseById(tripId : number, expenseId : number, participantId : number) : Person
+    {
+        let trip = this.getTripById(tripId);
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        
+        expense.addParticipant(participant);
+        
+        return this.getParticipantFromExpenseById(tripId, expenseId, participant.id);
+    }
+    
+    /**
+    * Remove participant to an IExpense of a Trip by using the ID of the Trip the IExpense belongs to, the ID of the IExpense and the ID of the participant.
+    *
+    * @param {number} tripId - The ID of the Trip the IExpense and the participant belong to.
+    * @param {number} expenseId - The ID of the IExpense the participant should be removed from.
+    * @param {number} participantId - The ID of the participant that should be removed from the IExpense.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    * @throws Will throw an error when no participant with supplied ID is found.
+    *
+    * @returns {number} The amount of participants participating to the IExpense after removal.
+    */
+    removeParticipantFromExpenseById(tripId : number, expenseId : number, participantId : number) : number
+    {
+        let trip = this.getTripById(tripId);
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        
+        return expense.removeParticipant(participant);
+    }
+    
+    /**
+    * Get a list of participants participating to IExpense with supplied ID which is maintained by Trip with supplied ID.
+    *
+    * @param {number} tripId - The ID of the Trip this IExpense belongs to.
+    * @param {number} expenseId - The ID of the IExpense the participants should be returned from.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    *
+    * @returns {Array<Person>} A list of participants participating to the IExpense with supplied ID.
+    */
+    getParticipantsByExpenseId(tripId : number, expenseId : number) : Array<Person>
+    {
+        return this.getExpenseById(tripId, expenseId).participants;
+    }
+    
+    /**
+    * Get a participant from an IExpense by using the ID of the Trip this IExpense belongs to, the ID of the IExpense this participant belongs to, and the ID of the participant.
+    *
+    * @param {number} tripId - The ID of the Trip the IExpense belongs to.
+    * @param {number} expenseId - The ID of the IExpense the participant belongs to.
+    * @param {number} participantId - The ID of the participant.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    * @throws Will throw an error when no participant with supplied ID is found.
+    * @throws Will throw an error when no participant with supplied ID participates to the IExpense with supplied ID.
+    *
+    * @returns {Person} The participant with supplied ID participating to the IExpense with supplied ID.
+    */
+    getParticipantFromExpenseById(tripId : number, expenseId : number, participantId : number) : Person
+    {
+        let participant = this.getParticipantById(tripId, participantId);
+        
+        let returnedParticipant = this.getExpenseById(tripId, expenseId).participantMap.get(participantId);
+        
+        // Check if participant is returned. If not, throw Error.
+        if (typeof returnedParticipant == 'undefined') throw new Error("Participant with ID " + participantId + " not found in IExpense with ID " + expenseId + ".");
+        
+        return returnedParticipant;
     }
     
     /**
@@ -459,7 +582,6 @@ export class KaravaanService
         {
             // If it does not, throw an Error
             throw new Error("Expense with id " + expenseId + " does not exist.");
-            
         }
         
         // Check if this participant already exists

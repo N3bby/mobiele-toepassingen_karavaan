@@ -142,6 +142,18 @@ export class EvenExpense implements IExpense
         return Array.from(participantSet);
     }
     
+    get participantMap() : Map<number, Person>
+    {
+        let newParticipantMap = new Map<number, Person>();
+        
+        for (let participant of this.participants)
+        {
+            newParticipantMap.set(participant.id, participant);
+        }
+        
+        return newParticipantMap;
+    }
+    
     /**
     * Add a participant to the expense. Under the hood, this will add a new debt and evenly distribute the amountUnpaid.
     */
@@ -220,7 +232,7 @@ export class EvenExpense implements IExpense
     /**
     * Remove a participant from the list of debtors. Removing a participant that paid does not work with this method, use removePayment first.
     */
-    removeParticipant(participant : Person)
+    removeParticipant(participant : Person) : number
     {
         for (let debtId of this.debts.keys())
         {
@@ -229,6 +241,8 @@ export class EvenExpense implements IExpense
         }
         
         this.recalculateDividedDebt();
+        
+        return this.participants.length;
     }
     
     get payments() : Map<number, Payment>
@@ -257,9 +271,10 @@ export class EvenExpense implements IExpense
     /**
     * Remove a payment. Debt gets recalculated.
     */
-    removePayment(paymentId : number)
+    removePayment(paymentId : number) : number
     {
         this.payments.delete(paymentId);
+        return this.payments.size;
     }
     
     addDebt(newDebt : Debt) : number
@@ -267,7 +282,7 @@ export class EvenExpense implements IExpense
         throw new Error("EvenExpense does not support adding debts, add participants or payments instead.");
     }
     
-    removeDebt(debtId : number)
+    removeDebt(debtId : number) : number
     {
         throw new Error("EvenExpense does not support removing debts, remove participants or payments instead.")
     }
@@ -278,7 +293,7 @@ export class EvenExpense implements IExpense
         throw new Error("EvenExpense does not support adding billItems.");
     }
     
-    removeBillItem(billItemId : number)
+    removeBillItem(billItemId : number) : number
     {
         throw new Error("EvenExpense does not support removing billItems.");
     }
