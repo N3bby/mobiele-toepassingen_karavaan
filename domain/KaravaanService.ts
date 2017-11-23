@@ -63,21 +63,23 @@ export class KaravaanService
     }
     
     /**
-    * Get an Array of the currencies.
+    * Get an Array of the Currencies.
     *
-    * @returns {Array<Currency>} An Array of currencies.
+    * @returns {Array<Currency>} An Array of Currencies.
     */
     get currencies() : Array<Currency>
     {
-        let currencyList = new Array<Currency>();
-        let currencyMap = this.currencyService.currencies;
-         
-        for (let currency of currencyMap.values())
-        {
-            currencyList.push(currency);
-        }
-        
-        return currencyList;
+        return Array.from(this.currencyMap.values());
+    }
+    
+    /**
+    * Get a Map of all Currencies.
+    *
+    * @returns {Map<string, Currency>} A Map<string, Currency> of all the Currencies.
+    */
+    get currencyMap() : Map<string, Currency>
+    {
+        return this.currencyService.currencies;
     }
     
     /**
@@ -116,6 +118,8 @@ export class KaravaanService
     * Get a currency from the CurrencyService.
     *
     * @param {string} currencyName - The name of the desired currency.
+    *
+    * @throws Will throw an Error when no Currency with supplied name is found.
     *
     * @returns {Currency} The currency returned by the CurrencyService.
     */
@@ -196,6 +200,80 @@ export class KaravaanService
         this.tripMap.delete(trip.id);
         
         return this.tripMap.size;
+    }
+    
+    /**
+    * Add a specific currency to a Trip.
+    *
+    * @param {number} tripId - The ID of the Trip the Currency needs to be added to.
+    * @param {Currency} newCurrency - The Currency that needs to be added.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
+    * @returns {number} The amount of Currencies maintained by the Trip with supplied ID after addition of the new Currency.
+    */
+    addCurrencyToTrip(tripId : number, newCurrency : Currency) : number
+    {
+        let trip = this.getTripById(tripId);
+        trip.addCurrency(newCurrency);
+        return trip.currencyMap.size;
+    }
+    
+    /**
+    * Remove a specific currency from a Trip.
+    *
+    * @param {number} tripId - The ID of the Tip the Currency needs to be removed from.
+    * @param {string} currencyName - The name of the Currency that needs to be removed.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no Currency with supplied name is found in the Trip.
+    *
+    * @returns {number} The amount of Currencies maintained by the Trip with supplied ID after removal of the Currency.
+    */
+    removeCurrencyFromTrip(tripId : number, currencyName : string)
+    {
+        let trip = this.getTripById(tripId);
+        let currency = this.getCurrencyFromTripByName(tripId, currencyName);
+        
+        
+        return trip.removeCurrency(currency);
+    }
+    
+    /**
+    * Get an Array of Currencies from a Trip.
+    *
+    * @param {number} tripId - The ID of the Trip we need the Currencies from.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    *
+    * @returns {Array<Currency>} The Array of Currencies maintained by the Trip with supplied ID.
+    */
+    getCurrenciesByTripId(tripId) : Array<Currency>
+    {
+        let trip = this.getTripById(tripId);
+        return trip.currencies;
+    }
+    
+    /**
+    * Get a Currency from a Trip.
+    *
+    * @param {number} tripId - The ID of the Trip we want to retrieve the Currency from.
+    * @param {string} currencyName - The name of the Currency we want to retrieve. (e.g. "EUR")
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no Currency with supplied name is found in the Trip.
+    *
+    * @returns The Currency with supplied name from Trip with supplied ID.
+    */
+    getCurrencyFromTripByName(tripId : number, currencyName : string) : Currency
+    {
+        let trip = this.getTripById(tripId);
+        let currency = trip.currencyMap.get(currencyName);
+        
+        // Check if a Currency is returned.
+        if (typeof currency == 'undefined') throw new Error("Currency with name " + currencyName + " not found in Trip with id " + tripId + ".");
+        
+        return currency;
     }
     
     /**

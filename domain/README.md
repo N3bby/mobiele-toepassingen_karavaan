@@ -13,6 +13,15 @@
 7. Get a list of participants from a Trip ✔
 8. Get a single participant from a Trip ✔
 9. Remove a participant from a Trip ✔
+10. Get a list of all Currencies ✔
+11. Add a Currency to a Trip ✔
+12. Remove a Currency from a Trip ✔
+13. Get a list of Currencies from a Trip ✔
+14. Get a single Currency from a Trip ✔
+15. Override the details of a Currency ✔
+
+## TODO:
+
 10. Add an Expense to a Trip 
 11. Remove an Expense from a Trip
 12. Add a participant to an Expense
@@ -247,3 +256,138 @@ Above code will output:
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
 > This method will throw an Error when supplying an ID that does not belong to a participant.
 > See "Get a single Trip by its ID" for more information about Error handling.
+
+## 10. Get a list of all Currencies
+
+The `KaravaanService` maintains a `CurrencyService`, which has the ability to pull a list of `Currencies` from a Rest api. If no connection is present, the `CurrencyService` will return the cashed list of `Currencies` pulled in the past. If no cahched list is present, The `CurrencyService` will return a list of hardcoded `Currencies`.
+
+There are 2 ways of getting list of `Currencies`
+
+* Retrieving an Array<Currency>
+* Retrieving a Map<string, Currency>
+
+#### Retrieving an Array of Currencies
+
+Getting an `Array` can be done by using the facade property `currencies`.
+
+```javascript
+let currencyList = service.currencies;
+
+console.log(currencyList[0]);
+```
+
+#### Retrieving a Map of Currencies
+
+Getting a `Map` of `Currencies` can be done using the facade property `currencyMap`;
+
+```javascript
+let currencyMap = service.currencyMap;
+
+console.log(currencyMap.get("EUR"));
+```
+
+This method is preferable because with the retrieved `Map` you can quickly get a `Currency` by name. (e.g. "EUR", "USD")
+
+## 11. Add a Currency to a Trip
+
+By default, when a `Trip` is created, it already contains one `Currency`, the Euro. You can easily add other `Currencies` by reference from the `CurrencyService`.
+You can use the `addCurrencyToTrip(tripId, newCurrency)` facade method, where `tripId` is the ID of the `Trip` the `Currency` needs to be added to, and `newCurrency` is the `Currency` instance that needs to be added.
+
+```javascript
+// Create a new service from scratch to show the flow of logic.
+let service = new KaravaanService();
+
+// Add a new Trip
+let newTrip = service.addNewTrip("New York");
+
+// This Trip already has one Currency by default.
+service.getCurrencyFromTripByName(newTrip.id, "EUR"); // Does not throw an Error.
+
+// Retrieve a Currency from the CurrencyService
+let newCurrency = service.currencyMap.get("USD");
+
+// Add this Currency to the previously created trip.
+service.addCurrencyToTrip(newTrip.id, newCurrency);
+
+// The Trip now has 2 Currencies that can later be used to add Expenses.
+console.log(service.getCurrenciesByTripId(newTrip.id).length === 2) // true
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+## 12. Remove a Currency from a Trip
+
+Removing a `Currency` from a `Trip` can be done using the `removeCurrencyFromTrip(tripId, currencyName)` facade method, where `tripId` is the ID of the `Trip` this `Currency` needs to be removed from, and `currencyName` the name of the `Currency` to be removed (e.g. "EUR").
+**This method does not remove a `Currency` from the `CurrencyService`, only from the `Trip`. The removed `Currency` is still available globally.**
+
+This method will return the amount of `Currencies` still maintained by the `Trip` after removal.
+
+```javascript
+// Let's say we created a Trip before and it got assigned the ID '0'.
+// We added 1 Currency "USD", so it should have 2 Currencies now: "EUR" and "USD".
+let existingTrip = service.getTripById(0);
+
+// Store the amount of Currencies before removal.
+before = service.getCurrenciesByTripId(existingTrip.id);
+
+// Remove a Currency from a previously created Trip and store the result.
+let after = service.removeCurrencyFromTrip(existingTrip.id, "EUR");
+
+console.log(before);
+console.log(after);
+```
+
+Above code will output:
+
+```
+2
+1
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+## 13. Get a list of Currencies from a Trip
+
+Getting a list of `Currencies` from a `Trip` can be done using the `getCurrenciesByTripId(tripId)` method, where `tripId` is the ID of the `Trip` we want to retrieve the `Currencies` from.
+This method will return an `Array` of `Currencies`.
+
+```javascript
+// Get an Array of Currencies from a previously created Trip with ID 0.
+let currencyList = service.getCurrenciesByTripId(0);
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+## 14. Get a single Currency from a Trip
+
+Getting a single `Currency` from a `Trip` can be done using the `getCurrencyFromTripByName(tripId, currencyName)` facade method.
+This method will return a `Currency` instance corresponding to the supplied `currencyName`. (e.g. "EUR")
+
+```javascript 
+// Retrieve a Currency from an existing Trip with ID 0.
+let currency = service.getCurrencyFromTripByName(0, "EUR");
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.
+> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+## 15. Override the details of a Currency
+
+We can override the details of a `Currency` by just editing a returned `Currency` from any method that returns it, as `Currencies` are handled by reference.
+
+```
+// Retrieve a Currency from an existing Trip with ID 0.
+let usd = service.getCurrencyFromTripByName(0, "USD");
+
+// Update rate against EUR.
+usd.rateComparedToEUR(1.5);
+```
+
+**This override will be enforced globally.**
+
+

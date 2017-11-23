@@ -137,7 +137,7 @@ function pulling_currencies_works_online()
     
     functionalityWorks("Pulling currencies works online", hasCurrencies);
 }
-pulling_currencies_works_online();*/
+pulling_currencies_works_online();
 
 let ee = new EvenExpense();
 ee.expenseAmount = 100;
@@ -153,4 +153,7 @@ ee.addPayment(new Payment(1, secondPayer, 50));
 ee.addParticipant(new Person(3, "kaka", "pipi"));
 
 
-console.log(ee.debts);
+console.log(ee.debts);*/
+
+let service = new KaravaanService();
+console.log(service.currencies[0]);
