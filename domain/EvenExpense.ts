@@ -8,7 +8,10 @@ import { ExpenseType } from './ExpenseType';
 
 /**
 * An EvenExpense is an expense where the debt gets evenly divided by participant.
-* First, the total expenseAmount needs to be set, then it is possible to add payments and after that it is possible to add participants for debt calculation.
+* First, the total expenseAmount needs to be set, then it is possible to add payments and after that it is possible to add participants for debt calculation.  
+*  
+* It is not possible to add BillItems to an EvenExpense, only add payments and participants.  
+* It is not possible to add Debts to an EvenExpense, only add payments and participants.
 */
 export class EvenExpense implements IExpense
 {
@@ -25,6 +28,16 @@ export class EvenExpense implements IExpense
     
     private idCounter = 0;
     
+    /**
+    * Initialise a new EvenExpense.
+    *
+    * @param {number} [id=-1] - The ID of the new EvenExpense.
+    * @param {number} [expenseAmount=100] - The expenseAmount of the new EvenExpense.
+    * @param {string} [category="category"] - The category of the new EvenExpense.
+    * @param {string} [description="New Evenly divided Expense"] - The description of the new EvenExpense.
+    *
+    * @class
+    */
     constructor(id : number = -1, expenseAmount : number = 100, category : string = "category", description : string = "New Evenly divided Expense.")
     {
         this.currency = new Currency("EUR", 1);
@@ -37,36 +50,71 @@ export class EvenExpense implements IExpense
         this.description = description;
     }
     
+    /**
+    * Get the ID of the EvenExpense.
+    *
+    * @returns {number} The ID of the EvenExpense.
+    */
     get id() : number
     {
         return this._id;
     }
     
+    /**
+    * Set a new ID for the EvenExpense.
+    *
+    * @param {number} newId - The new ID of the EvenExpense.
+    */
     set id(newId : number)
     {
         this._id = newId;
     }
     
+    /**
+    * Get the category of the EvenExpense.
+    *
+    * @returns {string} The category of the EvenExpense.
+    */
     get category() : string
     {
         return this._category;
     }
     
+    /**
+    * Set a new category for the EvenExpense.
+    *
+    * @param {string} newCategory - The new category of the EvenExpense.
+    */
     set category(newCategory : string)
     {
         this._category = newCategory;
     }
     
+    /**
+    * Get the description of the EvenExpense.
+    *
+    * @returns {string} The description of the EvenExpense.
+    */
     get description() : string
     {
         return this._description;
     }
     
+    /**
+    * Set a new description to the EvenExpense.
+    *
+    * @param {string} newDescripton - The new description for the EvenExpense.
+    */
     set description(newDescription : string)
     {
         this._description = newDescription;
     }
     
+    /**
+    * Get the total amount (price) of the EvenExpense. This is the amount that needs to be paid to a third party.
+    *
+    * 
+    */
     get expenseAmount() : number
     {
         return this._expenseAmount;

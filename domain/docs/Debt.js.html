@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Currency.js - Documentation</title>
+    <title>Debt.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Currency.js</h1>
+    <h1 class="page-title">Debt.js</h1>
     
 
     
@@ -40,53 +40,130 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Person_1 = require("./Person");
 /**
-* Currency class.
-* This class will be used to hold individual currency information.
-* A Currency consists of a name and its rate compared to the EUR.
+* A Debt is an object that keeps track of how much a Person owes another Person.
+* A Debt consists of an ID, a debtor, a creditor, an amount, a description and an "isPaid" flag/boolean that conveys if the Debt has been paid or not.
 */
-class Currency {
+class Debt {
     /**
-    * Initialize a new Currency.
+    * Initialise a new Debt.
     *
-    * @class Currency
-    * @param {string} name - The name of the currency in ISO 4217 format.
-    * @param {number} rateComparedToEUR - The rate of the currency compared to EUR.
+    * @param {number} [id=-1] - The ID of the new Debt.
+    * @param {Person} [debtor=new Person()] - The debtor of the Debt. (e.g.: Who needs to pay?)
+    * @param {Person} [creditor=new Person()] - The creditor of the Debt. (e.g.: Who needs to be paid?)
+    * @param {number} [amount=0] - The amount of the Debt. (e.g.: How much needs to be paid?)
+    * @param {string} [description=""] - The description of the Debt. (e.g.: What needs to be paid?)
+    * @param {boolean} [isPaid=false] - The boolean to keep track of the "paystate" of the Debt. (e.g.: Has it been paid already?)
+    *
+    * @class
     */
-    constructor(name = "EUR", rateComparedToEUR = 1) {
-        this.name = name;
-        this.rateComparedToEUR = rateComparedToEUR;
+    constructor(id = -1, debtor = new Person_1.Person(), creditor = new Person_1.Person(), amount = 0, description = "New Debt.", isPaid = false) {
+        this.id = id;
+        this.debtor = debtor;
+        this.creditor = creditor;
+        this.amount = amount;
+        this.description = description;
+        this.isPaid = isPaid;
     }
     /**
-    * Get the name of the currency.
-    * @returns {number} The name of the currency.
+    * Get the ID of the Debt.
+    *
+    * @returns {number} The ID of the Debt.
     */
-    get name() {
-        return this._name;
+    get id() {
+        return this._id;
     }
     /**
-    * Set the name of the currency.
-    * @param {string} name - The name to set the currency to.
+    * Set the ID of the Debt.
+    *
+    * @param {number} newId - The new ID of the Debt.
     */
-    set name(name) {
-        this._name = name;
+    set id(newId) {
+        this._id = newId;
     }
     /**
-    * Set the rate of the currency compared to EUR.
-    * @param {number} rate - The rate of the currency compared to EUR.
+    * Get the debtor of the Debt.
+    *
+    * @returns {Person} The debtor of the Debt.
     */
-    set rateComparedToEUR(rate) {
-        this._rateComparedToEUR = rate;
+    get debtor() {
+        return this._debtor;
     }
     /**
-    * Get the rate of the currency compared to EUR.
-    * @returns {number} The rate of the currency compared to EUR.
+    * Set a new debtor for the Debt.
+    *
+    * @param {Person} newDebtor - The new debtor for the Debt.
     */
-    get rateComparedToEUR() {
-        return this._rateComparedToEUR;
+    set debtor(newDebtor) {
+        this._debtor = newDebtor;
+    }
+    /**
+    * Get the creditor of the Debt.
+    *
+    * @returns {Person} The creditor of the Debt.
+    */
+    get creditor() {
+        return this._creditor;
+    }
+    /**
+    * Set a new creditor of the Debt.
+    *
+    * @param {Person} newCreditor - The new creditor of the Debt.
+    */
+    set creditor(newCreditor) {
+        this._creditor = newCreditor;
+    }
+    /**
+    * Get the amount (price) of the Debt.
+    *
+    * @returns {number} The amount (price) of the Debt.
+    */
+    get amount() {
+        return this._amount;
+    }
+    /**
+    * Set a new amount (price) for the Debt.
+    *
+    * @param {number} newAmount - The new amount (price) of the Debt.
+    */
+    set amount(newAmount) {
+        this._amount = newAmount;
+    }
+    /**
+    * Get the description of the Debt.
+    *
+    * @returns {string} The description of the Debt.
+    */
+    get description() {
+        return this._description;
+    }
+    /**
+    * Set a new description for the Debt.
+    *
+    * @param {string} newDescription - The new description of the Debt.
+    */
+    set description(newDescription) {
+        this._description = newDescription;
+    }
+    /**
+    * Check if the Debt has been paid.
+    *
+    * @returns {boolean} The state of payment. (e.g.: Has the debt already been paid, true or false?)
+    */
+    get isPaid() {
+        return this._isPaid;
+    }
+    /**
+    * Set a new pay-state for the Debt, true or false.
+    *
+    * @param {boolean} newPaidState - The new boolean representing the pay-state of the Debt.
+    */
+    set isPaid(newPaidState) {
+        this._isPaid = newPaidState;
     }
 }
-exports.Currency = Currency;
+exports.Debt = Debt;
 </code></pre>
         </article>
     </section>

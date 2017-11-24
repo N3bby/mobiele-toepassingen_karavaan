@@ -1,28 +1,52 @@
 import { Currency } from './Currency';
 import axios, { AxiosRequestConfig, AxiosPromise } from 'axios';
 
+/**
+* A CurrencyService is a class that handles pulling a list of Currencies from a remote rest api.  
+* If no response is returned from the remote service, the CurrencyService will return a hard-coded list, or the previously obtained list from the service.
+*/
 export class CurrencyService
 {
     readonly apiUrl : string = "https://api.fixer.io/latest";
     private _currencies : Map<string, Currency>;
     
+    /**
+    * Initialise a new CurrencyService.
+    *
+    * @class
+    */
     constructor() 
     {
         this.currencies = new Map<string, Currency>();
         this.getAllCurrencies();
     }
     
+    /**
+    * Get a Map of Currencies, ordered by their unique name. (e.g. "EUR")
+    *
+    * @returns {Map<string, Currency>} The latest Map of Currencies.
+    */
     get currencies() : Map<string, Currency>
     {
-        if (this._currencies.size == 0) return this.getMockData();
+        if (this._currencies.size == 0) this.currencies = this.getMockData();
         return this._currencies;
     }
 
+    /**
+    * Set the internal Map of Currencies.
+    *
+    * @param {Map<string, Currency>} newCurrencyMap - The new Map of Currencies.
+    */
     set currencies(newCurrencyMap : Map<string, Currency>)
     {
         this._currencies = newCurrencyMap;
     }
     
+    /**
+    * Return a hard-coded Map of Currencies, for when no response is returned yet.
+    *
+    * @returns {Map<string, Currency>} A hard-coded Map of Currencies.
+    */
     getMockData() : Map<string, Currency>
     {
         let mockMap = new Map<string, Currency>();
@@ -35,6 +59,12 @@ export class CurrencyService
         return mockMap;
     }
     
+    /**
+    * Pull a list of Currencies from a remote rest api and convert the response into a Map of Currencies that will be returned.  
+    * This method makes use of Promises, so be patient for a result.
+    *
+    * @returns {Map<string,Currency>} The returned Map of Currencies.
+    */
     getAllCurrencies() : Map<string, Currency>
     {
         axios.get(this.apiUrl)

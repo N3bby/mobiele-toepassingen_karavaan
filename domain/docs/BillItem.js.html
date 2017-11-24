@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Currency.js - Documentation</title>
+    <title>BillItem.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Currency.js</h1>
+    <h1 class="page-title">BillItem.js</h1>
     
 
     
@@ -40,53 +40,76 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Person_1 = require("./Person");
 /**
-* Currency class.
-* This class will be used to hold individual currency information.
-* A Currency consists of a name and its rate compared to the EUR.
+* A BillItem is an entry from any sort of bill, like a receipt or a sales ticket.
+* A BillItem contains an ID, a debtor (who should pay the BillItem) and the amount of the item.
 */
-class Currency {
+class BillItem {
     /**
-    * Initialize a new Currency.
+    * Initialise a new BillItem.
     *
-    * @class Currency
-    * @param {string} name - The name of the currency in ISO 4217 format.
-    * @param {number} rateComparedToEUR - The rate of the currency compared to EUR.
+    * @param {number} [id=-1] - The ID of the new BillItem.
+    * @param {Person} [debtor=new Person()] - The debtor of the new BillItem.
+    * @param {number} [amount=0] = The price of the new BillItem.
+    *
+    * @class
     */
-    constructor(name = "EUR", rateComparedToEUR = 1) {
-        this.name = name;
-        this.rateComparedToEUR = rateComparedToEUR;
+    constructor(id = -1, debtor = new Person_1.Person(), amount = 0) {
+        this.id = id;
+        this.debtor = debtor;
+        this.amount = amount;
     }
     /**
-    * Get the name of the currency.
-    * @returns {number} The name of the currency.
+    * Get the ID of the BillItem.
+    *
+    * @returns {number} The ID of the BillItem.
     */
-    get name() {
-        return this._name;
+    get id() {
+        return this._id;
     }
     /**
-    * Set the name of the currency.
-    * @param {string} name - The name to set the currency to.
+    * Set the ID of the BillItem.
+    *
+    * @param {number} newId - The new ID of the BillItem.
     */
-    set name(name) {
-        this._name = name;
+    set id(newId) {
+        this._id = newId;
     }
     /**
-    * Set the rate of the currency compared to EUR.
-    * @param {number} rate - The rate of the currency compared to EUR.
+    * Get the debtor of the BillItem.
+    *
+    * @returns {Person} The Person instance that owes the debt.
     */
-    set rateComparedToEUR(rate) {
-        this._rateComparedToEUR = rate;
+    get debtor() {
+        return this._debtor;
     }
     /**
-    * Get the rate of the currency compared to EUR.
-    * @returns {number} The rate of the currency compared to EUR.
+    * Set the debtor of the BillItem.
+    *
+    * @param {Person} newDebtor - The new debtor of the BillItem.
     */
-    get rateComparedToEUR() {
-        return this._rateComparedToEUR;
+    set debtor(newDebtor) {
+        this._debtor = newDebtor;
+    }
+    /**
+    * Get the amount (price) of the BillItem.
+    *
+    * @returns {number} The amount (price) of the BillItem.
+    */
+    get amount() {
+        return this._amount;
+    }
+    /**
+    * Set the amount (price) of the BillItem.
+    *
+    * @param {number} newAmount - The new amount (price) of the BillItem.
+    */
+    set amount(newAmount) {
+        this._amount = newAmount;
     }
 }
-exports.Currency = Currency;
+exports.BillItem = BillItem;
 </code></pre>
         </article>
     </section>

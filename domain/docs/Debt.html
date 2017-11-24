@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>EvenExpense - Documentation</title>
+    <title>Debt - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">EvenExpense</h1>
+    <h1 class="page-title">Debt</h1>
     
 
     
@@ -41,10 +41,10 @@
 <header>
     
         <h2>
-        EvenExpense
+        Debt
         </h2>
         
-            <div class="class-description">An EvenExpense is an expense where the debt gets evenly divided by participant.First, the total expenseAmount needs to be set, then it is possible to add payments and after that it is possible to add participants for debt calculation.It is not possible to add BillItems to an EvenExpense, only add payments and participants.It is not possible to add Debts to an EvenExpense, only add payments and participants.</div>
+            <div class="class-description">A Debt is an object that keeps track of how much a Person owes another Person.A Debt consists of an ID, a debtor, a creditor, an amount, a description and an "isPaid" flag/boolean that conveys if the Debt has been paid or not.</div>
         
     
 </header>
@@ -58,7 +58,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="EvenExpense"><span class="type-signature"></span>new EvenExpense<span class="signature">(id<span class="signature-attributes">opt</span>, expenseAmount<span class="signature-attributes">opt</span>, category<span class="signature-attributes">opt</span>, description<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Debt"><span class="type-signature"></span>new Debt<span class="signature">(id<span class="signature-attributes">opt</span>, debtor<span class="signature-attributes">opt</span>, creditor<span class="signature-attributes">opt</span>, amount<span class="signature-attributes">opt</span>, description<span class="signature-attributes">opt</span>, isPaid<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -70,7 +70,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line13">line 13</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line8">line 8</a>
     </li></ul></dd>
     
 
@@ -110,7 +110,7 @@
 
 
 <div class="description">
-    Initialise a new EvenExpense.
+    Initialise a new Debt.
 </div>
 
 
@@ -184,14 +184,92 @@
                 </td>
             
 
-            <td class="description last">The ID of the new EvenExpense.</td>
+            <td class="description last">The ID of the new Debt.</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>expenseAmount</code></td>
+                <td class="name"><code>debtor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Person</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>new Person()</code>
+                
+                </td>
+            
+
+            <td class="description last">The debtor of the Debt. (e.g.: Who needs to pay?)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>creditor</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Person</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>new Person()</code>
+                
+                </td>
+            
+
+            <td class="description last">The creditor of the Debt. (e.g.: Who needs to be paid?)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>amount</code></td>
             
 
             <td class="type">
@@ -218,51 +296,12 @@
             
                 <td class="default">
                 
-                    <code>100</code>
+                    <code>0</code>
                 
                 </td>
             
 
-            <td class="description last">The expenseAmount of the new EvenExpense.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>category</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    <code>"category"</code>
-                
-                </td>
-            
-
-            <td class="description last">The category of the new EvenExpense.</td>
+            <td class="description last">The amount of the Debt. (e.g.: How much needs to be paid?)</td>
         </tr>
 
     
@@ -296,12 +335,51 @@
             
                 <td class="default">
                 
-                    <code>"New Evenly divided Expense"</code>
+                    <code>""</code>
                 
                 </td>
             
 
-            <td class="description last">The description of the new EvenExpense.</td>
+            <td class="description last">The description of the Debt. (e.g.: What needs to be paid?)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isPaid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last">The boolean to keep track of the "paystate" of the Debt. (e.g.: Has it been paid already?)</td>
         </tr>
 
     
@@ -341,7 +419,7 @@
 
         
             
-<h4 class="name" id="category"><span class="type-signature"></span>category<span class="type-signature"></span></h4>
+<h4 class="name" id="amount"><span class="type-signature"></span>amount<span class="type-signature"></span></h4>
 
 
 
@@ -352,7 +430,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line64">line 64</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -392,7 +470,7 @@
 
 
 <div class="description">
-    Set a new category for the EvenExpense.
+    Get the amount (price) of the Debt.
 </div>
 
 
@@ -404,7 +482,7 @@
 
         
             
-<h4 class="name" id="category"><span class="type-signature"></span>category<span class="type-signature"></span></h4>
+<h4 class="name" id="amount"><span class="type-signature"></span>amount<span class="type-signature"></span></h4>
 
 
 
@@ -415,7 +493,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line56">line 56</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line90">line 90</a>
     </li></ul></dd>
     
 
@@ -455,7 +533,259 @@
 
 
 <div class="description">
-    Get the category of the EvenExpense.
+    Set a new amount (price) for the Debt.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="creditor"><span class="type-signature"></span>creditor<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line74">line 74</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Set a new creditor of the Debt.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="creditor"><span class="type-signature"></span>creditor<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get the creditor of the Debt.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="debtor"><span class="type-signature"></span>debtor<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line58">line 58</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Set a new debtor for the Debt.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="debtor"><span class="type-signature"></span>debtor<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get the debtor of the Debt.
 </div>
 
 
@@ -478,7 +808,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line80">line 80</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -518,7 +848,7 @@
 
 
 <div class="description">
-    Set a new description to the EvenExpense.
+    Get the description of the Debt.
 </div>
 
 
@@ -541,7 +871,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line72">line 72</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line106">line 106</a>
     </li></ul></dd>
     
 
@@ -581,70 +911,7 @@
 
 
 <div class="description">
-    Get the description of the EvenExpense.
-</div>
-
-
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="expenseAmount"><span class="type-signature"></span>expenseAmount<span class="type-signature"></span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line88">line 88</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Get the total amount (price) of the EvenExpense. This is the amount that needs to be paid to a third party.
+    Set a new description for the Debt.
 </div>
 
 
@@ -667,7 +934,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line48">line 48</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -707,7 +974,7 @@
 
 
 <div class="description">
-    Set a new ID for the EvenExpense.
+    Get the ID of the Debt.
 </div>
 
 
@@ -730,7 +997,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line40">line 40</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line42">line 42</a>
     </li></ul></dd>
     
 
@@ -770,7 +1037,7 @@
 
 
 <div class="description">
-    Get the ID of the EvenExpense.
+    Set the ID of the Debt.
 </div>
 
 
@@ -782,7 +1049,7 @@
 
         
             
-<h4 class="name" id="participants"><span class="type-signature"></span>participants<span class="type-signature"></span></h4>
+<h4 class="name" id="isPaid"><span class="type-signature"></span>isPaid<span class="type-signature"></span></h4>
 
 
 
@@ -793,7 +1060,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line124">line 124</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -833,98 +1100,8 @@
 
 
 <div class="description">
-    Get a list of participants for this expense. This list includes creditors and debtors.
+    Check if the Debt has been paid.
 </div>
-
-
-
-
-
-
-
-
-        
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="addParticipant"><span class="type-signature"></span>addParticipant<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line144">line 144</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Add a participant to the expense. Under the hood, this will add a new debt and evenly distribute the amountUnpaid.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -935,12 +1112,8 @@
 
         
             
+<h4 class="name" id="isPaid"><span class="type-signature"></span>isPaid<span class="type-signature"></span></h4>
 
-    
-
-    <h4 class="name" id="addPayment"><span class="type-signature"></span>addPayment<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
 
 
 
@@ -950,7 +1123,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line212">line 212</a>
+        <a href="Debt.js.html">Debt.js</a>, <a href="Debt.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -990,7 +1163,7 @@
 
 
 <div class="description">
-    Add a payment. Debt gets recalculated.
+    Set a new pay-state for the Debt, true or false.
 </div>
 
 
@@ -1000,192 +1173,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
-            
-
     
 
-    <h4 class="name" id="removeParticipant"><span class="type-signature"></span>removeParticipant<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line197">line 197</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Remove a participant from the list of debtors. Removing a participant that paid does not work with this method, use removePayment first.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="removePayment"><span class="type-signature"></span>removePayment<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="EvenExpense.js.html">EvenExpense.js</a>, <a href="EvenExpense.js.html#line225">line 225</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Remove a payment. Debt gets recalculated.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     
 
     

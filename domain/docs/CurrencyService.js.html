@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Currency.js - Documentation</title>
+    <title>CurrencyService.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,7 +28,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">Currency.js</h1>
+    <h1 class="page-title">CurrencyService.js</h1>
     
 
     
@@ -40,53 +40,79 @@
         <article>
             <pre class="prettyprint source linenums"><code>"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Currency_1 = require("./Currency");
+const axios_1 = require("axios");
 /**
-* Currency class.
-* This class will be used to hold individual currency information.
-* A Currency consists of a name and its rate compared to the EUR.
+* A CurrencyService is a class that handles pulling a list of Currencies from a remote rest api.
+* If no response is returned from the remote service, the CurrencyService will return a hard-coded list, or the previously obtained list from the service.
 */
-class Currency {
+class CurrencyService {
     /**
-    * Initialize a new Currency.
+    * Initialise a new CurrencyService.
     *
-    * @class Currency
-    * @param {string} name - The name of the currency in ISO 4217 format.
-    * @param {number} rateComparedToEUR - The rate of the currency compared to EUR.
+    * @class
     */
-    constructor(name = "EUR", rateComparedToEUR = 1) {
-        this.name = name;
-        this.rateComparedToEUR = rateComparedToEUR;
+    constructor() {
+        this.apiUrl = "https://api.fixer.io/latest";
+        this.currencies = new Map();
+        this.getAllCurrencies();
     }
     /**
-    * Get the name of the currency.
-    * @returns {number} The name of the currency.
+    * Get a Map of Currencies, ordered by their unique name. (e.g. "EUR")
+    *
+    * @returns {Map&lt;string, Currency>} The latest Map of Currencies.
     */
-    get name() {
-        return this._name;
+    get currencies() {
+        if (this._currencies.size == 0)
+            this.currencies = this.getMockData();
+        return this._currencies;
     }
     /**
-    * Set the name of the currency.
-    * @param {string} name - The name to set the currency to.
+    * Set the internal Map of Currencies.
+    *
+    * @param {Map&lt;string, Currency>} newCurrencyMap - The new Map of Currencies.
     */
-    set name(name) {
-        this._name = name;
+    set currencies(newCurrencyMap) {
+        this._currencies = newCurrencyMap;
     }
     /**
-    * Set the rate of the currency compared to EUR.
-    * @param {number} rate - The rate of the currency compared to EUR.
+    * Return a hard-coded Map of Currencies, for when no response is returned yet.
+    *
+    * @returns {Map&lt;string, Currency>} A hard-coded Map of Currencies.
     */
-    set rateComparedToEUR(rate) {
-        this._rateComparedToEUR = rate;
+    getMockData() {
+        let mockMap = new Map();
+        mockMap.set("EUR", new Currency_1.Currency("EUR", 1));
+        mockMap.set("USD", new Currency_1.Currency("USD", 1.184));
+        mockMap.set("AUD", new Currency_1.Currency("AUD", 1.5582));
+        mockMap.set("GBP", new Currency_1.Currency("GBP", 0.8991));
+        return mockMap;
     }
     /**
-    * Get the rate of the currency compared to EUR.
-    * @returns {number} The rate of the currency compared to EUR.
+    * Pull a list of Currencies from a remote rest api and convert the response into a Map of Currencies that will be returned.
+    * This method makes use of Promises, so be patient for a result.
+    *
+    * @returns {Map&lt;string,Currency>} The returned Map of Currencies.
     */
-    get rateComparedToEUR() {
-        return this._rateComparedToEUR;
+    getAllCurrencies() {
+        axios_1.default.get(this.apiUrl)
+            .then((response) => {
+            let mockMap = new Map();
+            for (let key in response.data.rates) {
+                let newCurrency = new Currency_1.Currency(key, response.data.rates[key]);
+                mockMap.set(newCurrency.name, newCurrency);
+            }
+            mockMap.set("EUR", new Currency_1.Currency("EUR", 1));
+            this.currencies = mockMap;
+            return mockMap;
+        })
+            .catch((error) => {
+            this.currencies = this.getMockData();
+        });
+        return this.getMockData();
     }
 }
-exports.Currency = Currency;
+exports.CurrencyService = CurrencyService;
 </code></pre>
         </article>
     </section>
