@@ -19,7 +19,7 @@ export class KaravaanService
     
     /**
     * Create a new KaravaanService.
-    * @class
+    * @class KaravaanService
     */
     constructor()
     {
@@ -29,18 +29,13 @@ export class KaravaanService
     
     // Getters and Setters
     
-    /**
-    * Set the idCounter, which is responsible for handling ID assignment in the KaravaanService.
-    *
-    * @param {number} newIndex - The new starting ID.
-    */
     private set idCounter(newIndex : number)
     {
         this._idCounter = newIndex;
     }
     
     /**
-    * Get the idCounter, which is responsible for handling ID assignment in the KaravaanService.
+    * Get or set the idCounter, which is responsible for handling ID assignment in the KaravaanService.
     *
     * @returns {number} The currenct ID.
     */
@@ -50,7 +45,7 @@ export class KaravaanService
     }
     
     /**
-    * Get the CurrencyService, which is used for retrieving a list of currencies.
+    * Get or set the CurrencyService, which is used for retrieving a list of currencies.
     *
     * @returns {CurrencyService} The current CurrencyService.
     */
@@ -59,11 +54,6 @@ export class KaravaanService
         return this._currencyService;
     }
     
-    /**
-    * Set the CurrencyService, which is used for retrieving a list of currencies.
-    *
-    * @param {CurrencyService} newCurrencyService - The new CurrencyService.
-    */
     private set currencyService(newCurrencyService : CurrencyService)
     {
         this._currencyService = newCurrencyService;
@@ -90,7 +80,7 @@ export class KaravaanService
     }
     
     /**
-    * Get a Map of the Trips that this KaravaanService contains.
+    * Get or set a Map of the Trips that this KaravaanService contains.
     *
     * @returns {Map<number, Trip>} A Map of all the Trips.
     */
@@ -99,11 +89,6 @@ export class KaravaanService
         return this._tripMap;
     }
     
-    /**
-    * Set the Map of Trips that this KaravaanService contains.
-    *
-    * @param {Map<number, Trip>} newTripMap - The new map containing all the Trips.
-    */
     set tripMap(newTripMap : Map<number, Trip>)
     {
         this._tripMap = newTripMap;
@@ -513,16 +498,16 @@ export class KaravaanService
     * @throws Will throw an error when no Trip with supplied ID is found.
     * @throws Will throw an error when no IExpense with supplied ID is found.
     * @throws Will throw an error when no participant with supplied ID is found.
+    * @throws Will throw an error when no participant with supplied ID participates to the IExpense with supplied ID.
     *
     * @returns {number} The amount of participants participating to the IExpense after removal.
     */
     removeParticipantFromExpenseById(tripId : number, expenseId : number, participantId : number) : number
     {
-        let trip = this.getTripById(tripId);
         let expense = this.getExpenseById(tripId, expenseId);
-        let participant = this.getParticipantById(tripId, participantId);
+        let participant = this.getParticipantFromExpenseById(tripId, expenseId, participantId);
         
-        return expense.removeParticipant(participant);
+        return expense.removeParticipant(participant.id);
     }
     
     /**

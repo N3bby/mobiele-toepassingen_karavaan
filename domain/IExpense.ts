@@ -8,6 +8,8 @@ import { ExpenseType } from './ExpenseType';
 /**
 * An Expense is an object that holds information about a certain bill to a thrid party.
 * Contained in this information is who paid to the third party (creditors) and who needs to redeem the creditors (debtors).
+*
+* @interface IExpense
 */
 export interface IExpense
 {
@@ -81,10 +83,10 @@ export interface IExpense
     /**
     * Removes a participant to this expense.
     *
-    * @param {Person} participant - The participant that needs to be removed from this IExpense.
+    * @param {number} participantId - The ID of the participant that needs to be removed from this IExpense.
     * @returns {number} The amount of participants participating to this IExpense after removal.
     */
-    removeParticipant(participant : Person) : number;
+    removeParticipant(participantId : number) : number;
     
     /**
     * Add a payment to this expense.
@@ -172,14 +174,14 @@ export interface IExpense
     /**
     * A list of all the total debt categorized by the debtor.
     *
-    * @returns {Map<Person, number>} A Map containing all the debtors of this IExpense, where the keys are the debtors Preson instances, and the values are the total amount of their debts.
+    * @returns {Map<Person, number>} A Map containing all the debtors of this IExpense, where the keys are the debtors Person instances, and the values are the total amount of their debts.
     */
     debtByDebtor : Map<Person, number>;
     
     /**
     * A list of all the total amount paid to the third party categorized the creditors.
     *
-    * @returns {Map<Person, number>} A Map containing all the creditors of this IExpense, where the keys are the creditors Preson instances, and the values are the total amount of their payments.
+    * @returns {Map<Person, number>} A Map containing all the creditors of this IExpense, where the keys are the creditors Person instances, and the values are the total amount of their payments.
     */
     creditByCreditor : Map<Person, number>;
 }

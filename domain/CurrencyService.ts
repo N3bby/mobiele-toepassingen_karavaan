@@ -13,7 +13,7 @@ export class CurrencyService
     /**
     * Initialise a new CurrencyService.
     *
-    * @class
+    * @class CurrencySercice;
     */
     constructor() 
     {
@@ -22,7 +22,7 @@ export class CurrencyService
     }
     
     /**
-    * Get a Map of Currencies, ordered by their unique name. (e.g. "EUR")
+    * Get or set a Map of Currencies, ordered by their unique name. (e.g. "EUR")
     *
     * @returns {Map<string, Currency>} The latest Map of Currencies.
     */
@@ -32,11 +32,6 @@ export class CurrencyService
         return this._currencies;
     }
 
-    /**
-    * Set the internal Map of Currencies.
-    *
-    * @param {Map<string, Currency>} newCurrencyMap - The new Map of Currencies.
-    */
     set currencies(newCurrencyMap : Map<string, Currency>)
     {
         this._currencies = newCurrencyMap;

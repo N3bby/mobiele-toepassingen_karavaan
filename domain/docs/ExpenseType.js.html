@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>ExpenseType.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -28,25 +28,30 @@
 
 <div id="main">
     
+    <h1 class="page-title">ExpenseType.js</h1>
+    
 
     
 
 
 
     
-
-
-
-
-
-
-
-
-
-    
-
-
-
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+* Enumeration of all ExpenseTypes.
+*/
+var ExpenseType;
+(function (ExpenseType) {
+    ExpenseType["EvenExpense"] = "Divide all debts evenly.";
+    ExpenseType["BillExpense"] = "Divide debts by assigning items on a bill.";
+    ExpenseType["ShareExpense"] = "Divide debts by assigning amounts.";
+})(ExpenseType = exports.ExpenseType || (exports.ExpenseType = {}));
+</code></pre>
+        </article>
+    </section>
 
 
 

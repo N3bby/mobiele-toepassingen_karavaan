@@ -1,3 +1,6 @@
+/**
+* Enumeration of all ExpenseTypes.
+*/
 export enum ExpenseType
 {
     EvenExpense = "Divide all debts evenly.",

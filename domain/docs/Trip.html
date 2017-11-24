@@ -1,0 +1,3696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Trip - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BillItem.html">BillItem</a></li><li><a href="Currency.html">Currency</a></li><li><a href="CurrencySercice;.html">CurrencySercice;</a></li><li><a href="CurrencyService.html">CurrencyService</a><ul class='methods'><li data-type='method'><a href="CurrencyService.html#getAllCurrencies">getAllCurrencies</a></li><li data-type='method'><a href="CurrencyService.html#getMockData">getMockData</a></li></ul></li><li><a href="Debt.html">Debt</a></li><li><a href="EvenExpense.html">EvenExpense</a><ul class='methods'><li data-type='method'><a href="EvenExpense.html#addBillItem">addBillItem</a></li><li data-type='method'><a href="EvenExpense.html#addDebt">addDebt</a></li><li data-type='method'><a href="EvenExpense.html#addParticipant">addParticipant</a></li><li data-type='method'><a href="EvenExpense.html#addPayment">addPayment</a></li><li data-type='method'><a href="EvenExpense.html#recalculateDividedDebt">recalculateDividedDebt</a></li><li data-type='method'><a href="EvenExpense.html#removeBillItem">removeBillItem</a></li><li data-type='method'><a href="EvenExpense.html#removeDebt">removeDebt</a></li><li data-type='method'><a href="EvenExpense.html#removeParticipant">removeParticipant</a></li><li data-type='method'><a href="EvenExpense.html#removePayment">removePayment</a></li></ul></li><li><a href="KaravaanService.html">KaravaanService</a><ul class='methods'><li data-type='method'><a href="KaravaanService.html#addCurrencyToTrip">addCurrencyToTrip</a></li><li data-type='method'><a href="KaravaanService.html#addExpenseToTrip">addExpenseToTrip</a></li><li data-type='method'><a href="KaravaanService.html#addNewDebtToExpenseById">addNewDebtToExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#addNewExpenseByTripId">addNewExpenseByTripId</a></li><li data-type='method'><a href="KaravaanService.html#addNewParticipantToTripById">addNewParticipantToTripById</a></li><li data-type='method'><a href="KaravaanService.html#addNewTrip">addNewTrip</a></li><li data-type='method'><a href="KaravaanService.html#addParticipantToExpenseById">addParticipantToExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#addParticipantToTrip">addParticipantToTrip</a></li><li data-type='method'><a href="KaravaanService.html#addTrip">addTrip</a></li><li data-type='method'><a href="KaravaanService.html#getCurrenciesByTripId">getCurrenciesByTripId</a></li><li data-type='method'><a href="KaravaanService.html#getCurrency">getCurrency</a></li><li data-type='method'><a href="KaravaanService.html#getCurrencyFromTripByName">getCurrencyFromTripByName</a></li><li data-type='method'><a href="KaravaanService.html#getDebtsByExpenseId">getDebtsByExpenseId</a></li><li data-type='method'><a href="KaravaanService.html#getDebtsForParticipantByExpenseId">getDebtsForParticipantByExpenseId</a></li><li data-type='method'><a href="KaravaanService.html#getExpenseById">getExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#getExpensesByTripId">getExpensesByTripId</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantById">getParticipantById</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantFromExpenseById">getParticipantFromExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantsByExpenseId">getParticipantsByExpenseId</a></li><li data-type='method'><a href="KaravaanService.html#getParticipantsByTripId">getParticipantsByTripId</a></li><li data-type='method'><a href="KaravaanService.html#getTripById">getTripById</a></li><li data-type='method'><a href="KaravaanService.html#removeCurrencyFromTrip">removeCurrencyFromTrip</a></li><li data-type='method'><a href="KaravaanService.html#removeExpenseFromTripById">removeExpenseFromTripById</a></li><li data-type='method'><a href="KaravaanService.html#removeParticipantById">removeParticipantById</a></li><li data-type='method'><a href="KaravaanService.html#removeParticipantFromExpenseById">removeParticipantFromExpenseById</a></li><li data-type='method'><a href="KaravaanService.html#removeTripById">removeTripById</a></li></ul></li><li><a href="Payment.html">Payment</a></li><li><a href="Person.html">Person</a></li><li><a href="Trip.html">Trip</a><ul class='methods'><li data-type='method'><a href="Trip.html#addCurrency">addCurrency</a></li><li data-type='method'><a href="Trip.html#addExpense">addExpense</a></li><li data-type='method'><a href="Trip.html#addParticipant">addParticipant</a></li><li data-type='method'><a href="Trip.html#removeCurrency">removeCurrency</a></li><li data-type='method'><a href="Trip.html#removeExpense">removeExpense</a></li><li data-type='method'><a href="Trip.html#removeParticipant">removeParticipant</a></li></ul></li></ul><h3>Global</h3><ul><li><a href="global.html#ExpenseType">ExpenseType</a></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Trip</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Trip
+        </h2>
+        
+            <div class="class-description">A Trip is a class that stores information about a Trip. Everything in the KaravaanService revolves around Trips.</div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Trip"><span class="type-signature"></span>new Trip<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="currencies"><span class="type-signature"></span>currencies<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a list of Currencies maintained by this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="currencyMap"><span class="type-signature"></span>currencyMap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a Map of Currencies maintained by this Trip, where the keys are the names of the Currencies and the values are the Currencys instances.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="date"><span class="type-signature"></span>date<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set the date of this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="description"><span class="type-signature"></span>description<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set the description of this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="expenseMap"><span class="type-signature"></span>expenseMap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line109">line 109</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a Map of IExpenses that are maintained by this Trip, where the keys are the IDs of the IExpenses and the values are the Expenses isntances.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="expenses"><span class="type-signature"></span>expenses<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a list of IExpenses that are maintained by this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set the ID of the Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get of set the name of the Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="participantMap"><span class="type-signature"></span>participantMap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a Map of participants that participate to this Trip, where the keys are the IDs of the participants and the values are the Person instances.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="participants"><span class="type-signature"></span>participants<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a list of participants that participate to this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="addCurrency"><span class="type-signature"></span>addCurrency<span class="signature">(newCurrency)</span><span class="type-signature"> &rarr; {<a href="Currency.html">Currency</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line205">line 205</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add a new Currency to this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newCurrency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Currency that should be added to this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The newly added Currency.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addExpense"><span class="type-signature"></span>addExpense<span class="signature">(newExpense)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line183">line 183</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add an IExpense to this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newExpense</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IExpense</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The IExpense that should be added to this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addParticipant"><span class="type-signature"></span>addParticipant<span class="signature">(newParticipant)</span><span class="type-signature"> &rarr; {<a href="Person.html">Person</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line161">line 161</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add a participant to this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newParticipant</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Person.html">Person</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The participant that should be added to this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The newly added participant.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Person.html">Person</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeCurrency"><span class="type-signature"></span>removeCurrency<span class="signature">(currency)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line216">line 216</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove a Currency from this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>currency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Currency that should be removed from this Trip;</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The amount of Currencies maintained by this Trip after removal.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeExpense"><span class="type-signature"></span>removeExpense<span class="signature">(expense)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line194">line 194</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove an IExpense from this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>expense</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IExpense</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The IExpense that should be removed from this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The amount of IExpenses maintained by this Trip after removal.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeParticipant"><span class="type-signature"></span>removeParticipant<span class="signature">(participant)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line172">line 172</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove a participant from this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>participant</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Person.html">Person</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The participant that needs to be removed from this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The amount of participants participating to this Trip after removal.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Trip
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="Trip"><span class="type-signature"></span>new Trip<span class="signature">(id<span class="signature-attributes">opt</span>, name<span class="signature-attributes">opt</span>, description<span class="signature-attributes">opt</span>, currency<span class="signature-attributes">opt</span>, expenses<span class="signature-attributes">opt</span>, participants<span class="signature-attributes">opt</span>, date<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line8">line 8</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Initialise a new Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>-1</code>
+                
+                </td>
+            
+
+            <td class="description last">The ID of the new Trip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>""</code>
+                
+                </td>
+            
+
+            <td class="description last">The name of the new Trip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>""</code>
+                
+                </td>
+            
+
+            <td class="description last">The description of the new Trip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>currency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>new Currency()</code>
+                
+                </td>
+            
+
+            <td class="description last">The default Currency of the new Trip.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>expenses</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;IExpense></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>New Array&lt;IExpense></code>
+                
+                </td>
+            
+
+            <td class="description last">The list of IExpenses the new Trip will maintain.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>participants</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Person.html">Person</a>></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>New Array&lt;Person></code>
+                
+                </td>
+            
+
+            <td class="description last">The list of participants the new Trip will maintain.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>date</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>new Date()</code>
+                
+                </td>
+            
+
+            <td class="description last">The date of the new Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="currencies"><span class="type-signature"></span>currencies<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line67">line 67</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a list of Currencies maintained by this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="currencyMap"><span class="type-signature"></span>currencyMap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a Map of Currencies maintained by this Trip, where the keys are the names of the Currencies and the values are the Currencys instances.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="date"><span class="type-signature"></span>date<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set the date of this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="description"><span class="type-signature"></span>description<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set the description of this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="expenseMap"><span class="type-signature"></span>expenseMap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line109">line 109</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a Map of IExpenses that are maintained by this Trip, where the keys are the IDs of the IExpenses and the values are the Expenses isntances.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="expenses"><span class="type-signature"></span>expenses<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line93">line 93</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a list of IExpenses that are maintained by this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line34">line 34</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set the ID of the Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get of set the name of the Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="participantMap"><span class="type-signature"></span>participantMap<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a Map of participants that participate to this Trip, where the keys are the IDs of the participants and the values are the Person instances.
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="participants"><span class="type-signature"></span>participants<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line120">line 120</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Get or set a list of participants that participate to this Trip.
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="addCurrency"><span class="type-signature"></span>addCurrency<span class="signature">(newCurrency)</span><span class="type-signature"> &rarr; {<a href="Currency.html">Currency</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line205">line 205</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add a new Currency to this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newCurrency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Currency that should be added to this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The newly added Currency.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addExpense"><span class="type-signature"></span>addExpense<span class="signature">(newExpense)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line183">line 183</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add an IExpense to this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newExpense</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IExpense</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The IExpense that should be added to this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addParticipant"><span class="type-signature"></span>addParticipant<span class="signature">(newParticipant)</span><span class="type-signature"> &rarr; {<a href="Person.html">Person</a>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line161">line 161</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Add a participant to this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newParticipant</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Person.html">Person</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The participant that should be added to this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The newly added participant.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Person.html">Person</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeCurrency"><span class="type-signature"></span>removeCurrency<span class="signature">(currency)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line216">line 216</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove a Currency from this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>currency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Currency.html">Currency</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The Currency that should be removed from this Trip;</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The amount of Currencies maintained by this Trip after removal.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeExpense"><span class="type-signature"></span>removeExpense<span class="signature">(expense)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line194">line 194</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove an IExpense from this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>expense</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">IExpense</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The IExpense that should be removed from this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The amount of IExpenses maintained by this Trip after removal.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="removeParticipant"><span class="type-signature"></span>removeParticipant<span class="signature">(participant)</span><span class="type-signature"> &rarr; {number}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Trip.js.html">Trip.js</a>, <a href="Trip.js.html#line172">line 172</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Remove a participant from this Trip.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>participant</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Person.html">Person</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The participant that needs to be removed from this Trip.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The amount of participants participating to this Trip after removal.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 24 2017 17:28:54 GMT+0100 (Romance Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

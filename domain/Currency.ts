@@ -22,7 +22,7 @@ export class Currency
     }
     
     /**
-    * Get the name of the currency.
+    * Get or set the name of the currency.
     * @returns {number} The name of the currency.
     */
     get name() : string
@@ -30,26 +30,18 @@ export class Currency
         return this._name;
     }
     
-    /**
-    * Set the name of the currency.
-    * @param {string} name - The name to set the currency to.
-    */
     set name(name : string)
     {
         this._name = name;
     }
     
-    /**
-    * Set the rate of the currency compared to EUR.
-    * @param {number} rate - The rate of the currency compared to EUR.
-    */
     set rateComparedToEUR(rate : number)
     {
         this._rateComparedToEUR = rate;
     }
 
     /**
-    * Get the rate of the currency compared to EUR.
+    * Get or set the rate of the currency compared to EUR.
     * @returns {number} The rate of the currency compared to EUR.
     */
     get rateComparedToEUR() : number
