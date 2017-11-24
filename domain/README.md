@@ -1,4 +1,25 @@
-# Karavaan Domain User Stories
+# Karavaan Domain
+
+You can look at the documentation compiled by `jsdoc` by running the `./build_test.sh` script. You need to install `jsdoc` to do this:
+
+```
+npm install -g jsdoc
+```
+
+Running the script:
+
+```
+./build_test.sh
+```
+
+This script will transpile the TypeScript files using `tsc` to the `target` directory and create a documentation website inside `target/docs` directory.  
+An additional `jsdoc` template will be cloned from a git repository to make the documentation website readable.   
+
+Then, the script will run the tests that can be found in `target/KaravaanTests.js`.  
+
+Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at working examples of how to use the domain classes.
+
+# User Stories
 
 ## As a *user* I want to:
 
