@@ -1,4 +1,5 @@
 {
-  "name": "karavaan_mobile",
-  "displayName": "karavaan_mobile"
+  "expo": {
+    "sdkVersion": "22.0.0"
+  }
 }
