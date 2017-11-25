@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "outDir": "target",
+    "module": "CommonJS"
+  },
+  "files": [
+      "Currency",
+      "Trip",
+      "Person",
+      "KaravaanService",
+      "KaravaanTests",
+      "CurrencyService",
+      "IExpense",
+      "EvenExpense",
+      "Payment",
+      "Debt",
+      "BillItem",
+      "ExpenseType"
+  ]
+}
