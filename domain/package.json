@@ -1,0 +1,11 @@
+{
+  "name": "karavaan-domain",
+  "version": "1.0.0",
+  "description": "You can look at the documentation compiled by `jsdoc` by running the `./build_test.sh` script. You need to install `jsdoc` to do this:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
