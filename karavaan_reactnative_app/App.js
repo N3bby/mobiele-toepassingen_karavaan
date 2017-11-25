@@ -40,7 +40,7 @@ export default class App extends Component<{}> {
             </Button>
           </Left>
           <Body>
-            <Title>Header</Title>
+            <Title >Karavaan App</Title>
           </Body>
           <Right/>
 
@@ -57,12 +57,12 @@ export default class App extends Component<{}> {
             <Text>Activity</Text>
           </Tab>
         </Tabs>
-
         {/*<Content>*/}
           {/*<Text>Content goes here</Text>*/}
         {/*</Content>*/}
-
       </Container>
     );
   }
 }
+
+
