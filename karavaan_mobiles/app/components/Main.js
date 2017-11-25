@@ -133,9 +133,9 @@ const styles = StyleSheet.create({
       bottom: 70, //90
       justifyContent: 'center',      
       backgroundColor: '#CC6600',
-      width: 100,
-      height: 30,
-      borderRadius: 0,
+      width: 100, //90
+      height: 30, //90
+      borderRadius: 0, //50
       alignItems: 'center',
       justifyContent: 'center',
       elevation: 8,
