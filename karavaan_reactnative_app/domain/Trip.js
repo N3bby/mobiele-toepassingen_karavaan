@@ -21,6 +21,7 @@ class Trip {
     constructor(id = -1, name = "", description = "", currency = new Currency_1.Currency("EUR", 1), expenses = new Array(), participants = new Array(), date = new Date()) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.currencies = new Array();
         this.addCurrency(currency);
         this.expenses = expenses;
