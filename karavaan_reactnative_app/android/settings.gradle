@@ -1,0 +1,3 @@
+rootProject.name = 'karavaan_reactnative_app'
+
+include ':app'
