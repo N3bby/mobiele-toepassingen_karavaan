@@ -39,6 +39,7 @@ export class Trip
     {
         this.id = id;
         this.name = name;
+		this.description = description;
         this.currencies = new Array<Currency>();
         this.addCurrency(currency);
         this.expenses = expenses;
