@@ -12,7 +12,7 @@ import {
     Left
 }from 'native-base';
 
-export default class CreateATripComponent extends Component<{}> {
+export default class CreateTripComponent extends Component<{}> {
 
     constructor() {
         super();

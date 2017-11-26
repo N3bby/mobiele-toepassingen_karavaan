@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StackNavigator} from 'react-navigation';
 import {StyleSheet} from 'react-native';
-import  {CreateATripComponent} from './CreateATripComponent'
+import  {CreateTripComponent} from './CreateTripComponent'
 import {
     Container,
     Header,
