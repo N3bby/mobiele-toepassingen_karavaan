@@ -4,9 +4,13 @@ import {
     Tab,
     List,
     ListItem,
-    Content
+    Content,
+    Left,
+    Body,
+    Icon,
+    Text,
+    Thumbnail
 }from 'native-base';
-import TripCardComponent from "./TripCardComponent";
 import {Trip} from "../domain/Trip";
 
 export default class TripsListComponent extends Component<{}> {
@@ -15,22 +19,21 @@ export default class TripsListComponent extends Component<{}> {
         super();
         //TODO Fetch trips from service
         this._trips = [];
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
-        this._trips.push(new TripCardComponent(new Trip(3, "TestGroup", "This is a group")));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
     }
 
     handleGroupClick(id) {
-
     }
 
     render() {
@@ -39,8 +42,14 @@ export default class TripsListComponent extends Component<{}> {
             <Content>
                 <List>
                     {this._trips.map((item, index) => (
-                        <ListItem key={index} button={true} onPress={this.handleGroupClick(item._trip.id)}>
-                            {item.render()}
+                        <ListItem key={index} button={true} onPress={() => this.handleGroupClick(item.id)} avatar>
+                            <Left>
+                                <Thumbnail small source={require('../images/house.jpg')}/>
+                            </Left>
+                            <Body>
+                            <Text>{item.name}</Text>
+                            <Text note>{item.description}</Text>
+                            </Body>
                         </ListItem>
                     ))}
                 </List>
