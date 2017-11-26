@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StackNavigator} from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
 import {StyleSheet} from 'react-native';
 import  {CreateTripComponent} from './CreateTripComponent'
 import {
@@ -14,13 +14,14 @@ import {
     Text,
     Tabs,
     Tab,
-    Content,
     FooterTab,
-    Footer
+    Footer,
+    Fab
 }from 'native-base';
-
+import TripsListComponent from "./TripsListComponent";
 
 export default class HomeComponent extends Component<{}> {
+
     render() {
         return (
             <Container>
@@ -39,37 +40,21 @@ export default class HomeComponent extends Component<{}> {
                 </Header>
 
                 <Tabs>
-                <Tab heading="Trips">
-                <Container>
-                <Header>
-                <Text>SubHead1 | SubHead2 | SubHead3</Text> 
-                </Header>
-                <Text>Trips</Text>                        
-                <Content />
-                <Footer>
-                <FooterTab>
-                <Button block primary full>
-                <Text style={styles.CreateATrip}>Create a Trip</Text>
-                </Button>
-                </FooterTab>
-                </Footer>
-                </Container>
-            </Tab>
-            <Tab heading="Users">
-                <Text>Users</Text>
-            </Tab>
-            <Tab heading="Activity">
-                <Text>Activity</Text>
-            </Tab>
-        </Tabs>                
-    </Container>
-);
-}
-}
+                    <Tab heading="Trips">
+                        <TripsListComponent/>
+                        <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
+                            <Icon name="md-add"/>
+                        </Fab>
+                    </Tab>
+                    <Tab heading="Users">
+                        <Text>Users</Text>
+                    </Tab>
+                    <Tab heading="Activity">
+                        <Text>Activity</Text>
+                    </Tab>
+                </Tabs>
+            </Container>
+        );
+    }
 
-const styles = StyleSheet.create({
-CreateATrip: {
-color: 'white',
-fontSize: 17,
-},
-});
+}
