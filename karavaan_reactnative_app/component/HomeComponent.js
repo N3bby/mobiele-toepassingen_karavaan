@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+import { StackNavigator} from 'react-navigation';
 import {StyleSheet} from 'react-native';
+import  {CreateATripComponent} from './CreateATripComponent'
 import {
     Container,
     Header,
@@ -16,6 +18,7 @@ import {
     FooterTab,
     Footer
 }from 'native-base';
+
 
 export default class HomeComponent extends Component<{}> {
     render() {
