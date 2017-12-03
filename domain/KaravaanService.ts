@@ -270,6 +270,26 @@ export class KaravaanService
     }
     
     /**
+    * Get a list of all participants to all Trips.
+    *
+    * @returns {Array<Person>} An Array<Person> of all participants of this service.
+    */
+    getAllParticipants() : Array<Person>
+    {
+        let participantSet = new Set<Person>();
+        
+        for (let trip of this.trips)
+        {
+            for (let participant of trip.participants)
+            {
+                participantSet.add(participant);
+            }
+        }
+        
+        return Array.from(participantSet);
+    }
+    
+    /**
     * Add a new participant to the Trip by using the Trips ID.
     *
     * @param {number} tripId - The ID of the Trip this participant has to be added to.
