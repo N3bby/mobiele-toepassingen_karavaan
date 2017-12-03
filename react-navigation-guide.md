@@ -58,7 +58,7 @@ Passing parameters through navigate calls is something that we still need to res
 
 Since child components are instantiated by our own code, react-navigation will not inject the navigation object into them.
 
-I propose this method to fix that problem:
+I propose this method to fix that problem: (basically injecting it manually)
 
 ```
 render() {
