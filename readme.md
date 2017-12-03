@@ -1,4 +1,5 @@
 # Info
 
-### [Setup guide](https://github.com/Razacx/mobiele-toepassingen_karavaan/blob/master/setup.md)
-### [Domain guide](https://github.com/Razacx/mobiele-toepassingen_karavaan/blob/master/domain/README.md)
+### [Setup guide](setup.md)
+### [Domain guide](domain/README.md)
+### [React-Navigation guide](react-navigation-guide.md)
