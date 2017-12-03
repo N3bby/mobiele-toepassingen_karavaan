@@ -1,27 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-import React, {Component} from 'react';
+import React from 'react';
 import {Platform} from 'react-native';
 
-import {
-    Container,
-    Header,
-    Title,
-    Content,
-    Button,
-    Left,
-    Right,
-    Body,
-    Icon,
-    Text,
-    Tabs,
-    Tab
-}from 'native-base';
-import HomeComponent from "./component/HomeComponent";
+import { Root } from "native-base";
+import AppNavigator from "./AppNavigator";
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
@@ -30,12 +11,13 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-export default class App extends Component<{}> {
+export default class App extends React.Component {
     render() {
         return (
-            <Container>
-                <HomeComponent/>
-            </Container>
+            <Root>
+                <AppNavigator/>
+            </Root>
         );
     }
 }
+

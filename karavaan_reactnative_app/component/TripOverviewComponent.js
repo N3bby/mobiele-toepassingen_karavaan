@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
     Container,
     Tab,
@@ -9,24 +9,20 @@ import {
     Header,
     Body,
     Button,
-    Left
+    Left,
+    Right,
+    Icon
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 
-export default class GroupOverviewComponent extends Component<{}> {
-
-    constructor() {
-        super();
-    }
+export default class TripOverviewComponent extends React.Component {
 
     render() {
-
-
         return (
             <Container>
                 <Header>
                     <Left>
-                        <Button transparent onPress={() => navigation.goBack()}>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <Icon name="arrow-back"/>
                         </Button>
                     </Left>

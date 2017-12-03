@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
     Container,
     Tab,
@@ -11,12 +11,11 @@ import {
     Text,
     Thumbnail
 }from 'native-base';
-import {View, TouchableHighlight} from 'react-native';
 import {Trip} from "../domain/Trip";
 
-export default class TripsListComponent extends Component<{}> {
+export default class TripsListComponent extends React.Component {
 
-    constructor() {
+    constructor(navigation) {
         super();
         //TODO Fetch trips from service
         this._trips = [];
@@ -34,9 +33,6 @@ export default class TripsListComponent extends Component<{}> {
         this._trips.push(new Trip(3, "TestGroup", "This is a group"));
     }
 
-    handleGroupClick(id) {
-    }
-
     render() {
 
         //TODO Fix the weird touch effect here.
@@ -46,7 +42,7 @@ export default class TripsListComponent extends Component<{}> {
             <Content>
                 <List>
                     {this._trips.map((item, index) => (
-                        <ListItem key={index} button={true} onPress={() => this.handleGroupClick(item.id)} avatar>
+                        <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("TripOverview")} avatar>
                             <Left>
                                 <Thumbnail small source={require('../images/house.jpg')}/>
                             </Left>
