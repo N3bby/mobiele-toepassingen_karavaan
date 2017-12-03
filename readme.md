@@ -2,4 +2,4 @@
 
 ### [Setup guide](setup.md)
 ### [Domain guide](domain/README.md)
-### [React-Navigation guide](react-navigation-guide.md)
+### [react-navigation guide](react-navigation-guide.md)
