@@ -63,7 +63,7 @@ I propose this method to fix that problem:
 ```
 render() {
 
-	var someChildComponent = new someChildComponent();
+	var someChildComponent = new SomeChildComponent();
     if(someChildComponent.props === undefined) someChildComponent.props = {};
     someChildComponent.props.navigation = this.props.navigation;
 
