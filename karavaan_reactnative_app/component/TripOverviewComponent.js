@@ -11,7 +11,11 @@ import {
     Button,
     Left,
     Right,
-    Icon
+    Icon,
+    Text,
+    Footer,
+    Col,
+    Grid
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 
@@ -39,7 +43,29 @@ export default class TripOverviewComponent extends React.Component {
                     </Body>
                     <Right />
                 </Header>
-                <Content></Content>
+                <Content>
+                    <Text>Activity</Text>
+                    <List>
+                        <ListItem>
+                            <Text>Test</Text>
+                        </ListItem>
+                        <ListItem>
+                            <Text>Test</Text>
+                        </ListItem>
+                        <ListItem>
+                            <Text>Test</Text>
+                        </ListItem>
+                        <ListItem>
+                            <Text>Test</Text>
+                        </ListItem>
+                    </List>
+                </Content>
+                <Footer>
+                    <Grid>
+                        <Col><Button><Text>Settle Up</Text></Button></Col>
+                        <Col><Button><Text>Balances</Text></Button></Col>
+                    </Grid>
+                </Footer>
             </Container>
         );
     }
