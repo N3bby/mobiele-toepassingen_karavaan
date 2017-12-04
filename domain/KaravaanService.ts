@@ -6,6 +6,8 @@ import { CurrencyService } from './CurrencyService';
 import { ExpenseType } from './ExpenseType';
 import { EvenExpense } from './EvenExpense';
 import { Debt } from './Debt';
+import { Payment } from './Payment';
+import { BillItem } from './BillItem';
 
 /**
 * Class representing a KaravaanService.
@@ -572,6 +574,25 @@ export class KaravaanService
         return returnedParticipant;
     }
     
+    addNewPaymentToExpenseById(tripId : number, expenseId : number, participantId : number, amount) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        
+        let newPayment = new Payment();
+        newPayment.creditor = participant;
+        newPayment.amount = amount;
+        
+        return this.addPaymentToExpenseById(tripId, expenseId, newPayment);
+    }
+    
+    private addPaymentToExpenseById(tripId : number, expenseId : number, newPayment : Payment) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.addPayment(newPayment);
+        return expense;
+    }
+    
     /**
     * Add a Debt to a certain IExpense by using its ID, the ID of the Trip it belongs to and the ID of the participant whose debt this is.
     * This method will throw an Error when no IExpense with given ID is found.
@@ -607,6 +628,13 @@ export class KaravaanService
         let newDebt = new Debt();
         newDebt.debtor = participant;
         newDebt.amount = amount;
+        
+        return this.addDebtToExpenseById(tripId, expenseId, newDebt);
+    }
+    
+    private addDebtToExpenseById(tripId : number, expenseId : number, newDebt : Debt) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
         expense.addDebt(newDebt);
         return expense;
     }
@@ -633,6 +661,7 @@ export class KaravaanService
     *
     * @param {Array<Debt>} An Array with the Debts for this participant.
     */
+    
     getDebtsForParticipantByExpenseId(tripId : number, expenseId : number, participantId : number) : Array<Debt>
     {
         let expense = this.getExpenseById(tripId, expenseId);
@@ -646,5 +675,24 @@ export class KaravaanService
         }
         
         return debtList;
+    }
+    
+    addNewBillItemToExpenseById(tripId : number, expenseId : number, participantId : number, description : string, amount : number) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        
+        let newBillItem = new BillItem();
+        newBillItem.debtor = participant;
+        newBillItem.description = description;
+        newBillItem.amount = amount;
+        return this.addBillItemToExpense(tripId, expenseId, newBillItem);
+    }
+    
+    private addBillItemToExpense(tripId: number, expenseId : number, newBillItem : BillItem) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.addBillItem(newBillItem);
+        return expense;
     }
 }

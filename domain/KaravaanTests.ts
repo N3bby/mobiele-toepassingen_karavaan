@@ -332,6 +332,33 @@ function editing_info_of_participants_of_expense_is_enforced_globally()
 }
 editing_info_of_participants_of_expense_is_enforced_globally();
 
+function adding_an_EvenExpense_to_Trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 100, "Pizzeria on the first day.", "food");
+    
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Sherlock", "Holmes");
+    let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "George", "Clooney");
+    
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, newParticipant.id);
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id);
+    
+    service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 50);
+    service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 50);
+    
+    let amountToBePaidIsZero = service.getExpenseById(newTrip.id, newExpense.id).amountUnpaid == 0;
+    let threeParticipants = service.getParticipantsByExpenseId(newTrip.id, newExpense.id).length == 3;
+    
+    let twoDebts = service.getDebtsByExpenseId(newTrip.id, newExpense.id).length == 2;
+    
+    // Concat booleans
+    let result = amountToBePaidIsZero && threeParticipants && twoDebts;
+    
+    functionalityWorks("Adding an EvenExpense to Trip works.", result);
+}
+
 
 /*let ee = new EvenExpense();
 ee.expenseAmount = 100;
