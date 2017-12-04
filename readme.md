@@ -3,4 +3,4 @@
 ### [Setup guide](setup.md)
 ### [Domain guide](domain/README.md)
 ### [react-navigation guide](react-navigation-guide.md)
-### [react-native domain usage](react-navigation-domain-usage.md)
+### [react-native domain usage](react-native-domain-usage.md)
