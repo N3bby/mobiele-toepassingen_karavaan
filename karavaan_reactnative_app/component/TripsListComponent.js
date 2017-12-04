@@ -17,20 +17,13 @@ export default class TripsListComponent extends React.Component {
 
     constructor(navigation) {
         super();
-        //TODO Fetch trips from service
-        this._trips = [];
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
-        this._trips.push(new Trip(3, "TestGroup", "This is a group"));
+        //Some test data
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");
     }
 
     render() {
@@ -41,8 +34,8 @@ export default class TripsListComponent extends React.Component {
         return (
             <Content>
                 <List>
-                    {this._trips.map((item, index) => (
-                        <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("TripOverview")} avatar>
+                    {global.service.trips.map((item, index) => (
+                        <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("TripOverview", { groupId: item.id })} avatar>
                             <Left>
                                 <Thumbnail small source={require('../images/house.jpg')}/>
                             </Left>

@@ -17,7 +17,15 @@ import {Trip} from "../domain/Trip";
 
 export default class TripOverviewComponent extends React.Component {
 
+    constructor() {
+        super();
+    }
+
     render() {
+
+        var groupId = this.props.navigation.state.params.groupId;
+        var group = global.service.getTripById(groupId);
+
         return (
             <Container>
                 <Header>
@@ -27,7 +35,7 @@ export default class TripOverviewComponent extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Group Overview</Title>
+                        <Title>{group.name}</Title>
                     </Body>
                     <Right />
                 </Header>

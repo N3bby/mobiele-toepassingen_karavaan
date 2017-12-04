@@ -3,6 +3,7 @@ import {Platform} from 'react-native';
 
 import { Root } from "native-base";
 import AppNavigator from "./AppNavigator";
+import {KaravaanService} from "./domain/KaravaanService";
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
@@ -12,6 +13,12 @@ const instructions = Platform.select({
 });
 
 export default class App extends React.Component {
+
+    constructor() {
+        super();
+        global.service = new KaravaanService();
+    }
+
     render() {
         return (
             <Root>
