@@ -9,10 +9,12 @@ import {
     Header,
     Body,
     Button,
-    Left
+    Left,
+    Right,
+    Icon
 }from 'native-base';
 
-export default class CreateTripComponent extends Component<{}> {
+export default class CreateTripComponent extends React.Component {
 
     constructor() {
         super();
@@ -23,21 +25,19 @@ export default class CreateTripComponent extends Component<{}> {
 
         return (
             <Container>
-                <Header>
+            <Header>
                 <Left>
-                <Button transparent onPress={() => navigation.goBack()}>
-                    <Icon name="arrow-back"/>
-                </Button>
+                    <Button transparent onPress={() => this.props.navigation.goBack()}>
+                        <Icon name="arrow-back"/>
+                    </Button>
                 </Left>
-                    <Body>
-                        <Title>Create A Trip</Title>
-                    </Body>
-                    <Right />
-                </Header>
-                <Content>
-                </Content>
-
-            </Container>
+                <Body>
+                    <Title>Create Trip Overview</Title>
+                </Body>
+                <Right />
+            </Header>
+            <Content></Content>
+        </Container>
         );
     }
 }

@@ -16,6 +16,7 @@ import {
     Fab
 }from 'native-base';
 import TripsListComponent from "./TripsListComponent";
+import CreateTripComponent from "./CreateTripComponent";
 
 export default class HomeComponent extends React.Component {
 
@@ -23,6 +24,7 @@ export default class HomeComponent extends React.Component {
         super();
         //Instantiating component to prevent re-instantiating it every render (and thus reloading the domain)
         this.tripsListComponent = new TripsListComponent();
+        this.createTripComponent = new CreateTripComponent();
     }
 
     render() {
@@ -31,6 +33,9 @@ export default class HomeComponent extends React.Component {
         //This cannot be done in the constructor because the navigation property is not injected yet then
         if(this.tripsListComponent.props === undefined) this.tripsListComponent.props = {};
         this.tripsListComponent.props.navigation = this.props.navigation;
+
+        if(this.createTripComponent.props === undefined)this.createTripComponent.props={};
+        this.createTripComponent.props.navigation=this.props.navigation;
 
         return (
             <Container>
@@ -52,7 +57,7 @@ export default class HomeComponent extends React.Component {
                     <Tab heading="Trips">
                         {this.tripsListComponent.render()}
                         <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
-                            <Icon name="md-add"/>
+                            <Icon name="md-add" onPress={()=>this.props.navigation.navigate("CreateTrip")}/>
                         </Fab>
                     </Tab>
                     <Tab heading="Users">
