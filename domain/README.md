@@ -412,4 +412,31 @@ usd.rateComparedToEUR(1.5);
 
 **This override will be enforced globally.**
 
+## 16. Expenses
 
+Expenses are represented using an `IExpense` interface. Expenses can be added to a `Trip` in the `KaravaanService` and, normally (depends on the type of `IExpense`), can be given new participants, `Payments`, `BillItems` and `Debts`. Adding an expense to a trip can be done using the `AddNewExpenseByTripId` facade method and passing the desired `ExpenseType` as a parameter.
+
+All implementations of `IExpense` should be added to the `ExpenseType` enumeration.  
+
+When adding a new `IExpense` using the `addNewExpenseByTripId` method, the created `IExpense` implementation is returned.
+
+## 17. Adding an EvenExpense
+
+An `EvenExpense` is an `IExpense` implementation where the total amount of the expense is evenly shared among the participants. Adding an `EvenExpense` can easily be done using the `addNewExpenseByTripId` and passing the `ExpenseType.EvenExpense` parameter.   
+
+An `EvenExpense` works as follows:
+- Create the `EvenExpense`
+- Add `Payments`
+- Add participants
+
+Everytime a new operation is performed on the `EvenExpense`, the `Debt` gets recalculated and divided among the participants.
+
+```javascript
+// Create a new Trip to add the IExpense to
+let newTrip = service.addNewTrip("Rome");
+
+// Create a new EvenExpense with a price of 100 to the previously created trip for a cab ride. Category is transportation.
+let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 100, "Cab ride", "transportation");
+```
+
+Now, we can add participants from the `Trip` to this `EvenExpense` and add `Payments`.
