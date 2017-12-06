@@ -30,7 +30,9 @@ Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at workin
 3. Get a list of Trips ✔
 4. Get a single Trip by its ID ✔
 5. Remove a Trip ✔
-6. Add a participant to a Trip ✔
+6. 1. Add a new Person ✔
+6. 2. Get a Person by its ID ✔
+6. 3. Add a participant to a Trip ✔
 7. Get a list of participants from a Trip ✔
 8. Get a single participant from a Trip ✔
 9. Remove a participant from a Trip ✔

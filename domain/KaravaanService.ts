@@ -18,6 +18,7 @@ export class KaravaanService
     
     private _tripMap : Map<number, Trip>;
     private _currencyService : CurrencyService;
+    private _personMap : Map<number, Person>;
     
     /**
     * Create a new KaravaanService.
@@ -27,6 +28,7 @@ export class KaravaanService
     {
         this.tripMap = new Map<number, Trip>();
         this.currencyService = new CurrencyService();
+        this._personMap = new Map<number, Person>();
     }
     
     // Getters and Setters
@@ -104,6 +106,31 @@ export class KaravaanService
     get trips() : Array<Trip>
     {
         return Array.from(this.tripMap.values());
+    }
+    
+    /**
+    * Get or set the Map containing all Persons.
+    *
+    * @returns {Map<number, Person>} A Map<number, Person> containing all the Persons.
+    */
+    get personMap() : Map<number, Person>
+    {
+        return this._personMap;
+    }
+    
+    set personMap(newPersonMap : Map<number, Person>)
+    {
+        this._personMap = newPersonMap;
+    }
+    
+    /**
+    * Get a list of all persons.
+    *
+    * @returns {Array<Peron>} An Array<Person> containing all Person objects.
+    */
+    get persons() : Array<Person>
+    {
+        return Array.from(this.personMap.values());
     }
     
     // Methods
@@ -292,6 +319,52 @@ export class KaravaanService
     }
     
     /**
+    * Create and add a new Person object. This Person does not get linked to a Trip using this method.
+    *
+    * @param {string} firstName - The first name of this new Person.
+    * @param {string} lastName - The last name of this new Person.
+    *
+    * @returns {Person} The newly created and added Person.
+    */
+    addNewPerson(firstName : string, lastName : string) : Person
+    {
+        let newPerson = new Person();
+        newPerson.firstName = firstName;
+        newPerson.lastName = lastName;
+        return this.addPerson(newPerson);
+    }
+    
+    /**
+    * Add a Person object.
+    *
+    * @param {Person} person - The Person object to be added.
+    *
+    * @returns {Person} The Person object with a newly assigned ID.
+    */
+    private addPerson(person: Person) : Person
+    {
+        if (person.id < 0) person.id = this.idCounter++;
+        this.personMap.set(person.id, person);
+        return person;
+    }
+    
+    /**
+    * Get a Person object by its ID.
+    *
+    * @param {number} personId - The ID of the Person object to be returned.
+    *
+    * @throws Will throw an Error when no Person object with supplied ID is found.
+    *
+    * @returns {Person} The Person object with supplied ID.
+    */
+    getPersonById(personId : number) : Person
+    {
+        let person = this.personMap.get(personId);
+        if (typeof person == 'undefined') throw new Error("Person with id " + personId + " does not exist.");
+        return person;
+    }
+    
+    /**
     * Add a new participant to the Trip by using the Trips ID.
     *
     * @param {number} tripId - The ID of the Trip this participant has to be added to.
@@ -304,9 +377,27 @@ export class KaravaanService
     */
     addNewParticipantToTripById(tripId : number, firstName : string, lastName : string) : Person
     {
-        let newPerson = new Person(this.idCounter++, firstName, lastName);
+        let newPerson = this.addNewPerson(firstName, lastName);
         let trip = this.getTripById(tripId);
         return this.addParticipantToTrip(trip, newPerson);
+    }
+    
+    /**
+    * Add an existing Person object as a participant to a Trip.
+    *
+    * @param {number} tripId - The ID of the Trip this Person should be added to.
+    * @param {number} personId - The ID of the Person that should be added to the Trip with given ID.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no Person with supplied ID is found.
+    *
+    * @returns {Person} The newly added Person.
+    */
+    addExistingParticipantToTripById(tripId : number, personId : number) : Person
+    {
+        let person = this.getPersonById(personId);
+        
+        return this.addParticipantToTrip(this.getTripById(tripId), person);
     }
     
     /**
@@ -321,7 +412,6 @@ export class KaravaanService
     */
     private addParticipantToTrip(trip : Trip, person : Person) : Person
     {
-        if (person.id < 0) trip.id = this.idCounter++;
         trip.addParticipant(person);
         return person;
     }
