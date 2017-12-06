@@ -32,7 +32,8 @@ Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at workin
 5. Remove a Trip ✔
 6. 1. Add a new Person ✔
 6. 2. Get a Person by its ID ✔
-6. 3. Add a participant to a Trip ✔
+6. 3. Get a list of Persons ✔
+6. 4. Add a participant to a Trip ✔
 7. Get a list of participants from a Trip ✔
 8. Get a single participant from a Trip ✔
 9. Remove a participant from a Trip ✔
@@ -202,7 +203,27 @@ Retrieving a `Person` object can be done by using the `getPersonById` facade met
 let person = service.getPersonById(4);
 ```
 
-## 6. 3. Add a participant to a Trip
+## 6. 3. Get a list of Persons
+
+Getting a list of `Person` objects can be done in 2 ways:   
+
+### Getting an Array<Person>
+
+You can use the `persons` facade property to retrieve an `Array<Person>`.   
+
+```javascript
+let personArray = service.persons;
+```
+
+### Getting a Map<number, Perons>
+
+You can retrieve a `Map<number, Person>` where the keys are the `Person` IDs and the values the `Person` objects, using the `personMap` facade property.   
+
+```javascript
+let personMap = service.personMap;
+```
+
+## 6. 4. Add a participant to a Trip
 
 Ofcourse we want to add participants to this Trip (including ourselves).  
 This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.  
