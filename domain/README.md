@@ -33,7 +33,8 @@ Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at workin
 6. 1. Add a new Person ✔
 6. 2. Get a Person by its ID ✔
 6. 3. Get a list of Persons ✔
-6. 4. Add a participant to a Trip ✔
+6. 4. Add a new participant to a Trip ✔
+6. 5. Add an existing Person as a participant to a Trip ✔
 7. Get a list of participants from a Trip ✔
 8. Get a single participant from a Trip ✔
 9. Remove a participant from a Trip ✔
@@ -203,6 +204,8 @@ Retrieving a `Person` object can be done by using the `getPersonById` facade met
 let person = service.getPersonById(4);
 ```
 
+> This method will throw an Error when supplying an ID that does not belong to an existing `Person`.   
+
 ## 6. 3. Get a list of Persons
 
 Getting a list of `Person` objects can be done in 2 ways:   
@@ -223,9 +226,9 @@ You can retrieve a `Map<number, Person>` where the keys are the `Person` IDs and
 let personMap = service.personMap;
 ```
 
-## 6. 4. Add a participant to a Trip
+## 6. 4. Add a new participant to a Trip
 
-Ofcourse we want to add participants to this Trip (including ourselves).  
+Ofcourse we want to add participants to a Trip (including ourselves).  
 This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.  
 
 The `tripId` is the ID of the Trip you want to add the participant to, the other parameters speak for themselves.  
@@ -240,6 +243,26 @@ let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Le
 ```
 
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> See "Get a single Trip by its ID" for more information about Error handling.  
+
+## 6. 5. Add an existing Person as a participant to a Trip
+
+The previous method (`addNewParticipantToTripById`) adds a new `Person` object to a `Trip`. But we also have a pool of `Person` objects in the `KaravaanService`.
+We can add `Person` objects from this pool to `Trips` as participants. To do this, we use the `addExistingParticipantToTripById` facade method.
+
+```javascript
+//First, we create a new Person
+let newPerson = service.addNewPerson("John", "Lennon");
+
+// Create a new Trip
+let newTrip = service.addNewTrip("Rome");
+
+// Now, we can add this existing Person as a participant to a Trip.
+service.addExistingParticipantToTripById(newTrip.id, newParticipant.id);
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> This method will throw an Error when supplying an ID that does not belong to an existing `Person`.   
 > See "Get a single Trip by its ID" for more information about Error handling.  
 
 ## 7. Get a list of participants from a Trip
