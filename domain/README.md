@@ -183,7 +183,26 @@ Above code will output:
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
 > See "Get a single Trip by its ID" for more information about Error handling.  
 
-## 6. Add a participant to a Trip
+## 6. 1. Add a new Person
+
+A new `Person` object can be created by supplying its first name and last name to the `addNewPerson` facade method.    
+The `addNewPerson` facade method returns the newly created `Person` object.
+
+```javascript
+let newPerson = service.addNewPerson("John", "Lennon");
+```
+
+The above code will create a new `Person` object and give it a new ID.
+
+## 6. 2. Get a Person by its ID
+
+Retrieving a `Person` object can be done by using the `getPersonById` facade method and supplying the ID of the `Person` object you need.
+
+```javascript
+let person = service.getPersonById(4);
+```
+
+## 6. 3. Add a participant to a Trip
 
 Ofcourse we want to add participants to this Trip (including ourselves).  
 This can be done by using the `addNewParticipantToTripById(tripId, firstName, lastName)` facade method. All parameters are required.  
