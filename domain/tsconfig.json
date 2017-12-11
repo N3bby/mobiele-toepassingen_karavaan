@@ -16,6 +16,7 @@
       "Payment",
       "Debt",
       "BillItem",
-      "ExpenseType"
+      "ExpenseType",
+      "BillExpense"
   ]
 }

@@ -502,14 +502,14 @@ export class EvenExpense implements IExpense
         /**
         * Add whatever the creditor paid already.
         */ 
-        for (let debt of this.debts.values())
+        for (let payment of this.payments.values())
         {
-            if (creditMap.has(debt.creditor))
+            if (creditMap.has(payment.creditor))
             {
-                let newAmount = creditMap.get(debt.creditor) + debt.amount;
-                creditMap.set(debt.creditor, newAmount);
+                let newAmount = creditMap.get(payment.creditor) + payment.amount;
+                creditMap.set(payment.creditor, newAmount);
             }
-            else creditMap.set(debt.creditor, debt.amount);
+            else creditMap.set(payment.creditor, payment.amount);
         }
         
         return creditMap;

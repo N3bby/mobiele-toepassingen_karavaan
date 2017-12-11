@@ -44,6 +44,9 @@ Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at workin
 13. Get a list of Currencies from a Trip ✔
 14. Get a single Currency from a Trip ✔
 15. Override the details of a Currency ✔
+16. Expenses 
+16. 1. EvenExpenses
+
 
 ## TODO:
 
@@ -485,7 +488,7 @@ All implementations of `IExpense` should be added to the `ExpenseType` enumerati
 
 When adding a new `IExpense` using the `addNewExpenseByTripId` method, the created `IExpense` implementation is returned.
 
-## 17. Adding an EvenExpense
+## 16. 1. EvenExpense
 
 An `EvenExpense` is an `IExpense` implementation where the total amount of the expense is evenly shared among the participants. Adding an `EvenExpense` can easily be done using the `addNewExpenseByTripId` and passing the `ExpenseType.EvenExpense` parameter.   
 
@@ -505,3 +508,18 @@ let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpen
 ```
 
 Now, we can add participants from the `Trip` to this `EvenExpense` and add `Payments`.
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.  
+> This method will throw an Error when supplying a currencyName that does not belong to a Currency maintained by the `Trip`.   
+> Adding a Debt to an EvenExpense will throw an Error.    
+> Adding a BillItem to an EvenExpense will throw an Error.   
+> See "Get a single Trip by its ID" for more information about Error handling.
+
+## 16. 2. BillExpense
+
+Like `EvenExpense`, `BillExpense` is an implementation of `IExpense`. A `BillExpense` is an `IExpense` that consists of `BillItems` that are tied to whomever should pay them. The flow of logic is to first create the `BillExpense`, then add `BillItems`, `Payments` and participants.
+Adding a `BillItem` works the same way as adding an `EvenExpense`, with the `addNewExpenseByTripId` and supplying `ExpenseType.BillExpense` as the `ExpenseType` parameter.
+
+```javascript
+// TODO
+```
