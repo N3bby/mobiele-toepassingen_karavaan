@@ -8,6 +8,7 @@ import { EvenExpense } from './EvenExpense';
 import { Debt } from './Debt';
 import { Payment } from './Payment';
 import { BillItem } from './BillItem';
+import { BillExpense } from './BillExpense';
 
 /**
 * Class representing a KaravaanService.
@@ -493,6 +494,10 @@ export class KaravaanService
         {
             case ExpenseType.EvenExpense:
                 newExpense = new EvenExpense();
+            break;
+                
+            case ExpenseType.BillExpense:
+                newExpense = new BillExpense();
             break;
                 
             // No expenseType found

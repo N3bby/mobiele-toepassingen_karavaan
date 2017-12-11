@@ -198,7 +198,7 @@ export class BillExpense implements IExpense
             }
         }
         
-        return new Map<number, Debt>();
+        return newDebtMap;
     }
     
     get unfilteredDebts() : Map<number, Debt>
@@ -251,14 +251,14 @@ export class BillExpense implements IExpense
     {
         let debtMap = new Map<Person, number>();
         
-        for (let debt of this.debts.values())
+        for (let billItem of this.billItems.values())
         {
-            if (debtMap.has(debt.debtor)) 
+            if (debtMap.has(billItem.debtor)) 
             {
-                let newAmount = debtMap.get(debt.debtor) + debt.amount;
-                debtMap.set(debt.debtor, newAmount);
+                let newAmount = debtMap.get(billItem.debtor) + billItem.amount;
+                debtMap.set(billItem.debtor, newAmount);
             }
-            else debtMap.set(debt.debtor, debt.amount);
+            else debtMap.set(billItem.debtor, billItem.amount);
         }
         
         return debtMap;

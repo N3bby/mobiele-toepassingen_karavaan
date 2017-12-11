@@ -251,17 +251,17 @@ export class EvenExpense implements IExpense
 
 
             // Add debts for all payments
-            for (let payment of this.payments.values())
+            for (let creditor of this.creditByCreditor.keys())
             {
-                let paidPercentage = payment.amount / this.expensePaid;
+                let paidPercentage = this.creditByCreditor.get(creditor) / this.expensePaid;
 
                 // Calculate new Debt for payment for all participants based on paidPercentage
                 for (let participant of this.participants)
                 {
                     let amountPerParticipant = this.expensePaid / this.participants.length;
                     let amountPerParticipantForThisPayment = amountPerParticipant * paidPercentage;
-                    let debtDescription = participant.firstName + " owes " + payment.creditor.firstName + " " + amountPerParticipantForThisPayment.toFixed(2) + "% of total payment of " + this.expensePaid + ".";
-                    let newDebt = new Debt(this.idCounter++, participant, payment.creditor, amountPerParticipantForThisPayment, debtDescription);
+                    let debtDescription = participant.firstName + " owes " + creditor.firstName + " " + amountPerParticipantForThisPayment.toFixed(2) + "% of total payment of " + this.expensePaid + ".";
+                    let newDebt = new Debt(this.idCounter++, participant, creditor, amountPerParticipantForThisPayment, debtDescription);
                     newDebts.set(newDebt.id, newDebt);
                 }
             }

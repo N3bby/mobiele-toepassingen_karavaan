@@ -144,12 +144,17 @@ export interface IExpense
     payments : Map<number, Payment>;
     
     /**
-    * Map containing all debts for this IExpense.
+    * Map containing all debts for this IExpense, with all illogical debts filtered out (like debts that creditors owe themselves).
     *
     * @returns {Map<number, Debt>} A Map containing all the debts for this IExpense, where the keys are the IDs of the Debts.
     */
     debts : Map<number, Debt>;
     
+    /**
+    * Map containing all debts for this IExpense.
+    *
+    * @returns {Map<number, Debt>} A Map containing all the debts for this IExpense, where the keys are the IDs of the Debts.
+    */
     unfilteredDebts : Map<number, Debt>;
     
     /**

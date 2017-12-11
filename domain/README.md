@@ -470,7 +470,7 @@ let currency = service.getCurrencyFromTripByName(0, "EUR");
 
 We can override the details of a `Currency` by just editing a returned `Currency` from any method that returns it, as `Currencies` are handled by reference.
 
-```
+```javascript
 // Retrieve a Currency from an existing Trip with ID 0.
 let usd = service.getCurrencyFromTripByName(0, "USD");
 
