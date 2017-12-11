@@ -17,6 +17,7 @@
       "Debt",
       "BillItem",
       "ExpenseType",
-      "BillExpense"
+      "BillExpense",
+      "ShareExpense"
   ]
 }

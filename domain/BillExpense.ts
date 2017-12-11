@@ -9,7 +9,7 @@ import { BillItem } from './BillItem';
 export class BillExpense implements IExpense
 {
     public id; 
-    readonly expenseType : ExpenseType;
+    readonly expenseType = ExpenseType.BillExpense;
     
     category : string;
     description : string;
