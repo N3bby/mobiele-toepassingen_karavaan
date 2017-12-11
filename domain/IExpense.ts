@@ -150,6 +150,8 @@ export interface IExpense
     */
     debts : Map<number, Debt>;
     
+    unfilteredDebts : Map<number, Debt>;
+    
     /**
     * Map containgin all billItems for this IExpense.
     *

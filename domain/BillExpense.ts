@@ -55,7 +55,7 @@ export class BillExpense implements IExpense
     {
         let amountAlreadyPaid = 0;
         
-        for (let debt of this.debts.values())
+        for (let debt of this.unfilteredDebts.values())
         {
             amountAlreadyPaid += debt.amount;
         }
@@ -156,19 +156,13 @@ export class BillExpense implements IExpense
     {
         let newDebtMap = new Map<number, Debt>();
         
-        // Calculate the percentage paid by each creditor
+        for (let debt of this.unfilteredDebts.values())
+        {
+            newDebtMap.set(debt.id, debt);
+        }
+        
         for (let creditor of this.creditByCreditor.keys())
         {
-            let paidPercentage = this.creditByCreditor.get(creditor) / this.expenseAmount;
-            
-            for (let debtor of this.debtByDebtor.keys())
-            {
-                let amountToPay = this.debtByDebtor.get(debtor) * paidPercentage;
-                let description = debtor.firstName + " owes " + creditor.firstName + " " + amountToPay + " " + this.currency.name;
-                let newDebt = new Debt(this.idCounter++, debtor, creditor, amountToPay, description);
-                newDebtMap.set(newDebt.id, newDebt);
-            }
-            
             // Filter out debts that creditors owe to themselves
             for (let debtId of newDebtMap.keys())
             {
@@ -205,6 +199,27 @@ export class BillExpense implements IExpense
         }
         
         return new Map<number, Debt>();
+    }
+    
+    get unfilteredDebts() : Map<number, Debt>
+    {
+        let newDebtMap = new Map<number, Debt>();
+        
+        // Calculate the percentage paid by each creditor
+        for (let creditor of this.creditByCreditor.keys())
+        {
+            let paidPercentage = this.creditByCreditor.get(creditor) / this.expenseAmount;
+            
+            for (let debtor of this.debtByDebtor.keys())
+            {
+                let amountToPay = this.debtByDebtor.get(debtor) * paidPercentage;
+                let description = debtor.firstName + " owes " + creditor.firstName + " " + amountToPay + " " + this.currency.name;
+                let newDebt = new Debt(this.idCounter++, debtor, creditor, amountToPay, description);
+                newDebtMap.set(newDebt.id, newDebt);
+            }
+        }
+        
+        return newDebtMap;
     }
     
     

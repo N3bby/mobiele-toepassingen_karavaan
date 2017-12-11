@@ -6,6 +6,7 @@ import { Debt } from './Debt';
 import { Person } from './Person';
 import { Payment } from './Payment';
 import { ExpenseType } from './ExpenseType';
+import { BillExpense } from './BillExpense';
 
 
 function functionalityWorks(functionality : string, works : boolean)
@@ -341,37 +342,44 @@ function adding_an_EvenExpense_to_Trip_works()
     let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
     let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Sherlock", "Holmes");
     let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "George", "Clooney");
+    let fourthParticipant = service.addNewParticipantToTripById(newTrip.id, "King", "Philip");
     
     service.addParticipantToExpenseById(newTrip.id, newExpense.id, newParticipant.id);
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, secondParticipant.id);
     service.addParticipantToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id);
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, fourthParticipant.id);
     
     service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 50);
     service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 50);
     
+    let expenseIsCompletelyPaidByCreditors = service.getExpenseById(newTrip.id, newExpense.id).expenseUnpaid == 0;
     let amountToBePaidIsZero = service.getExpenseById(newTrip.id, newExpense.id).amountUnpaid == 0;
-    let threeParticipants = service.getParticipantsByExpenseId(newTrip.id, newExpense.id).length == 3;
+    let fourParticipants = service.getParticipantsByExpenseId(newTrip.id, newExpense.id).length == 4;
     
     let twoDebts = service.getDebtsByExpenseId(newTrip.id, newExpense.id).length == 2;
     
     // Concat booleans
-    let result = amountToBePaidIsZero && threeParticipants && twoDebts;
+    let result = amountToBePaidIsZero && expenseIsCompletelyPaidByCreditors && fourParticipants;// && twoDebts;
     
     functionalityWorks("Adding an EvenExpense to Trip works.", result);
 }
+adding_an_EvenExpense_to_Trip_works();
 
 
-/*let ee = new EvenExpense();
+let ee = new EvenExpense();
 ee.expenseAmount = 100;
 let firstPayer = new Person(0, "Artus", "Vranken");
 let secondPayer = new Person(1, "John", "Lennon");
 let thirdPart = new Person(2, "Laila", "dsd");
-//ee.addParticipant(thirdPart);
+ee.addParticipant(thirdPart);
 
 ee.addPayment(new Payment(0, firstPayer, 50));
 ee.addPayment(new Payment(1, secondPayer, 50));
-//ee.addParticipant(secondPayer);
+ee.addParticipant(secondPayer);
 
 ee.addParticipant(new Person(3, "kaka", "pipi"));
 
+console.log(ee.amountUnpaid);
+console.log(ee.expenseUnpaid);
 
-console.log(ee.debts);*/
+console.log(ee.debts);
