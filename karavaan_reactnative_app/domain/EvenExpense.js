@@ -117,7 +117,7 @@ class EvenExpense {
     */
     get amountPaid() {
         let amountAlreadyPaid = 0;
-        for (let debt of this.debts.values()) {
+        for (let debt of this.unfilteredDebts.values()) {
             amountAlreadyPaid += debt.amount;
         }
         return amountAlreadyPaid;
@@ -143,7 +143,7 @@ class EvenExpense {
         for (let payment of this.payments.values()) {
             participantSet.add(payment.creditor);
         }
-        for (let debt of this.debts.values()) {
+        for (let debt of this.unfilteredDebts.values()) {
             participantSet.add(debt.debtor);
         }
         return Array.from(participantSet);
@@ -168,7 +168,7 @@ class EvenExpense {
     addParticipant(newParticipant) {
         if (!(this.participants.indexOf(newParticipant) > -1)) {
             let newDebt = new Debt_1.Debt(this.idCounter++, newParticipant);
-            this.debts.set(newDebt.id, newDebt);
+            this.unfilteredDebts.set(newDebt.id, newDebt);
             this.recalculateDividedDebt();
         }
     }
@@ -180,40 +180,15 @@ class EvenExpense {
         if (this._payments.size > 0) {
             let newDebts = new Map();
             // Add debts for all payments
-            for (let payment of this.payments.values()) {
-                let paidPercentage = payment.amount / this.expensePaid;
+            for (let creditor of this.creditByCreditor.keys()) {
+                let paidPercentage = this.creditByCreditor.get(creditor) / this.expensePaid;
                 // Calculate new Debt for payment for all participants based on paidPercentage
                 for (let participant of this.participants) {
                     let amountPerParticipant = this.expensePaid / this.participants.length;
                     let amountPerParticipantForThisPayment = amountPerParticipant * paidPercentage;
-                    let debtDescription = participant.firstName + " owes " + payment.creditor.firstName + " " + amountPerParticipantForThisPayment.toFixed(2) + "% of total payment of " + this.expensePaid + ".";
-                    let newDebt = new Debt_1.Debt(this.idCounter++, participant, payment.creditor, amountPerParticipantForThisPayment, debtDescription);
+                    let debtDescription = participant.firstName + " owes " + creditor.firstName + " " + amountPerParticipantForThisPayment.toFixed(2) + "% of total payment of " + this.expensePaid + ".";
+                    let newDebt = new Debt_1.Debt(this.idCounter++, participant, creditor, amountPerParticipantForThisPayment, debtDescription);
                     newDebts.set(newDebt.id, newDebt);
-                }
-            }
-            // Remove debts that creditors owe to themselves
-            for (let debtId of newDebts.keys()) {
-                let currentDebt = newDebts.get(debtId);
-                if (currentDebt.creditor == currentDebt.debtor)
-                    newDebts.delete(debtId);
-            }
-            // Subtract debts that cancel eachother out
-            for (let debtId of newDebts.keys()) {
-                let currentDebt = newDebts.get(debtId);
-                for (let otherDebtId of newDebts.keys()) {
-                    let otherDebt = newDebts.get(otherDebtId);
-                    if (currentDebt.creditor === otherDebt.debtor) {
-                        if (currentDebt.amount > otherDebt.amount) {
-                            let newAmount = currentDebt.amount - otherDebt.amount;
-                            currentDebt.amount = newAmount;
-                            currentDebt.description = currentDebt.debtor.firstName + " owes " + currentDebt.creditor.firstName + " " + newAmount.toFixed(2) + " of " + this.expenseAmount + ".";
-                            newDebts.delete(otherDebt.id);
-                        }
-                        if (currentDebt.amount === otherDebt.amount) {
-                            newDebts.delete(currentDebt.id);
-                            newDebts.delete(otherDebt.id);
-                        }
-                    }
                 }
             }
             this._debts = newDebts;
@@ -228,10 +203,10 @@ class EvenExpense {
     */
     removeParticipant(participantId) {
         let participant = this.participantMap.get(participantId);
-        for (let debtId of this.debts.keys()) {
-            let currentDebt = this.debts.get(debtId);
+        for (let debtId of this.unfilteredDebts.keys()) {
+            let currentDebt = this.unfilteredDebts.get(debtId);
             if (currentDebt.debtor == participant)
-                this.debts.delete(debtId);
+                this.unfilteredDebts.delete(debtId);
         }
         this.recalculateDividedDebt();
         return this.participants.length;
@@ -312,6 +287,38 @@ class EvenExpense {
     * @returns {Map<number, Debt>} A Map containing all Debts maintained by this EvenExpense.
     */
     get debts() {
+        let newDebts = new Map();
+        for (let debt of this.unfilteredDebts.values()) {
+            newDebts.set(debt.id, debt);
+        }
+        // Subtract debts that cancel eachother out
+        for (let debtId of newDebts.keys()) {
+            let currentDebt = newDebts.get(debtId);
+            for (let otherDebtId of newDebts.keys()) {
+                let otherDebt = newDebts.get(otherDebtId);
+                if (currentDebt.creditor === otherDebt.debtor) {
+                    if (currentDebt.amount > otherDebt.amount) {
+                        let newAmount = currentDebt.amount - otherDebt.amount;
+                        currentDebt.amount = newAmount;
+                        currentDebt.description = currentDebt.debtor.firstName + " owes " + currentDebt.creditor.firstName + " " + newAmount.toFixed(2) + " of " + this.expenseAmount + ".";
+                        newDebts.delete(otherDebt.id);
+                    }
+                    if (currentDebt.amount === otherDebt.amount) {
+                        newDebts.delete(currentDebt.id);
+                        newDebts.delete(otherDebt.id);
+                    }
+                }
+            }
+        }
+        // Remove debts that creditors owe to themselves
+        for (let debtId of newDebts.keys()) {
+            let currentDebt = newDebts.get(debtId);
+            if (currentDebt.creditor == currentDebt.debtor)
+                newDebts.delete(debtId);
+        }
+        return newDebts;
+    }
+    get unfilteredDebts() {
         return this._debts;
     }
     /**
@@ -373,13 +380,13 @@ class EvenExpense {
         /**
         * Add whatever the creditor paid already.
         */
-        for (let debt of this.debts.values()) {
-            if (creditMap.has(debt.creditor)) {
-                let newAmount = creditMap.get(debt.creditor) + debt.amount;
-                creditMap.set(debt.creditor, newAmount);
+        for (let payment of this.payments.values()) {
+            if (creditMap.has(payment.creditor)) {
+                let newAmount = creditMap.get(payment.creditor) + payment.amount;
+                creditMap.set(payment.creditor, newAmount);
             }
             else
-                creditMap.set(debt.creditor, debt.amount);
+                creditMap.set(payment.creditor, payment.amount);
         }
         return creditMap;
     }

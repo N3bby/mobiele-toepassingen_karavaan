@@ -217,18 +217,49 @@ function editing_info_of_participants_of_expense_is_enforced_globally() {
     functionalityWorks("Editing info of a participant of an expense is enforced globally.", result);
 }
 editing_info_of_participants_of_expense_is_enforced_globally();
-/*let ee = new EvenExpense();
-ee.expenseAmount = 100;
-let firstPayer = new Person(0, "Artus", "Vranken");
-let secondPayer = new Person(1, "John", "Lennon");
-let thirdPart = new Person(2, "Laila", "dsd");
-//ee.addParticipant(thirdPart);
-
-ee.addPayment(new Payment(0, firstPayer, 50));
-ee.addPayment(new Payment(1, secondPayer, 50));
-//ee.addParticipant(secondPayer);
-
-ee.addParticipant(new Person(3, "kaka", "pipi"));
-
-
-console.log(ee.debts);*/
+function adding_an_EvenExpense_to_Trip_works() {
+    let service = new KaravaanService_1.KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType_1.ExpenseType.EvenExpense, 100, "Taxi", "food");
+    let newParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Sherlock", "Holmes");
+    let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "George", "Clooney");
+    let fourthParticipant = service.addNewParticipantToTripById(newTrip.id, "King", "Philip");
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, newParticipant.id);
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, secondParticipant.id);
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id);
+    service.addParticipantToExpenseById(newTrip.id, newExpense.id, fourthParticipant.id);
+    service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 50);
+    service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, newParticipant.id, 50);
+    let expenseIsCompletelyPaidByCreditors = service.getExpenseById(newTrip.id, newExpense.id).expenseUnpaid == 0;
+    let amountToBePaidIsZero = service.getExpenseById(newTrip.id, newExpense.id).amountUnpaid == 0;
+    let fourParticipants = service.getParticipantsByExpenseId(newTrip.id, newExpense.id).length == 4;
+    let threeDebts = service.getDebtsByExpenseId(newTrip.id, newExpense.id).length == 3;
+    // Concat booleans
+    let result = amountToBePaidIsZero && expenseIsCompletelyPaidByCreditors && fourParticipants && threeDebts;
+    functionalityWorks("Adding an EvenExpense to Trip works.", result);
+}
+adding_an_EvenExpense_to_Trip_works();
+function adding_a_BillExpense_to_Trip_works() {
+    let service = new KaravaanService_1.KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType_1.ExpenseType.BillExpense, 75, "Restaurant.", "food");
+    let firstParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Mark", "Zuckerberg");
+    let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "Paul", "Kalkbrenner");
+    let newPayment = service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, 75);
+    let firstBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, "Hawaii", 25);
+    let secondBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.id, secondParticipant.id, "Marguerita", 25);
+    let thirdBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id, "Prosciutto", 25);
+    let secondParticipantDebtIsCorrect = service.getExpenseById(newTrip.id, newExpense.id).debtByDebtor.get(secondParticipant) == 25;
+    let thirdParticipantDebtIsCorrect = service.getExpenseById(newTrip.id, newExpense.id).debtByDebtor.get(thirdParticipant) == 25;
+    let result = secondParticipantDebtIsCorrect && thirdParticipantDebtIsCorrect;
+    let has3Participants = service.getExpenseById(newTrip.id, newExpense.id).participants.length == 3;
+    let has3BillItems = service.getExpenseById(newTrip.id, newExpense.id).billItems.size == 3;
+    result = result && has3BillItems && has3Participants;
+    let totalAmountIsPaid = service.getExpenseById(newTrip.id, newExpense.id).amountUnpaid == 0;
+    let has2Debts = service.getDebtsByExpenseId(newTrip.id, newExpense.id).length == 2;
+    result = result && totalAmountIsPaid && has2Debts;
+    functionalityWorks("Adding a BillExpense to Trip works.", result);
+}
+adding_a_BillExpense_to_Trip_works();

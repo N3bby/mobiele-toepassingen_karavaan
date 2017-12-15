@@ -6,6 +6,9 @@ const CurrencyService_1 = require("./CurrencyService");
 const ExpenseType_1 = require("./ExpenseType");
 const EvenExpense_1 = require("./EvenExpense");
 const Debt_1 = require("./Debt");
+const Payment_1 = require("./Payment");
+const BillItem_1 = require("./BillItem");
+const BillExpense_1 = require("./BillExpense");
 /**
 * Class representing a KaravaanService.
 */
@@ -18,6 +21,7 @@ class KaravaanService {
         this._idCounter = 0;
         this.tripMap = new Map();
         this.currencyService = new CurrencyService_1.CurrencyService();
+        this._personMap = new Map();
     }
     // Getters and Setters
     set idCounter(newIndex) {
@@ -76,6 +80,25 @@ class KaravaanService {
     */
     get trips() {
         return Array.from(this.tripMap.values());
+    }
+    /**
+    * Get or set the Map containing all Persons.
+    *
+    * @returns {Map<number, Person>} A Map<number, Person> containing all the Persons.
+    */
+    get personMap() {
+        return this._personMap;
+    }
+    set personMap(newPersonMap) {
+        this._personMap = newPersonMap;
+    }
+    /**
+    * Get a list of all persons.
+    *
+    * @returns {Array<Peron>} An Array<Person> containing all Person objects.
+    */
+    get persons() {
+        return Array.from(this.personMap.values());
     }
     // Methods
     /**
@@ -217,6 +240,62 @@ class KaravaanService {
         return currency;
     }
     /**
+    * Get a list of all participants to all Trips.
+    *
+    * @returns {Array<Person>} An Array<Person> of all participants of this service.
+    */
+    getAllParticipants() {
+        let participantSet = new Set();
+        for (let trip of this.trips) {
+            for (let participant of trip.participants) {
+                participantSet.add(participant);
+            }
+        }
+        return Array.from(participantSet);
+    }
+    /**
+    * Create and add a new Person object. This Person does not get linked to a Trip using this method.
+    *
+    * @param {string} firstName - The first name of this new Person.
+    * @param {string} lastName - The last name of this new Person.
+    *
+    * @returns {Person} The newly created and added Person.
+    */
+    addNewPerson(firstName, lastName) {
+        let newPerson = new Person_1.Person();
+        newPerson.firstName = firstName;
+        newPerson.lastName = lastName;
+        return this.addPerson(newPerson);
+    }
+    /**
+    * Add a Person object.
+    *
+    * @param {Person} person - The Person object to be added.
+    *
+    * @returns {Person} The Person object with a newly assigned ID.
+    */
+    addPerson(person) {
+        if (person.id < 0)
+            person.id = this.idCounter++;
+        this.personMap.set(person.id, person);
+        return person;
+    }
+    /**
+    * Get a Person object by its ID.
+    *
+    * @param {number} personId - The ID of the Person object to be returned.
+    *
+    * @throws Will throw an Error when no Person object with supplied ID is found.
+    *
+    * @returns {Person} The Person object with supplied ID.
+    */
+    getPersonById(personId) {
+        let person = this.personMap.get(personId);
+        if (typeof person == 'undefined')
+            throw new Error("Person with id " + personId + " does not exist.");
+        return person;
+    }
+    /**
     * Add a new participant to the Trip by using the Trips ID.
     *
     * @param {number} tripId - The ID of the Trip this participant has to be added to.
@@ -228,9 +307,24 @@ class KaravaanService {
     * @returns {Person} The newly created and added participant, with a new ID assigned to it.
     */
     addNewParticipantToTripById(tripId, firstName, lastName) {
-        let newPerson = new Person_1.Person(this.idCounter++, firstName, lastName);
+        let newPerson = this.addNewPerson(firstName, lastName);
         let trip = this.getTripById(tripId);
         return this.addParticipantToTrip(trip, newPerson);
+    }
+    /**
+    * Add an existing Person object as a participant to a Trip.
+    *
+    * @param {number} tripId - The ID of the Trip this Person should be added to.
+    * @param {number} personId - The ID of the Person that should be added to the Trip with given ID.
+    *
+    * @throws Will throw an Error when no Trip with supplied ID is found.
+    * @throws Will throw an Error when no Person with supplied ID is found.
+    *
+    * @returns {Person} The newly added Person.
+    */
+    addExistingParticipantToTripById(tripId, personId) {
+        let person = this.getPersonById(personId);
+        return this.addParticipantToTrip(this.getTripById(tripId), person);
     }
     /**
     * Add a participant to a Trip by using objects.
@@ -243,8 +337,6 @@ class KaravaanService {
     * @returns {Person} The person object, with an assigned ID if it didn't have one yet.
     */
     addParticipantToTrip(trip, person) {
-        if (person.id < 0)
-            trip.id = this.idCounter++;
         trip.addParticipant(person);
         return person;
     }
@@ -314,6 +406,9 @@ class KaravaanService {
         switch (expenseType) {
             case ExpenseType_1.ExpenseType.EvenExpense:
                 newExpense = new EvenExpense_1.EvenExpense();
+                break;
+            case ExpenseType_1.ExpenseType.BillExpense:
+                newExpense = new BillExpense_1.BillExpense();
                 break;
             // No expenseType found
             default:
@@ -459,6 +554,19 @@ class KaravaanService {
             throw new Error("Participant with ID " + participantId + " not found in IExpense with ID " + expenseId + ".");
         return returnedParticipant;
     }
+    addNewPaymentToExpenseById(tripId, expenseId, participantId, amount) {
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        let newPayment = new Payment_1.Payment();
+        newPayment.creditor = participant;
+        newPayment.amount = amount;
+        return this.addPaymentToExpenseById(tripId, expenseId, newPayment);
+    }
+    addPaymentToExpenseById(tripId, expenseId, newPayment) {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.addPayment(newPayment);
+        return expense;
+    }
     /**
     * Add a Debt to a certain IExpense by using its ID, the ID of the Trip it belongs to and the ID of the participant whose debt this is.
     * This method will throw an Error when no IExpense with given ID is found.
@@ -488,6 +596,10 @@ class KaravaanService {
         let newDebt = new Debt_1.Debt();
         newDebt.debtor = participant;
         newDebt.amount = amount;
+        return this.addDebtToExpenseById(tripId, expenseId, newDebt);
+    }
+    addDebtToExpenseById(tripId, expenseId, newDebt) {
+        let expense = this.getExpenseById(tripId, expenseId);
         expense.addDebt(newDebt);
         return expense;
     }
@@ -520,6 +632,20 @@ class KaravaanService {
                 debtList.push(debt);
         }
         return debtList;
+    }
+    addNewBillItemToExpenseById(tripId, expenseId, participantId, description, amount) {
+        let expense = this.getExpenseById(tripId, expenseId);
+        let participant = this.getParticipantById(tripId, participantId);
+        let newBillItem = new BillItem_1.BillItem();
+        newBillItem.debtor = participant;
+        newBillItem.description = description;
+        newBillItem.amount = amount;
+        return this.addBillItemToExpense(tripId, expenseId, newBillItem);
+    }
+    addBillItemToExpense(tripId, expenseId, newBillItem) {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.addBillItem(newBillItem);
+        return expense;
     }
 }
 exports.KaravaanService = KaravaanService;
