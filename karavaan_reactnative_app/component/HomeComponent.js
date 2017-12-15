@@ -18,6 +18,7 @@ import {
 import TripsListComponent from "./TripsListComponent";
 import CreateTripComponent from "./CreateTripComponent";
 import CreateUserComponent from "./CreateUserComponent";
+import UserListComponent from "./UserListComponent";
 
 export default class HomeComponent extends React.Component {
 
@@ -29,6 +30,7 @@ export default class HomeComponent extends React.Component {
         this.tripsListComponent = new TripsListComponent();
         this.createTripComponent = new CreateTripComponent();
         this.CreateUserComponent = new CreateUserComponent();
+        this.UserListComponent   = new UserListComponent();
     }
 
     render() {
@@ -43,6 +45,9 @@ export default class HomeComponent extends React.Component {
 
         if(this.CreateUserComponent.props===undefined)this.CreateUserComponent.props={};
         this.CreateUserComponent.props.navigation=this.props.navigation;
+
+        if(this.UserListComponent.props === undefined) this.UserListComponent.props={};
+        this.UserListComponent.props.navigation = this.props.navigation;
 
         return (
             <Container>
@@ -68,8 +73,8 @@ export default class HomeComponent extends React.Component {
                         </Fab>
                     </Tab>
                     <Tab heading="Users">
-                        <Text>Users</Text>
-                        <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
+                    {this.UserListComponent.render()}
+                    <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
                         <Icon name="md-add" onPress={()=>this.props.navigation.navigate("CreateUser")}/>
                     </Fab>
                     </Tab>

@@ -48,7 +48,8 @@ export default class CreateUserComponent extends React.Component {
 
     add(){
         let service = new KaravaanService();        
-        const newPerson = service.addNewPerson(this.state.firstName, this.state.lastName);
+        global.service.addNewPerson(this.state.firstName,this.state.lastName);
+        this.props.navigation.goBack();
         global.homeComponent.forceUpdate();
     }
 
