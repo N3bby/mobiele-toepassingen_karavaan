@@ -22,8 +22,9 @@ export default class HomeComponent extends React.Component {
 
     constructor() {
         super();
-        //Instantiating component to prevent re-instantiating it every render (and thus reloading the domain)
+        //this will force the home component to re render everythings.
         global.homeComponent = this;
+        //Instantiating component to prevent re-instantiating it every render (and thus reloading the domain)
         this.tripsListComponent = new TripsListComponent();
         this.createTripComponent = new CreateTripComponent();
     }

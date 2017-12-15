@@ -42,6 +42,7 @@ export default class TripsListComponent extends React.Component {
                             <Body>
                             <Text>{item.name}</Text>
                             <Text note>{item.description}</Text>
+                            <Text note>{item.currencies.map(c => c.name).join(', ')}</Text>
                             </Body>
                         </ListItem>
                     ))}
