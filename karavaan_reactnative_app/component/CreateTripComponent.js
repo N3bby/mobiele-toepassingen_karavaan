@@ -68,9 +68,9 @@ export default class CreateTripComponent extends React.Component {
             <Container>
             <Header>
                 <Left>
-                    <Button transparent>
-                        <Icon name="arrow-back"/>
-                    </Button>
+                <Button transparent onPress={() => this.props.navigation.goBack()}>
+                <Icon name="arrow-back"/>
+            </Button>
                 </Left>
                 <Body>
                 <Title>New Trip</Title> 

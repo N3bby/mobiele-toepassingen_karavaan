@@ -17,6 +17,7 @@ import {
 }from 'native-base';
 import TripsListComponent from "./TripsListComponent";
 import CreateTripComponent from "./CreateTripComponent";
+import CreateUser from "./CreateUser";
 
 export default class HomeComponent extends React.Component {
 
@@ -27,6 +28,7 @@ export default class HomeComponent extends React.Component {
         //Instantiating component to prevent re-instantiating it every render (and thus reloading the domain)
         this.tripsListComponent = new TripsListComponent();
         this.createTripComponent = new CreateTripComponent();
+        this.CreateUser = new CreateUser();
     }
 
     render() {
@@ -38,6 +40,9 @@ export default class HomeComponent extends React.Component {
 
         if(this.createTripComponent.props === undefined)this.createTripComponent.props={};
         this.createTripComponent.props.navigation=this.props.navigation;
+
+        if(this.CreateUser.props===undefined)this.CreateUser.props={};
+        this.CreateUser.props.navigation=this.props.navigation;
 
         return (
             <Container>
@@ -64,6 +69,9 @@ export default class HomeComponent extends React.Component {
                     </Tab>
                     <Tab heading="Users">
                         <Text>Users</Text>
+                        <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
+                        <Icon name="md-add" onPress={()=>this.props.navigation.navigate("CreateUser")}/>
+                    </Fab>
                     </Tab>
                     <Tab heading="Activity">
                         <Text>Activity</Text>
