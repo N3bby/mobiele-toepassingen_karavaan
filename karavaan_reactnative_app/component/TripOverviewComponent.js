@@ -25,6 +25,13 @@ export default class TripOverviewComponent extends React.Component {
         super();
     }
 
+    deleteTrip(id){
+        global.service.removeTripById(id);
+        this.props.navigation.goBack();
+        global.homeComponent.forceUpdate();
+    }
+
+
     render() {
 
         var groupId = this.props.navigation.state.params.groupId;
@@ -41,7 +48,11 @@ export default class TripOverviewComponent extends React.Component {
                     <Body>
                         <Title>{group.name}</Title>
                     </Body>
-                    <Right />
+                    <Right>
+                    <Button small danger onPress={() => this.deleteTrip(group.id)}>
+                    <Icon active name="trash" />
+                    </Button>
+                    </Right>
                 </Header>
                 <Content>
                     <Text>Activity</Text>

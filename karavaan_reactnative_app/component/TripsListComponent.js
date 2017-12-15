@@ -27,11 +27,7 @@ export default class TripsListComponent extends React.Component {
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
     }
-    deleteTrip(id){
-        global.service.removeTripById(id);
-        //this.props.navigation.goBack();
-        global.homeComponent.forceUpdate();
-    }
+    
 
 
     render() {
@@ -48,20 +44,9 @@ export default class TripsListComponent extends React.Component {
                                 <Thumbnail small source={require('../images/house.jpg')}/>
                             </Left>
                             <Body>
-                            <Grid>
-                            <Col>
                             <Text>{item.name}</Text>
                             <Text note>{item.description}</Text>
-                            <Text note>{item.currencies.map(c => c.name).join(', ')}</Text>
-                            </Col>
-                            <Col style={{width:50}}> 
-                            <Right>
-                            <Button small danger onPress={() => this.deleteTrip(item.id)}>
-                            <Icon active name="trash" />
-                            </Button>
-                            </Right>
-                            </Col>
-                            </Grid>
+                            <Text note>{item.currencies.map(c => c.name).join(', ')}</Text>                            
                             </Body>
                         </ListItem>
                     ))}
