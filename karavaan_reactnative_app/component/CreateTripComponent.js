@@ -60,7 +60,6 @@ export default class CreateTripComponent extends React.Component {
       global.service.addTrip(trip);
       this.props.navigation.goBack();
       global.homeComponent.forceUpdate();
-      console.log(trip);
     }
 
     render() {

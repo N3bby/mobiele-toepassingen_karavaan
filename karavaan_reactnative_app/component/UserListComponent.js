@@ -9,8 +9,13 @@ import {
     Body,
     Icon,
     Text,
-    Thumbnail
+    Thumbnail,
+    SwipeRow,
+    Button,
+    View,
+    Right
 }from 'native-base';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import {Person} from "../domain/Person";
 
 export default class UserListComponent extends React.Component {
@@ -18,9 +23,14 @@ export default class UserListComponent extends React.Component {
     constructor(navigation) {
         super();
         //Some test data
-        //global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewPerson("surendra","sapkota");
-        
+        global.service.addNewPerson("Levi","Vandenbempt");
+        global.service.addNewPerson("Artus","Vranken");
+        global.service.addNewPerson("Tim", "Vangilbergen");
+    }
+
+    deleteUser(id){
+        alert("DELETE METHOD NOT FOUND IN KARAVAANSERVICE\n idnr: "+id);
     }
 
     render() {
@@ -33,12 +43,22 @@ export default class UserListComponent extends React.Component {
                 <List>
                     {global.service.persons.map((item, index) => (
                         <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
-                            <Left>
-                                <Thumbnail small source={require('../images/house.jpg')}/>
-                            </Left>
                             <Body>
-                            <Text>{item.firstName}</Text>
-                            <Text note>{item.lastName}</Text>
+                            <Grid>
+                            <Col>
+                            <Text>
+                            <Icon active name="person" style={{padding:5}}/>
+                            {item.firstName} {item.lastName}
+                            </Text>
+                            </Col>
+                            <Col style={{width:50}}> 
+                            <Right>
+                            <Button small danger onPress={() => this.deleteUser(item.id)}>
+                            <Icon active name="trash" />
+                            </Button>
+                            </Right>
+                            </Col>
+                            </Grid>
                             </Body>
                         </ListItem>
                     ))}
@@ -48,3 +68,4 @@ export default class UserListComponent extends React.Component {
     }
 
 }
+
