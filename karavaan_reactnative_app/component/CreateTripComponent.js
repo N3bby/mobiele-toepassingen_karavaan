@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Platform } from "react-native";
 import {
     Container,
     Tab,
@@ -19,30 +20,53 @@ import {
     Form,
     Picker
 }from 'native-base';
-const Items = Picker.Item;
+import {Trip} from "../domain/Trip";
+import HomeComponent from './HomeComponent';
+ const PickerItem = Picker.Item;
 export default class CreateTripComponent extends React.Component {
 
     constructor(props) {
-        super();
+      super(props);
         this.state = {
-            selected3: "key3"
+          selected1: "key4",
+          tripName: "",
+          tripDescription: ""
         };
-    }
+      }
 
-    onValueChange3(value){
-        this.state={
-            selected3:value
-        }
+    onValueChange(value){
+        this.setState({
+            selected1:value
+        });
+    }
+    onValueChangeTripName(value){
+      this.setState({
+          tripName:value
+      });
+  }
+  onValueChangeTripDescription(value){
+    this.setState({
+        tripDescription:value
+    });
+}
+
+
+
+    add(){
+      var currency = this.state.slected1;
+      var a = Math.floor(Math.random()*1000);
+      //new Trip(a,this.state.tripName,this.state.tripDescription);
+      global.service.addNewTrip(a,this.state.tripName,this.state.tripDescription);
+      this.props.navigation.goBack();
+      global.homeComponent.forceUpdate();
     }
 
     render() {
-
-
         return (
             <Container>
             <Header>
                 <Left>
-                    <Button transparent onPress={() => this.props.navigation.goBack()}>
+                    <Button transparent>
                         <Icon name="arrow-back"/>
                     </Button>
                 </Left>
@@ -52,29 +76,49 @@ export default class CreateTripComponent extends React.Component {
                 <Right />
             </Header>
             <Content>
-            <Item>
-            <Input placeholder='Trip Name'/>
-            </Item>
-            <Button disabled={true} block info >
-            <Text>Participants</Text>
-          </Button>
-          <Text>//TODO</Text>
-          <Button disabled={true} block info >
-          <Text>Currency</Text>
-        </Button>
-            <Picker mode="dropdown">
-            </Picker>
+
+            
+            <Item regular>
+            <Input placeholder='Trip Name' placeholderTextColor='green' value={this.state.tripName} onChangeText={this.onValueChangeTripName.bind(this)} />
+          </Item>
+
+          <Item regular>
+          <Input placeholder='Trip Description' placeholderTextColor='green' value={this.state.tripDescription} onChangeText={this.onValueChangeTripDescription.bind(this)} />
+          </Item>
+
+          <Form style={{margin:5}}>
           <Picker
-          mode="dropdown"
-          iosHeader="Your Header"
-          selectedValue={this.state.selected3}
-          onValueChange={this.onValueChange3.bind(this)}>
-          <Item label="Dollar $" value="key0" />
-          <Item label="Euro €" value="key1" />
-          <Item label="Pound £" value="key2" />
-          <Item label="Yen ¥" value="key3" />
-        </Picker>
-          </Content>
+            renderHeader={backAction =>
+              <Header style={{ backgroundColor: 'green' }}>
+                <Left>
+                  <Button transparent onPress={backAction}>
+                    <Icon name="arrow-back" style={{ color: "#fff" }} />
+                  </Button>
+                </Left>
+                <Body style={{ flex: 3 }}>
+                  <Title style={{ color: "#fff" }}>Choose the currency</Title>
+                </Body>
+                <Right />
+              </Header>}
+            mode="dropdown"
+            style={{ width: Platform.OS === "ios" ? undefined : 200 }}
+            selectedValue={this.state.selected1}
+            onValueChange={this.onValueChange.bind(this)}
+          >
+            <PickerItem label="€ Euro" value="key0" />
+            <PickerItem label="$ Dollar" value="key1" />
+            <PickerItem label="£ Pound" value="key2" />
+            <PickerItem label="￥Yen" value="key3" />
+            <PickerItem label="Choose the currency" value="key4"/>
+          </Picker>
+        </Form>
+
+        <Button
+          success
+          style={{ alignSelf: "center", margin:10 }}
+          onPress={() => this.add()}
+        ><Text> Create </Text></Button>
+         </Content>
         </Container>
         );
     }
