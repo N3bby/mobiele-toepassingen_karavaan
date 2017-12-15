@@ -17,7 +17,7 @@ import {
 }from 'native-base';
 import TripsListComponent from "./TripsListComponent";
 import CreateTripComponent from "./CreateTripComponent";
-import CreateUser from "./CreateUser";
+import CreateUserComponent from "./CreateUserComponent";
 
 export default class HomeComponent extends React.Component {
 
@@ -28,7 +28,7 @@ export default class HomeComponent extends React.Component {
         //Instantiating component to prevent re-instantiating it every render (and thus reloading the domain)
         this.tripsListComponent = new TripsListComponent();
         this.createTripComponent = new CreateTripComponent();
-        this.CreateUser = new CreateUser();
+        this.CreateUserComponent = new CreateUserComponent();
     }
 
     render() {
@@ -41,8 +41,8 @@ export default class HomeComponent extends React.Component {
         if(this.createTripComponent.props === undefined)this.createTripComponent.props={};
         this.createTripComponent.props.navigation=this.props.navigation;
 
-        if(this.CreateUser.props===undefined)this.CreateUser.props={};
-        this.CreateUser.props.navigation=this.props.navigation;
+        if(this.CreateUserComponent.props===undefined)this.CreateUserComponent.props={};
+        this.CreateUserComponent.props.navigation=this.props.navigation;
 
         return (
             <Container>
