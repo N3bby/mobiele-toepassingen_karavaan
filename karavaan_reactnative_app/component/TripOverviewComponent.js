@@ -16,7 +16,9 @@ import {
     Footer,
     Col,
     Grid,
-    Center
+    Center,
+    Thumbnail,
+    Badge
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 import UserListOfTripComponent from "./UserListOfTripComponent";
@@ -49,59 +51,68 @@ export default class TripOverviewComponent extends React.Component {
 
         return (
             <Container>
-                <Header>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name="arrow-back"/>
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>{group.name}</Title>
-                        <Text note>Activity</Text>
-                        </Body>
-                    <Right>
-                    <Button small danger onPress={() => this.deleteTrip(group.id)}>
-                    <Icon active name="trash" />
+            <Header>
+                <Left>
+                    <Button transparent onPress={() => this.props.navigation.goBack()}>
+                        <Icon name="arrow-back"/>
                     </Button>
-                    </Right>
-                </Header>
-                <Content>
+                </Left>
                 <Body>
-                <Grid>
-                <Col>
-                    <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewOfTrip",{tripId: groupId})}>
-                    <Icon active name="person"/>
-                    <Text>Add Person</Text>
-                    </Button>
-                    </Col>
-                    <Col>
-                    <Button rounded info>
-                    <Icon active name="person"/>
-                    <Text>Add Expense</Text>
-                    </Button>
-                    </Col>
-                    </Grid>
+                    <Title>{group.name}</Title>
+                    <Text note>Activity</Text>
                     </Body>
-                    <List>
-                    {global.service.getParticipantsByTripId(0).map((item) => (
-                        <ListItem button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
-                            <Body>
-                            <Text>{item.name}</Text>
-                            <Text note>{item.firstName}</Text>
-                            <Text note>{item.lastName}</Text>                            
-                            </Body>
-                        </ListItem>
-                    ))}
-                </List>
-                </Content>
-                <Footer>
-                    <Grid>
-                        <Col><Button><Text>Settle Up</Text></Button></Col>
-                        <Col><Button><Text>Balances</Text></Button></Col>
-                        <Col><Button><Text>Users</Text></Button></Col>
-                    </Grid>
-                </Footer>
-            </Container>
-        );
-    }
+                <Right>
+                <Button small danger onPress={() => this.deleteTrip(group.id)}>
+                <Icon active name="trash" />
+                </Button>
+                </Right>
+            </Header>
+            <Content>
+            <Body>
+            <Grid>
+            <Col>
+                <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewOfTrip",{tripId: groupId})}>
+                <Icon active name="person"/>
+                <Text>Add Person</Text>
+                </Button>
+                </Col>
+                <Col>
+                <Button rounded info>
+                <Icon active name="person"/>
+                <Text>Add Expense</Text>
+                </Button>
+                </Col>
+                </Grid>
+                </Body>
+                <ListItem itemHeader first>
+                <Text style={{justifyContent: "center",alignItems: "center"}}>List of expenses</Text>
+                </ListItem>
+                <List style={{padding:5}}>
+                {global.service.getParticipantsByTripId(groupId).map((item,index) => (
+                    <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
+                        <Left>
+                        <Badge primary>
+                        <Text>{item.id}</Text>
+                      </Badge>                        
+                      </Left>    
+                    <Body>
+                        <Text>{item.name}</Text>
+                        </Body>
+                        <Right>
+                        <Text note>{new Date().toLocaleString()}</Text>
+                        </Right>
+                    </ListItem>
+                ))}
+            </List>
+            </Content>
+            <Footer>
+                <Grid>
+                    <Col><Button><Text>Settle Up</Text></Button></Col>
+                    <Col><Button><Text>Balances</Text></Button></Col>
+                    <Col><Button><Text>Users</Text></Button></Col>
+                </Grid>
+            </Footer>
+        </Container>
+    );
+}
 }
