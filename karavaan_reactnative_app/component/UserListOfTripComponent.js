@@ -22,6 +22,7 @@ import {
 }from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Person} from "../domain/Person";
+import TripOverviewComponent from "./TripOverviewComponent";
 
 export default class UserListOfTripComponent extends React.Component {
 
@@ -35,7 +36,7 @@ export default class UserListOfTripComponent extends React.Component {
         global.service.addExistingParticipantToTripById(tripId,id);
         alert("persoon id \n idnr: "+id +"\n tripId:"+tripId+"\n successvol toegevoegd");
         this.props.navigation.goBack();
-        global.homeComponent.forceUpdate();
+        global.tripOverview.forceUpdate();
     }
 
     render() {

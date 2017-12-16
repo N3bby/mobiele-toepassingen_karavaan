@@ -28,6 +28,7 @@ export default class TripOverviewComponent extends React.Component {
 
     constructor() {
         super();
+        global.tripOverview = this;
         this.UserListOfTripComponent = new UserListOfTripComponent();
     }
 
