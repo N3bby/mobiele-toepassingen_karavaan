@@ -73,13 +73,13 @@ export default class TripOverviewComponent extends React.Component {
             <Col>
                 <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewOfTrip",{tripId: groupId})}>
                 <Icon active name="person"/>
-                <Text>Add Person</Text>
+                <Text style={{fontSize:12}}>Add user to trip</Text>
                 </Button>
                 </Col>
                 <Col>
                 <Button rounded info>
                 <Icon active name="person"/>
-                <Text>Add Expense</Text>
+                <Text style={{fontSize:12}}>Add Expenses to trip</Text>
                 </Button>
                 </Col>
                 </Grid>
