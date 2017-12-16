@@ -27,6 +27,11 @@ export default class UserListOfTripComponent extends React.Component {
         super();
         //global.userListOfTripComponent = this;
     }
+
+    deleteUser(id){
+        alert("need to make a function in karavaan service to delete the user from the trip");
+    }
+
     render() {
         var tripId = this.props.navigation.state.params.tripId;
                return (
@@ -46,7 +51,9 @@ export default class UserListOfTripComponent extends React.Component {
                         </Text>
                         </Body>
                         <Right>
-                        <Text note>{new Date().toLocaleString()}</Text>
+                        <Button small danger onPress={() => this.deleteUser(item.id)}>
+                            <Icon active name="trash" />
+                            </Button>
                         </Right>
                     </ListItem>
                 ))}
