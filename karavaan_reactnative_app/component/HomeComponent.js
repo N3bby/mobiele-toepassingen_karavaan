@@ -13,7 +13,8 @@ import {
     Tab,
     FooterTab,
     Footer,
-    Fab
+    Fab,
+    navigation
 }from 'native-base';
 import TripsListComponent from "./TripsListComponent";
 import CreateTripComponent from "./CreateTripComponent";

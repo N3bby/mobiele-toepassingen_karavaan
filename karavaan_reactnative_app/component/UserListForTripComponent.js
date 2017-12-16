@@ -23,33 +23,31 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import {Person} from "../domain/Person";
 import TripOverviewComponent from "./TripOverviewComponent";
-
+import UserListOfTripComponent from "./UserListOfTripComponent";
 export default class UserListForTripComponent extends React.Component {
 
     constructor(navigation) {
         super();
-        
+        this.userListOfTripComponent = new UserListOfTripComponent();     
     }
 
     addUserToTrip(id){
         var tripId = this.props.navigation.state.params.tripId;
         global.service.addExistingParticipantToTripById(tripId,id);
         alert("persoon id \n idnr: "+id +"\n tripId:"+tripId+"\n successvol toegevoegd");
-        this.props.navigation.goBack();
-        global.tripOverview.forceUpdate();
+        this.props.navigation.navigate("UserOverviewForTrip",{ tripId: tripId});
     }
 
     render() {
+        if(this.userListOfTripComponent.props === undefined) this.userListOfTripComponent.props = {};
+        this.userListOfTripComponent.props.navigation = this.props.navigation;
+       
         var tripId = this.props.navigation.state.params.tripId;
-
-        //TODO Fix the weird touch effect here.
-        //Bug report of it can be found here: https://github.com/GeekyAnts/NativeBase/issues/1378
-        //Apparently an issue with the last version of NativeBase. Might need to wait for a fix
         return (
             <Container>
             <Header hasTabs>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                        <Button transparent onPress={() => this.props.navigation.navigate("TripOverview",{groupId:tripId})}>
                             <Icon name="arrow-back"/>
                         </Button>
                     </Left>
@@ -62,25 +60,7 @@ export default class UserListForTripComponent extends React.Component {
 
                 <Tabs>
                 <Tab heading="Users of this trip">
-                <List>
-                {global.service.getParticipantsByTripId(tripId).map((item,index) => (
-                    <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
-                    <Left>
-                        <Badge primary>
-                        <Text>{item.id}</Text>
-                      </Badge>                        
-                      </Left>        
-                    <Body>
-                        <Text>
-                         {item.name}
-                        </Text>
-                        </Body>
-                        <Right>
-                        <Text note>{new Date().toLocaleString()}</Text>
-                        </Right>
-                    </ListItem>
-                ))}
-            </List>
+                {this.userListOfTripComponent.render()}
            </Tab>   
                 <Tab heading="List of all users">         
                 <Content>
