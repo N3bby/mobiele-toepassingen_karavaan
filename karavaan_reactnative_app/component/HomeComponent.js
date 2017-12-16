@@ -19,7 +19,7 @@ import TripsListComponent from "./TripsListComponent";
 import CreateTripComponent from "./CreateTripComponent";
 import CreateUserComponent from "./CreateUserComponent";
 import UserListComponent from "./UserListComponent";
-import UserListOfTripComponent from "./UserListOfTripComponent";
+import UserListForTripComponent from "./UserListForTripComponent";
 
 export default class HomeComponent extends React.Component {
 
@@ -32,7 +32,7 @@ export default class HomeComponent extends React.Component {
         this.createTripComponent = new CreateTripComponent();
         this.CreateUserComponent = new CreateUserComponent();
         this.UserListComponent   = new UserListComponent();
-        this.UserListOfTripComponent = new UserListOfTripComponent();
+        this.UserListForTripComponent = new UserListForTripComponent();
     }
 
     render() {
@@ -51,8 +51,8 @@ export default class HomeComponent extends React.Component {
         if(this.UserListComponent.props === undefined) this.UserListComponent.props={};
         this.UserListComponent.props.navigation = this.props.navigation;
 
-        if(this.UserListOfTripComponent.props === undefined) this.UserListOfTripComponent.props={};
-        this.UserListOfTripComponent.props.navigation=this.props.navigation;
+        if(this.UserListForTripComponent.props === undefined) this.UserListForTripComponent.props={};
+        this.UserListForTripComponent.props.navigation=this.props.navigation;
 
         return (
             <Container>

@@ -21,7 +21,7 @@ import {
     Badge
 }from 'native-base';
 import {Trip} from "../domain/Trip";
-import UserListOfTripComponent from "./UserListOfTripComponent";
+import UserListForTripComponent from "./UserListForTripComponent";
 
 
 export default class TripOverviewComponent extends React.Component {
@@ -29,7 +29,7 @@ export default class TripOverviewComponent extends React.Component {
     constructor() {
         super();
         global.tripOverview = this;
-        this.UserListOfTripComponent = new UserListOfTripComponent();
+        this.UserListForTripComponent = new UserListForTripComponent();
     }
 
     deleteTrip(id){
@@ -41,8 +41,8 @@ export default class TripOverviewComponent extends React.Component {
 
     render() {
         
-        if(this.UserListOfTripComponent.props === undefined) this.UserListOfTripComponent.props={};
-        this.UserListOfTripComponent.props.navigation=this.props.navigation;
+        if(this.UserListForTripComponent.props === undefined) this.UserListForTripComponent.props={};
+        this.UserListForTripComponent.props.navigation=this.props.navigation;
 
 
 
@@ -72,7 +72,7 @@ export default class TripOverviewComponent extends React.Component {
             <Body>
             <Grid>
             <Col>
-                <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewOfTrip",{tripId: groupId})}>
+                <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}>
                 <Icon active name="person"/>
                 <Text style={{fontSize:12}}>Add user to trip</Text>
                 </Button>

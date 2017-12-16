@@ -24,7 +24,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import {Person} from "../domain/Person";
 import TripOverviewComponent from "./TripOverviewComponent";
 
-export default class UserListOfTripComponent extends React.Component {
+export default class UserListForTripComponent extends React.Component {
 
     constructor(navigation) {
         super();
