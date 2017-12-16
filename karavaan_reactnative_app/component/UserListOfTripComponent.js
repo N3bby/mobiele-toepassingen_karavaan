@@ -20,6 +20,7 @@ import {
 }from 'native-base';
 import {Person} from "../domain/Person";
 
+
 export default class UserListOfTripComponent extends React.Component {
 
     constructor(navigation) {
@@ -33,7 +34,7 @@ export default class UserListOfTripComponent extends React.Component {
             <Content>
                 <List>
                 {global.service.getParticipantsByTripId(tripId).map((item,index) => (
-                    <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
+                    <ListItem key={index} button={true} onPress={() => this.props.navigation.goBack()} avatar>
                     <Left>
                         <Badge primary>
                         <Text>{item.id}</Text>

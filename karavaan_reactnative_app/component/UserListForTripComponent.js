@@ -24,6 +24,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import {Person} from "../domain/Person";
 import TripOverviewComponent from "./TripOverviewComponent";
 import UserListOfTripComponent from "./UserListOfTripComponent";
+import HomeComponent from './HomeComponent';
 export default class UserListForTripComponent extends React.Component {
 
     constructor(navigation) {
@@ -35,7 +36,7 @@ export default class UserListForTripComponent extends React.Component {
         var tripId = this.props.navigation.state.params.tripId;
         global.service.addExistingParticipantToTripById(tripId,id);
         alert("persoon id \n idnr: "+id +"\n tripId:"+tripId+"\n successvol toegevoegd");
-        this.props.navigation.navigate("UserOverviewForTrip",{ tripId: tripId});
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -47,7 +48,7 @@ export default class UserListForTripComponent extends React.Component {
             <Container>
             <Header hasTabs>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.navigate("TripOverview",{groupId:tripId})}>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <Icon name="arrow-back"/>
                         </Button>
                     </Left>

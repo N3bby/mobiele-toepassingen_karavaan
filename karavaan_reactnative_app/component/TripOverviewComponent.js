@@ -39,7 +39,7 @@ export default class TripOverviewComponent extends React.Component {
     }
 
     goToHome(){
-        this.props.navigation.navigate("Home");
+       // this.props.navigation.navigate("Home");
         //global.homeComponent.forceUpdate();
     }
 
@@ -59,7 +59,7 @@ export default class TripOverviewComponent extends React.Component {
             <Container>
             <Header>
                 <Left>
-                    <Button transparent onPress={()=> this.goToHome()}>
+                    <Button transparent onPress={()=> this.props.navigation.goBack()}>
                         <Icon name="arrow-back"/>
                     </Button>
                 </Left>
