@@ -368,6 +368,26 @@ export class KaravaanService
     }
     
     /**
+    * Remove a person by its ID.
+    *
+    * @throws Will throw an Error when the person participates to a Trip.
+    * 
+    * @param {number} [personId] - The ID of the person to be removed.
+    */
+    removePersonById(personId : number)
+    {
+        let isActiveUser = false;
+        
+        for (let participant of this.getAllParticipants())
+        {
+            if (participant.id == personId) isActiveUser = true;
+        }
+        
+        if (isActiveUser) throw new Error('User is an active participant. Remove him/her from all trips first.');
+        else this.personMap.delete(personId);
+    }
+    
+    /**
     * Add a new participant to the Trip by using the Trips ID.
     *
     * @param {number} tripId - The ID of the Trip this participant has to be added to.
