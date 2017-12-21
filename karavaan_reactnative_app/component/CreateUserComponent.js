@@ -57,7 +57,8 @@ export default class CreateUserComponent extends React.Component {
         {
             global.service.addNewPerson(this.state.firstName,this.state.lastName);
             global.saveService();
-            this.props.navigation.goBack();
+            //this.props.navigation.goBack();
+            this.props.navigation.navigate("Home");
             global.homeComponent.forceUpdate();
         }
     }
