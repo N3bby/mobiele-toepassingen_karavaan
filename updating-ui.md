@@ -24,7 +24,7 @@ constructor() {
   
   	//With an anonymous function (entity argument ignored here
   	global.observerService.addPersonMapObserver(() => {
-    	this.forceUpdate();
+    	  this.forceUpdate();
   	})
   
   	//Using another function (with entity argument here
