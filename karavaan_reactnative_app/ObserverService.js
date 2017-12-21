@@ -5,6 +5,7 @@ export class ObserverService {
         this._observedService = service;
         this._personMapObservers = [];
         this._tripMapObservers = [];
+        this._tripExpensesObservers = {}; //This is a map since every trip has its own array of expenses
 
         this._applyObserverables()
     }
@@ -58,5 +59,12 @@ export class ObserverService {
     addTripMapObserver(callback) {
         this._tripMapObservers.push(callback);
     }
+
+    // addTripExpensesObserver(tripId, callback) {
+    //     let trip = global.service.getTripById(tripId);
+    //
+    //     Map.prototype.set
+    //
+    // }
 
 }

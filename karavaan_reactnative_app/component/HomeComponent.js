@@ -31,7 +31,7 @@ export default class HomeComponent extends React.Component {
     debugClear() {
         global.clearService();
         global.loadService();
-        this.forceUpdate();
+        alert("Please reload the app!")
     }
 
     render() {
