@@ -94,7 +94,7 @@ export default class UserListForTripComponent extends React.Component {
                 </List>
             </Content>
             <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
-            <Icon name="md-add" onPress={()=>this.props.navigation.navigate("som")}/>
+            <Icon name="md-add" onPress={()=>this.props.navigation.navigate("CreateUser")}/>
         </Fab>
         </Tab>
            </Tabs>

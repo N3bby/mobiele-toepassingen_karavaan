@@ -27,7 +27,7 @@ export default class UserListOfTripComponent extends React.Component {
 
     constructor(navigation) {
         super();
-        //global.userListOfTripComponent = this;
+        global.userListOfTripComponent = this;
     }
 
     deleteUser(id){
@@ -39,24 +39,14 @@ export default class UserListOfTripComponent extends React.Component {
                return (
             <Container>
             <Content>
-                <List>
+                <List  style={{ flex: 1, backgroundColor: '#fff' }}>
                 {global.service.getParticipantsByTripId(tripId).map((item,index) => (
                     <ListItem key={index} button={true} onPress={() => this.props.navigation.goBack()} avatar>
-                    <Left>
-                        <Badge primary>
-                        <Text>{item.id}</Text>
-                      </Badge>                        
-                      </Left>        
                     <Body>
                         <Text>
                          {item.name}
                         </Text>
                         </Body>
-                        <Right>
-                        <Button small danger onPress={() => this.deleteUser(item.id)}>
-                            <Icon active name="trash" />
-                            </Button>
-                        </Right>
                     </ListItem>
                 ))}
             </List>

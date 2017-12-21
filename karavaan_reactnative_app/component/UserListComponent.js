@@ -50,17 +50,29 @@ export default class UserListComponent extends React.Component {
                 <List>
                     {global.service.persons.map((item, index) => (
                         <ListItem key={index} avatar>
-                            <Left>
-                                <Icon active name="person" />
-                            </Left>
                             <Body>
-                                <Text>{item.name}</Text>
-                            </Body>
+                            <Grid>
+                            <Left>
+                            <Icon active name="person" style={{padding:5}}/>
+                            </Left>
+                            <Col>
+                            <Text>
+                            {item.name}
+                            </Text>
+                            </Col>
+                            <Col> 
                             <Right>
-                                <Button danger>
-                                    <Icon name='trash' onPress={() => this.deletePerson(item.id) } />
-                                </Button>
+                            <Button danger>
+                            <Icon name='trash' onPress={() => this.deletePerson(item.id) } />
+                            </Button>
                             </Right>
+                            </Col>
+                            </Grid>
+                            </Body>
+
+
+
+
                         </ListItem>
                     ))}
                 </List>
