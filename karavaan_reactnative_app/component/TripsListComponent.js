@@ -15,17 +15,21 @@ import {
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 import { Col, Row, Grid } from "react-native-easy-grid";
+import '../ServiceWrapper.js';
+
+
+
 export default class TripsListComponent extends React.Component {
 
     constructor(navigation) {
         super();
         //Some test data
+        /*global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");
+        global.service.addNewTrip("SomeTrip", "Some description for the trip");*/
     }
     
 

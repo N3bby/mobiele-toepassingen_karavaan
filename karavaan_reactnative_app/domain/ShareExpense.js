@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ExpenseType_1 = require("./ExpenseType");
+const IExpenseDO_1 = require("./IExpenseDO");
 class ShareExpense {
     constructor(id = -1, expenseAmount = 100, category, description = "A new SharedExpense where participants enter their own debts.") {
         this.expenseType = ExpenseType_1.ExpenseType.ShareExpense;
@@ -127,6 +128,19 @@ class ShareExpense {
                 creditMap.set(payment.creditor, payment.amount);
         }
         return creditMap;
+    }
+    toDataObject() {
+        let newDO = new IExpenseDO_1.IExpenseDO();
+        newDO.id = this.id;
+        newDO.idCounter = this.idCounter;
+        newDO.expenseType = this.expenseType;
+        newDO.category = this.category;
+        newDO.description = this.description;
+        newDO.expenseAmount = this.expenseAmount;
+        newDO.currency = this.currency;
+        newDO.payments = Array.from(this.payments.values());
+        newDO.debts = Array.from(this.debts.values());
+        return newDO;
     }
 }
 exports.ShareExpense = ShareExpense;

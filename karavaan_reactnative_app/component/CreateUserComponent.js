@@ -23,6 +23,8 @@ import {
 import {Trip} from "../domain/Trip";
 import HomeComponent from './HomeComponent';
 import { KaravaanService } from '../domain/KaravaanService';
+import '../ServiceWrapper.js';
+
 export default class CreateUserComponent extends React.Component {
 
     constructor(props) {
@@ -47,8 +49,8 @@ export default class CreateUserComponent extends React.Component {
 
 
     add(){
-        let service = new KaravaanService();        
         global.service.addNewPerson(this.state.firstName,this.state.lastName);
+        global.saveService();
         this.props.navigation.goBack();
         global.homeComponent.forceUpdate();
     }

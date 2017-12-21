@@ -25,6 +25,9 @@ import {Person} from "../domain/Person";
 import TripOverviewComponent from "./TripOverviewComponent";
 import UserListOfTripComponent from "./UserListOfTripComponent";
 import HomeComponent from './HomeComponent';
+
+import '../ServiceWrapper.js';
+
 export default class UserListForTripComponent extends React.Component {
 
     constructor(navigation) {
@@ -35,6 +38,7 @@ export default class UserListForTripComponent extends React.Component {
     addUserToTrip(id){
         var tripId = this.props.navigation.state.params.tripId;
         global.service.addExistingParticipantToTripById(tripId,id);
+        global.saveService();
         alert("persoon id \n idnr: "+id +"\n tripId:"+tripId+"\n successvol toegevoegd");
         this.props.navigation.goBack();
     }

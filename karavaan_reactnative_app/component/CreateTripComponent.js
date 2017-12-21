@@ -23,6 +23,8 @@ import {
 import {Trip} from "../domain/Trip";
 import HomeComponent from './HomeComponent';
 import { Currency } from '../domain/Currency';
+import '../ServiceWrapper.js';
+
  const PickerItem = Picker.Item;
 export default class CreateTripComponent extends React.Component {
 
@@ -58,6 +60,7 @@ export default class CreateTripComponent extends React.Component {
       var a = Math.floor(Math.random()*1000);
       const trip = new Trip(a,this.state.tripName,this.state.tripDescription,new Currency(this.state.selected1,1));
       global.service.addTrip(trip);
+      global.saveService();
       this.props.navigation.goBack();
       global.homeComponent.forceUpdate();
     }

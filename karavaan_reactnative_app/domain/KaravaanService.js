@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const Currency_1 = require("./Currency");
 const Trip_1 = require("./Trip");
 const Person_1 = require("./Person");
 const CurrencyService_1 = require("./CurrencyService");
@@ -9,6 +10,7 @@ const Debt_1 = require("./Debt");
 const Payment_1 = require("./Payment");
 const BillItem_1 = require("./BillItem");
 const BillExpense_1 = require("./BillExpense");
+const KaravaanServiceDO_1 = require("./KaravaanServiceDO");
 /**
 * Class representing a KaravaanService.
 */
@@ -646,6 +648,70 @@ class KaravaanService {
         let expense = this.getExpenseById(tripId, expenseId);
         expense.addBillItem(newBillItem);
         return expense;
+    }
+    /**
+    * Create a DataObject of this service that can later be used to reload it.
+    *
+    * @returns {KaravaanServiceDO} - The DataObject that represents this service.
+    */
+    toDataObject() {
+        let newDO = new KaravaanServiceDO_1.KaravaanServiceDO();
+        newDO.idCounter = this.idCounter;
+        newDO.persons = this.persons;
+        for (let trip of this.trips) {
+            newDO.trips.push(trip.toDataObject());
+        }
+        newDO.currencies = this.currencies;
+        return newDO;
+    }
+    static fromDataObject(karavaanDO) {
+        let newService = new KaravaanService();
+        newService.idCounter = karavaanDO.idCounter;
+        // Import users
+        for (let person of karavaanDO.persons) {
+            let newPerson = new Person_1.Person(person.id, person.firstName, person.lastName);
+            newService.addPerson(newPerson);
+        }
+        // Import currencies
+        let currencyMap = new Map();
+        for (let currency of karavaanDO.currencies) {
+            let newCurrency = new Currency_1.Currency(currency.name, currency.rateComparedToEUR);
+            currencyMap.set(newCurrency.name, newCurrency);
+        }
+        newService.currencyService.currencies = currencyMap;
+        // Import Trips
+        for (let tripDO of karavaanDO.trips) {
+            let newTrip = new Trip_1.Trip(tripDO.id, tripDO.name);
+            newTrip.description = tripDO.description;
+            newTrip.date = new Date(tripDO.date);
+            newService.addTrip(newTrip);
+            // Import participants of this trip
+            for (let participant of tripDO.participants) {
+                newService.addExistingParticipantToTripById(newTrip.id, participant.id);
+            }
+            // Import currencies of this trip
+            for (let currency of tripDO.currencies) {
+                newService.addCurrencyToTrip(newTrip.id, newService.getCurrency(currency.name));
+            }
+            // Import Expenses for this trip
+            for (let expenseDO of tripDO.expenses) {
+                let newExpense = newService.addNewExpenseByTripId(newTrip.id, expenseDO.expenseType, expenseDO.expenseAmount, expenseDO.description, expenseDO.category);
+                newExpense.currency = newService.getCurrency(expenseDO.currency.name);
+                for (let payment of expenseDO.payments) {
+                    newService.addNewPaymentToExpenseById(newTrip.id, newExpense.id, payment.creditor.id, payment.amount);
+                }
+                for (let participant of expenseDO.participants) {
+                    newService.addParticipantToExpenseById(newTrip.id, newExpense.id, participant.id);
+                }
+                for (let billItem of expenseDO.billItems) {
+                    newService.addNewBillItemToExpenseById(newTrip.id, newExpense.id, billItem.debtor.id, billItem.description, billItem.amount);
+                }
+                for (let debt of expenseDO.debts) {
+                    newService.addNewDebtToExpenseById(newTrip.id, newExpense.id, debt.debtor.id, debt.amount);
+                }
+            }
+        }
+        return newService;
     }
 }
 exports.KaravaanService = KaravaanService;

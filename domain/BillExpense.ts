@@ -5,6 +5,7 @@ import { Person } from './Person';
 import { Payment } from './Payment';
 import { Debt } from './Debt';
 import { BillItem } from './BillItem';
+import { IExpenseDO } from './IExpenseDO';
 
 export class BillExpense implements IExpense
 {
@@ -279,6 +280,23 @@ export class BillExpense implements IExpense
         }
         
         return creditMap;
+    }
+    
+    toDataObject() : IExpenseDO
+    {
+        let newDO = new IExpenseDO();
+        
+        newDO.id = this.id;
+        newDO.idCounter = this.idCounter;
+        newDO.expenseType = this.expenseType;
+        newDO.category = this.category;
+        newDO.description = this.description;
+        newDO.expenseAmount = this.expenseAmount;
+        newDO.currency = this.currency;
+        newDO.payments = Array.from(this.payments.values()); 
+        newDO.billItems = Array.from(this.billItems.values());
+        
+        return newDO;
     }
     
 }

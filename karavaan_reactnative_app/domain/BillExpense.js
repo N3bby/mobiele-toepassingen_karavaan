@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ExpenseType_1 = require("./ExpenseType");
 const Currency_1 = require("./Currency");
 const Debt_1 = require("./Debt");
+const IExpenseDO_1 = require("./IExpenseDO");
 class BillExpense {
     constructor(id = -1, expenseAmount = 100, category = "category", description = "New split by BillItem Expense.") {
         this.expenseType = ExpenseType_1.ExpenseType.BillExpense;
@@ -173,6 +174,19 @@ class BillExpense {
                 creditMap.set(payment.creditor, payment.amount);
         }
         return creditMap;
+    }
+    toDataObject() {
+        let newDO = new IExpenseDO_1.IExpenseDO();
+        newDO.id = this.id;
+        newDO.idCounter = this.idCounter;
+        newDO.expenseType = this.expenseType;
+        newDO.category = this.category;
+        newDO.description = this.description;
+        newDO.expenseAmount = this.expenseAmount;
+        newDO.currency = this.currency;
+        newDO.payments = Array.from(this.payments.values());
+        newDO.billItems = Array.from(this.billItems.values());
+        return newDO;
     }
 }
 exports.BillExpense = BillExpense;

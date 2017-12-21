@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Debt_1 = require("./Debt");
 const Currency_1 = require("./Currency");
 const ExpenseType_1 = require("./ExpenseType");
+const IExpenseDO_1 = require("./IExpenseDO");
 /**
 * An EvenExpense is an expense where the debt gets evenly divided by participant.
 * First, the total expenseAmount needs to be set, then it is possible to add payments and after that it is possible to add participants for debt calculation.
@@ -389,6 +390,24 @@ class EvenExpense {
                 creditMap.set(payment.creditor, payment.amount);
         }
         return creditMap;
+    }
+    /**
+    * Converts the Expense to a DataObject.
+    *
+    * @returns {IExpenseDO} - The DataObject representing this Expense.
+    */
+    toDataObject() {
+        let newDO = new IExpenseDO_1.IExpenseDO();
+        newDO.id = this.id;
+        newDO.idCounter = this.idCounter;
+        newDO.expenseType = this.expenseType;
+        newDO.category = this.category;
+        newDO.description = this.description;
+        newDO.expenseAmount = this.expenseAmount;
+        newDO.currency = this.currency;
+        newDO.participants = this.participants;
+        newDO.payments = Array.from(this.payments.values());
+        return newDO;
     }
 }
 exports.EvenExpense = EvenExpense;

@@ -17,25 +17,5 @@ class Currency {
         this.name = name;
         this.rateComparedToEUR = rateComparedToEUR;
     }
-    /**
-    * Get or set the name of the currency.
-    * @returns {number} The name of the currency.
-    */
-    get name() {
-        return this._name;
-    }
-    set name(name) {
-        this._name = name;
-    }
-    set rateComparedToEUR(rate) {
-        this._rateComparedToEUR = rate;
-    }
-    /**
-    * Get or set the rate of the currency compared to EUR.
-    * @returns {number} The rate of the currency compared to EUR.
-    */
-    get rateComparedToEUR() {
-        return this._rateComparedToEUR;
-    }
 }
 exports.Currency = Currency;

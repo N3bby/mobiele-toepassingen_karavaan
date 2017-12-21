@@ -20,6 +20,8 @@ import {
 }from 'native-base';
 import {Person} from "../domain/Person";
 
+import '../ServiceWrapper.js';
+
 
 export default class UserListOfTripComponent extends React.Component {
 

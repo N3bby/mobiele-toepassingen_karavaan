@@ -18,8 +18,9 @@ export default class App extends React.Component {
 
     constructor() {
         super();
-        global.service = new KaravaanService();
-        global.person = new  Person();
+//        global.service = new KaravaanService();
+        global.loadService();
+        global.person = new Person();
         global.trip = new Trip();
     }
 

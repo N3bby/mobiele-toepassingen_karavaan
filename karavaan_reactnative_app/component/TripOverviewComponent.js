@@ -22,6 +22,7 @@ import {
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 import UserListForTripComponent from "./UserListForTripComponent";
+import '../ServiceWrapper.js';
 
 
 export default class TripOverviewComponent extends React.Component {
@@ -34,6 +35,7 @@ export default class TripOverviewComponent extends React.Component {
 
     deleteTrip(id){
         global.service.removeTripById(id);
+        global.saveService();
         this.props.navigation.goBack();
         global.homeComponent.forceUpdate();
     }

@@ -22,6 +22,8 @@ import CreateUserComponent from "./CreateUserComponent";
 import UserListComponent from "./UserListComponent";
 import UserListForTripComponent from "./UserListForTripComponent";
 
+import '../ServiceWrapper.js';
+
 export default class HomeComponent extends React.Component {
 
     constructor() {

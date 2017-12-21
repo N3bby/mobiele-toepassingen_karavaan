@@ -5,6 +5,7 @@ import { BillItem } from './BillItem';
 import { Person } from './Person';
 import { Currency } from './Currency';
 import { ExpenseType } from './ExpenseType';
+import { IExpenseDO } from './IExpenseDO';
 
 /**
 * An EvenExpense is an expense where the debt gets evenly divided by participant.
@@ -525,5 +526,27 @@ export class EvenExpense implements IExpense
         }
         
         return creditMap;
+    }
+    
+    /**
+    * Converts the Expense to a DataObject.
+    *
+    * @returns {IExpenseDO} - The DataObject representing this Expense.
+    */
+    toDataObject() : IExpenseDO
+    {
+        let newDO = new IExpenseDO();
+        
+        newDO.id = this.id;
+        newDO.idCounter = this.idCounter;
+        newDO.expenseType = this.expenseType;
+        newDO.category = this.category;
+        newDO.description = this.description;
+        newDO.expenseAmount = this.expenseAmount;
+        newDO.currency = this.currency;
+        newDO.participants = this.participants;
+        newDO.payments = Array.from(this.payments.values());
+        
+        return newDO;
     }
 }

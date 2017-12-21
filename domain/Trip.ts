@@ -1,6 +1,7 @@
 import { IExpense } from './IExpense';
 import { Person } from './Person';
 import { Currency } from './Currency';
+import { TripDO } from './TripDO';
 
 /**
 * A Trip is a class that stores information about a Trip. Everything in the KaravaanService revolves around Trips.
@@ -44,6 +45,7 @@ export class Trip
         this.addCurrency(currency);
         this.expenses = expenses;
         this.participants = participants;
+        this.date = date;
     }
     
     /**
@@ -297,5 +299,25 @@ export class Trip
     {
         this.currencyMap.delete(currency.name);
         return this.currencyMap.size;
+    }
+    
+    toDataObject() : TripDO
+    {
+        let newDO = new TripDO();
+        
+        newDO.id = this.id;
+        newDO.name = this.name;
+        newDO.description = this.description;
+        newDO.currencies = this.currencies;
+        
+        for (let IExpense of this.expenses)
+        {
+            newDO.expenses.push(IExpense.toDataObject());
+        }
+        
+        newDO.participants = this.participants;
+        newDO.date = this.date.toISOString();
+        
+        return newDO;
     }
 }

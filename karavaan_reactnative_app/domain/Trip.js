@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Currency_1 = require("./Currency");
+const TripDO_1 = require("./TripDO");
 /**
 * A Trip is a class that stores information about a Trip. Everything in the KaravaanService revolves around Trips.
 */
@@ -26,6 +27,7 @@ class Trip {
         this.addCurrency(currency);
         this.expenses = expenses;
         this.participants = participants;
+        this.date = date;
     }
     /**
     * Get or set the ID of the Trip.
@@ -217,6 +219,19 @@ class Trip {
     removeCurrency(currency) {
         this.currencyMap.delete(currency.name);
         return this.currencyMap.size;
+    }
+    toDataObject() {
+        let newDO = new TripDO_1.TripDO();
+        newDO.id = this.id;
+        newDO.name = this.name;
+        newDO.description = this.description;
+        newDO.currencies = this.currencies;
+        for (let IExpense of this.expenses) {
+            newDO.expenses.push(IExpense.toDataObject());
+        }
+        newDO.participants = this.participants;
+        newDO.date = this.date.toISOString();
+        return newDO;
     }
 }
 exports.Trip = Trip;

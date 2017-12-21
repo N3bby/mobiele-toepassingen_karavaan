@@ -4,6 +4,7 @@ import { Debt } from './Debt';
 import { Person } from './Person';
 import { Currency } from './Currency';
 import { ExpenseType } from './ExpenseType';
+import { IExpenseDO } from './IExpenseDO';
 
 /**
 * An Expense is an object that holds information about a certain bill to a thrid party.
@@ -191,4 +192,11 @@ export interface IExpense
     * @returns {Map<Person, number>} A Map containing all the creditors of this IExpense, where the keys are the creditors Person instances, and the values are the total amount of their payments.
     */
     creditByCreditor : Map<Person, number>;
+    
+    /**
+    * Convert the IExpense to a DataObject.
+    *
+    * @returns an IExpenseDO
+    */
+    toDataObject() : IExpenseDO;
 }

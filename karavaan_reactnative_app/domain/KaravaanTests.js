@@ -263,3 +263,24 @@ function adding_a_BillExpense_to_Trip_works() {
     functionalityWorks("Adding a BillExpense to Trip works.", result);
 }
 adding_a_BillExpense_to_Trip_works();
+function exporting_and_importing_DataObject_works() {
+    let service = new KaravaanService_1.KaravaanService();
+    let participant1 = service.addNewPerson("John", "Lennon");
+    let participant2 = service.addNewPerson("Paul", "McCartney");
+    let participant3 = service.addNewPerson("George", "Harrison");
+    let participant4 = service.addNewPerson("Ringo", "Star");
+    let newTrip = service.addNewTrip("Rome");
+    service.addExistingParticipantToTripById(newTrip.id, participant1.id);
+    service.addExistingParticipantToTripById(newTrip.id, participant2.id);
+    service.addExistingParticipantToTripById(newTrip.id, participant3.id);
+    service.addExistingParticipantToTripById(newTrip.id, participant4.id);
+    let newEvenExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType_1.ExpenseType.EvenExpense, 100);
+    let firstEvenPayment = service.addNewPaymentToExpenseById(newTrip.id, newEvenExpense.id, participant1.id, 50);
+    let secondEvenPayment = service.addNewPaymentToExpenseById(newTrip.id, newEvenExpense.id, participant2.id, 50);
+    let fistEvenParticipant = service.addParticipantToExpenseById(newTrip.id, newEvenExpense.id, participant3.id);
+    let secondEvenParticipant = service.addParticipantToExpenseById(newTrip.id, newEvenExpense.id, participant4.id);
+    let serviceJSONString = JSON.stringify(service.toDataObject());
+    let importedService = KaravaanService_1.KaravaanService.fromDataObject(JSON.parse(serviceJSONString));
+    console.log(Array.from(importedService.trips)[0].expenses);
+}
+exporting_and_importing_DataObject_works();

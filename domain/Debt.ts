@@ -6,12 +6,12 @@ import { Person } from './Person';
 */
 export class Debt
 {
-    private _id : number;
-    private _debtor : Person;
-    private _creditor : Person;
-    private _amount : number;
-    private _description : string;
-    private _isPaid : boolean;
+    id : number;
+    debtor : Person;
+    creditor : Person;
+    amount : number;
+    description : string;
+    isPaid : boolean;
     
     /**
     * Initialise a new Debt.
@@ -33,95 +33,5 @@ export class Debt
         this.amount = amount;
         this.description = description;
         this.isPaid = isPaid;
-    }
-    
-    /**
-    * Get or set the ID of the Debt.
-    *
-    * @returns {number} The ID of the Debt.
-    */
-    get id() : number
-    {
-        return this._id;
-    }
-    
-    set id(newId : number)
-    {
-        this._id = newId;
-    }
-    
-    /**
-    * Get or set the debtor of the Debt.
-    *
-    * @returns {Person} The debtor of the Debt.
-    */
-    get debtor() : Person
-    {
-        return this._debtor;
-    }
-    
-    set debtor(newDebtor : Person) 
-    {
-        this._debtor = newDebtor;
-    }
-    
-    /**
-    * Get or set the creditor of the Debt.
-    *
-    * @returns {Person} The creditor of the Debt.
-    */
-    get creditor() : Person
-    {
-        return this._creditor;
-    }
-    
-    set creditor(newCreditor : Person)
-    {
-        this._creditor = newCreditor;
-    }
-    
-    /**
-    * Get or set the amount (price) of the Debt.
-    *
-    * @returns {number} The amount (price) of the Debt.
-    */
-    get amount() : number
-    {
-        return this._amount;
-    }
-    
-    set amount(newAmount : number)
-    {
-        this._amount = newAmount;
-    }
-    
-    /**
-    * Get or set the description of the Debt.
-    *
-    * @returns {string} The description of the Debt.
-    */
-    get description() : string
-    {
-        return this._description;
-    }
-    
-    set description(newDescription : string)
-    {
-        this._description = newDescription;
-    }
-    
-    /**
-    * Check if the Debt has been paid, or update wether the Debt has been paid or not.
-    *
-    * @returns {boolean} The state of payment. (e.g.: Has the debt already been paid, true or false?)
-    */
-    get isPaid() : boolean
-    {
-        return this._isPaid;
-    }
-    
-    set isPaid(newPaidState : boolean)
-    {
-        this._isPaid = newPaidState;
     }
 }
