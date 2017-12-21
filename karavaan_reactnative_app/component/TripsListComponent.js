@@ -43,9 +43,9 @@ export default class TripsListComponent extends React.Component {
                                 <Thumbnail small source={require('../images/house.jpg')}/>
                             </Left>
                             <Body>
-                            <Text>{item.name}</Text>
-                            <Text note>{item.description}</Text>
-                            <Text note>{item.currencies.map(c => c.name).join(', ')}</Text>                            
+                                <Text numberOfLines={1}>{item.name}</Text>
+                                <Text numberOfLines={1} note>{item.description}</Text>
+                                <Text numberOfLines={1} note>{item.currencies.map(c => c.name).join(', ')}</Text>
                             </Body>
                         </ListItem>
                     ))}
