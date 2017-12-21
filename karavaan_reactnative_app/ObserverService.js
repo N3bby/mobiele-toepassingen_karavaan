@@ -1,6 +1,8 @@
 
 export class ObserverService {
 
+    //TODO Create generic hookMapModification method
+    
     constructor(service) {
         this._observedService = service;
         this._personMapObservers = [];
