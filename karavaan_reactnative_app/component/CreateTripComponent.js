@@ -57,7 +57,7 @@ export default class CreateTripComponent extends React.Component {
 
     add(){
       var currency = this.state.slected1;
-      global.service.addNewTrip(this.state.tripname, this.state.tripDescription);
+      global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
       global.saveService();
       this.props.navigation.goBack();
       global.homeComponent.forceUpdate();
