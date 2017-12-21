@@ -14,17 +14,18 @@ import {
     Icon,
     Text,
     Footer,
-    Col,
-    Grid,
     Center,
     Thumbnail,
     Badge,
     View,
-    H2
-}from 'native-base';
-import {Trip} from "../domain/Trip";
+    H2,
+    H3,
+    Card,
+    CardItem
+} from 'native-base';
+import {Col, Row, Grid} from 'react-native-easy-grid';
 
-import  CreateExpenseComponent  from "./CreateExpenseComponent";
+import CreateExpenseComponent from "./CreateExpenseComponent";
 import '../ServiceWrapper.js';
 
 
@@ -36,36 +37,26 @@ export default class TripOverviewComponent extends React.Component {
         this.CreateExpenseComponent = new CreateExpenseComponent();
     }
 
-    deleteTrip(id){
+    deleteTrip(id) {
         global.service.removeTripById(id);
         global.saveService();
         this.props.navigation.goBack();
     }
 
-    goToHome(){
-       // this.props.navigation.navigate("Home");
-        //global.homeComponent.forceUpdate();
+    navigateToExpenseForm(tripId) {
+        this.props.navigation.navigate("CreateExpenseComponent", {tripId: tripId});
     }
-    
-    navigateToExpenseForm(tripId)
-    {
-        this.props.navigation.navigate("CreateExpenseComponent", {tripId : tripId});
-    }
-    
-    navigateToExpenseOverview(tripId, expenseId)
-    {
+
+    navigateToExpenseOverview(tripId, expenseId) {
         // TODO
     }
-    
-    removeExpense(tripId, expenseId)
-    {
-        try
-        {
+
+    removeExpense(tripId, expenseId) {
+        try {
             global.service.removeExpenseFromTripById(tripId, expenseId);
             global.saveService();
         }
-        catch (error)
-        {
+        catch (error) {
             alert(error);
         }
     }
@@ -73,65 +64,88 @@ export default class TripOverviewComponent extends React.Component {
 
     render() {
 
-        if(this.CreateExpenseComponent.props === undefined) this.CreateExpenseComponent.props={};
-        this.CreateExpenseComponent.props.navigation=this.props.navigation;
+        if (this.CreateExpenseComponent.props === undefined) this.CreateExpenseComponent.props = {};
+        this.CreateExpenseComponent.props.navigation = this.props.navigation;
 
         var groupId = this.props.navigation.state.params.groupId;
         var group = global.service.getTripById(groupId);
 
         return (
-        <Container>
-            <Header>
-                <Left>
-                    <Button transparent onPress={()=> this.props.navigation.goBack()}>
-                        <Icon name="arrow-back"/>
-                    </Button>
-                </Left>
-                <Body>
+            <Container>
+                <Header>
+                    <Left>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name="arrow-back"/>
+                        </Button>
+                    </Left>
+                    <Body>
                     <Title>{group.name}</Title>
-                    <Text note>{group.description}</Text>
                     </Body>
-                <Right>
-                <Button small danger onPress={() => this.deleteTrip(group.id)}>
-                <Icon active name="trash" />
-                </Button>
-                </Right>
+                    <Right>
+                        <Button small danger onPress={() => this.deleteTrip(group.id)}>
+                            <Icon active name="trash"/>
+                        </Button>
+                    </Right>
                 </Header>
-            <Content>
-                <H2 style={{margin: 5}}>List of expenses</H2>
-                    
-                <List>
-                    
-                    {global.service.getExpensesByTripId(groupId).map((item, index) => (
-                     
-                     <ListItem key={index} button={true} onPress={() => this.navigateToExpenseOverview(item.id)}>
-                         <Left>
-                             <Icon name="cash" />
-                         </Left>
-                         <Body>
-                             <Text>{item.description}</Text>
-                             <Text>{item.expenseAmount}</Text>
-                         </Body>
-                         <Right>
-                             <Button danger onPress={() => this.removeExpense(groupId, item.id)} >
-                                 <Icon name="trash" />
-                             </Button>
-                         </Right>
-                      </ListItem>
-                     ))}
-                    
-                </List>
-            </Content>
-            <Footer>
-            <Left style={{margin:5}}>
-            <Button success onPress={()=>this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}><Text>Add users</Text></Button>
-            </Left>
-            <Right style={{margin:5}}>
-            <Button info onPress={() => this.navigateToExpenseForm(groupId)}><Text>Add expenses</Text></Button>
-            </Right>
-            </Footer>
-        </Container>
-    );
-}
+
+                <Content>
+
+                    <Card>
+                        <CardItem header>
+                            <H3>Description</H3>
+                        </CardItem>
+                        <CardItem>
+                            <Body>
+                            <Text>{group.description}</Text>
+                            </Body>
+                        </CardItem>
+                    </Card>
+
+                    <Card style={{marginBottom:0}}>
+                        <CardItem header>
+                            <H3>Expenses</H3>
+                        </CardItem>
+                    </Card>
+
+                    <View style={{ backgroundColor: 'white' }}>
+                        {/* TODO: Move this to a seperate component */}
+                        <List dataArray={global.service.getExpensesByTripId(groupId)} renderRow={(expense) => (
+                                <ListItem key={expense.id} button={false}
+                                          onPress={() => this.navigateToExpenseOverview(expense.id)} icon>
+                                    <Left>
+                                        <Icon name="cash"/>
+                                    </Left>
+                                    <Body>
+                                        <View style={{flexDirection: 'row'}}>
+                                            <Text numberOfLines={1} style={{flex:1}}>{expense.description}</Text>
+                                            <Text style={{marginLeft: 'auto', fontWeight:'bold', fontSize: 17}}>{expense.expenseAmount}</Text>
+                                        </View>
+                                    </Body>
+                                    <Right>
+                                        <Button transparent onPress={() => this.removeExpense(groupId, expense.id)}>
+                                            <Icon name="trash"/>
+                                        </Button>
+                                    </Right>
+                                </ListItem>
+                            )}/>
+                    </View>
+
+                </Content>
+
+                <Footer>
+                    <Left style={{margin: 5}}>
+                        <Button success
+                                onPress={() => this.props.navigation.navigate("UserOverviewForTrip", {tripId: groupId})}><Text>Add
+                            users</Text></Button>
+                    </Left>
+                    <Right style={{margin: 5}}>
+                        <Button info onPress={() => this.navigateToExpenseForm(groupId)}><Text>Add
+                            expenses</Text></Button>
+                    </Right>
+                </Footer>
+
+            </Container>
+        );
+    }
 }
 

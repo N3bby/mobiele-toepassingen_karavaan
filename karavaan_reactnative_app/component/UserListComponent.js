@@ -38,7 +38,7 @@ export default class UserListComponent extends React.Component {
                             <Icon style={{fontSize: 25}} name="person"/>
                         </Left>
                         <Body>
-                        <Text style={{fontSize: 18}}>{user.firstName} {user.lastName}</Text>
+                        <Text style={{fontSize: 18}}>{user.name}</Text>
                         </Body>
                     </ListItem>
                 }/>
