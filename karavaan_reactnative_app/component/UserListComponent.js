@@ -26,6 +26,7 @@ export default class UserListComponent extends React.Component {
 
     constructor() {
         super();
+        //TODO: Make the oobserver stuff generic for this class
         global.observerService.addPersonMapObserver(() => this.forceUpdate() );
     }
 
