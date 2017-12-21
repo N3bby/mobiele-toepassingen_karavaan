@@ -1,13 +1,9 @@
 # react-navigation
-## Intro
-Due to the way our project is set up, we have to do some weird things to get navigation working. This document will cover some conventions.
 
 ## Navigation object
 In order to navigate to a new screen, we need acces to a navigation object.
 
 This navigation object is injected into your react component if you instantiate that component through react-navigation calls (into this.props.navigation)
-
-Also note that you cannot use this object inside the constructor of a component since it's injected later.
 
 A good example of this is our HomeComponent which is instantiated by the AppNavigator
 
@@ -52,30 +48,28 @@ Going back to the previous page is also possible
 this.props.navigation.goBack();
 ```
 
-Passing parameters through navigate calls is something that we still need to research
+## Passing parameters
 
-## Passing navigation object to child components
-
-Since child components are instantiated by our own code, react-navigation will not inject the navigation object into them.
-
-I propose this method to fix that problem: (basically injecting it manually)
+Passing parameters is pretty easy
+Can be done like in the example
 
 ```
 render() {
 
-	var someChildComponent = new SomeChildComponent();
-    if(someChildComponent.props === undefined) someChildComponent.props = {};
-    someChildComponent.props.navigation = this.props.navigation;
-
-	return (
+    	return (
     	<Container>
-        	{someChildComponent.render()}
+        	<SomeComponent prop1={"somestring"} prop2={2} navigation={this.props.navigation)/>
         </Container>
     );
 }
 ```
 
-You can also do the instantiation of the object in the constructor (see example HomeComponent)
+Each property will be available in the child component using 'this.props.*'
 
-
-Passing the navigation object will always have to be done in the render method I'm afraid.
+Note that properties aren't available for use in the constructor unless you specify it like this:
+```
+constructor(props) {
+	super(props)l
+	//You can use this.props.* here now
+}
+```
