@@ -16,6 +16,8 @@ import {
     Right
 } from 'native-base';
 
+import '../ServiceWrapper.js';
+
 export default class UserListComponent extends React.Component {
 
     //Properties

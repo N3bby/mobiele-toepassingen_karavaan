@@ -6,10 +6,10 @@ import { Person } from './Person';
 */
 export class BillItem
 {
-    private _id: number;
-    private _description: string;
-    private _debtor: Person;
-    private _amount: number;
+    id: number;
+    description: string;
+    debtor: Person;
+    amount: number;
     
     /**
     * Initialise a new BillItem.
@@ -28,65 +28,4 @@ export class BillItem
         this.debtor = debtor;
         this.amount = amount;
     }
-    
-    /**
-    * Get or set the ID of the BillItem.
-    * 
-    * @returns {number} The ID of the BillItem.
-    */
-    get id() : number
-    {
-        return this._id;
-    }
-    
-    set id(newId : number)
-    {
-        this._id = newId;
-    }
-    
-    /**
-    * Get or set the description of the BillItem.
-    *
-    * @returns {string} The description of the BillItem.
-    */
-    get description() : string
-    {
-        return this._description;
-    }
-    
-    set description(newDescription : string)
-    {
-        this._description = newDescription;
-    }
-    
-    /**
-    * Get or set the debtor of the BillItem.
-    *
-    * @returns {Person} The Person instance that owes the debt.
-    */
-    get debtor() : Person
-    {
-        return this._debtor;
-    }
-    
-    set debtor(newDebtor : Person)
-    {
-        this._debtor = newDebtor;
-    }
-    
-    /**
-    * Get or set the amount (price) of the BillItem.
-    * 
-    * @returns {number} The amount (price) of the BillItem.
-    */
-    get amount() : number
-    {
-        return this._amount;
-    }
-    
-    set amount(newAmount : number)
-    {
-        this._amount = newAmount;
-    }
-    
 }

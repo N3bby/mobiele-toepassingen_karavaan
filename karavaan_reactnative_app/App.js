@@ -6,6 +6,8 @@ import AppNavigator from "./AppNavigator";
 import {KaravaanService} from "./domain/KaravaanService";
 import {ObserverService} from "./ObserverService";
 
+import './ServiceWrapper.js';
+
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
     'Cmd+D or shake for dev menu',
@@ -17,7 +19,7 @@ export default class App extends React.Component {
 
     constructor() {
         super();
-        global.service = new KaravaanService();
+        global.loadService();
         global.observerService = new ObserverService(global.service);
     }
 

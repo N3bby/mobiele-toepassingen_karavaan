@@ -22,49 +22,5 @@ class BillItem {
         this.debtor = debtor;
         this.amount = amount;
     }
-    /**
-    * Get or set the ID of the BillItem.
-    *
-    * @returns {number} The ID of the BillItem.
-    */
-    get id() {
-        return this._id;
-    }
-    set id(newId) {
-        this._id = newId;
-    }
-    /**
-    * Get or set the description of the BillItem.
-    *
-    * @returns {string} The description of the BillItem.
-    */
-    get description() {
-        return this._description;
-    }
-    set description(newDescription) {
-        this._description = newDescription;
-    }
-    /**
-    * Get or set the debtor of the BillItem.
-    *
-    * @returns {Person} The Person instance that owes the debt.
-    */
-    get debtor() {
-        return this._debtor;
-    }
-    set debtor(newDebtor) {
-        this._debtor = newDebtor;
-    }
-    /**
-    * Get or set the amount (price) of the BillItem.
-    *
-    * @returns {number} The amount (price) of the BillItem.
-    */
-    get amount() {
-        return this._amount;
-    }
-    set amount(newAmount) {
-        this._amount = newAmount;
-    }
 }
 exports.BillItem = BillItem;

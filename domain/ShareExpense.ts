@@ -5,6 +5,7 @@ import { Payment } from './Payment';
 import { Debt } from './Debt';
 import { Person } from './Person';
 import { BillItem } from './BillItem';
+import { IExpenseDO } from './IExpenseDO';
 
 export class ShareExpense implements IExpense
 {
@@ -102,7 +103,7 @@ export class ShareExpense implements IExpense
     
     removeParticipant(participantId : number) : number
     {
-        throw new Error('Removing participants from a ShareExpense is not supported. Remove participants instead.')
+        throw new Error('Removing participants from a ShareExpense is not supported. Remove debts instead.')
     }
     
     addPayment(newPayment : Payment) : number
@@ -216,5 +217,21 @@ export class ShareExpense implements IExpense
         return creditMap;
     }
     
+    toDataObject() : IExpenseDO
+    {
+        let newDO = new IExpenseDO();
+        
+        newDO.id = this.id;
+        newDO.idCounter = this.idCounter;
+        newDO.expenseType = this.expenseType;
+        newDO.category = this.category;
+        newDO.description = this.description;
+        newDO.expenseAmount = this.expenseAmount;
+        newDO.currency = this.currency;
+        newDO.payments = Array.from(this.payments.values()); 
+        newDO.debts = Array.from(this.debts.values());
+        
+        return newDO;
+    }
     
 }

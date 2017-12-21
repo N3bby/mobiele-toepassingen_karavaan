@@ -4,10 +4,10 @@
 */
 export class Person {
 
-    private _id : number;
+    id : number;
     
-    private _lastName : string;
-    private _firstName : string;
+    lastName : string;
+    firstName : string;
 
     /**
     * Initialise a new Person.
@@ -23,51 +23,6 @@ export class Person {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-    
-    /**
-    * Get or set the ID of the Person.
-    *
-    * @returns {number} The ID of the Person.
-    */
-    get id() : number
-    {
-        return this._id;
-    }
-    
-    set id(newId : number)
-    {
-        this._id = newId;
-    }
-    
-    /**
-    * Get or set the first name of the Person.
-    *
-    * @returns {string} The first name of the Person.
-    */
-    get firstName() : string
-    {
-        return this._firstName;
-    }
-    
-    set firstName(newFirstName : string)
-    {
-        this._firstName = newFirstName;
-    }
-    
-    /**
-    * Get or set the last name of the Person.
-    *
-    * @returns {string} The last name of the Person.
-    */
-    get lastName() : string
-    {
-        return this._lastName;
-    }
-    
-    set lastName(newLastName : string)
-    {
-        this._lastName = newLastName;
     }
     
     /**

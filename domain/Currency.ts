@@ -5,8 +5,8 @@
 */
 export class Currency 
 {
-    private _name : string;
-    private _rateComparedToEUR : number; 
+    name : string;
+    rateComparedToEUR : number; 
 
     /**
     * Initialize a new Currency.
@@ -19,33 +19,5 @@ export class Currency
     {
         this.name = name;
         this.rateComparedToEUR = rateComparedToEUR;
-    }
-    
-    /**
-    * Get or set the name of the currency.
-    * @returns {number} The name of the currency.
-    */
-    get name() : string
-    {
-        return this._name;
-    }
-    
-    set name(name : string)
-    {
-        this._name = name;
-    }
-    
-    set rateComparedToEUR(rate : number)
-    {
-        this._rateComparedToEUR = rate;
-    }
-
-    /**
-    * Get or set the rate of the currency compared to EUR.
-    * @returns {number} The rate of the currency compared to EUR.
-    */
-    get rateComparedToEUR() : number
-    {
-        return this._rateComparedToEUR;
     }
 }

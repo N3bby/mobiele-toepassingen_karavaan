@@ -20,6 +20,8 @@ import TripsListComponent from "./TripsListComponent";
 import UserListComponent from "./UserListComponent";
 import {Person} from "../domain/Person";
 
+import '../ServiceWrapper.js';
+
 export default class HomeComponent extends React.Component {
 
     constructor() {

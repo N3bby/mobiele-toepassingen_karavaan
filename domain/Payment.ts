@@ -4,9 +4,9 @@ import { Person } from './Person';
 */
 export class Payment
 {
-    private _id : number;
-    private _creditor : Person;
-    private _amount : number;
+    id : number;
+    creditor : Person;
+    amount : number;
     
     /**
     * Initialise a new Payment.
@@ -22,50 +22,5 @@ export class Payment
         this.id = id;
         this.creditor = creditor;
         this.amount = amount;
-    }
-    
-    /**
-    * Get or set the ID of the Payment.
-    *
-    * @returns {number} The ID of the Payment.
-    */
-    get id() : number
-    {
-        return this._id;
-    }
-    
-    set id(newId : number)
-    {
-        this._id = newId;
-    }
-    
-    /**
-    * Get or set the creditor of this Payment.
-    *
-    * @rturns {Person} The creditor of this payment.
-    */
-    get creditor() : Person
-    {
-        return this._creditor;
-    }
-    
-    set creditor(newCreditor : Person)
-    {
-        this._creditor = newCreditor;
-    }
-    
-    /**
-    * Get or set the amount that the creditor of this Payment has paid the third party.
-    *
-    * @returns {number} The amount that the creditor of this Payment has paid the third party.
-    */
-    get amount() : number
-    {
-        return this._amount;
-    }
-    
-    set amount(newAmount : number)
-    {
-        this._amount = newAmount;
     }
 }

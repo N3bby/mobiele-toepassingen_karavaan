@@ -20,6 +20,8 @@ import {
     Picker
 }from 'native-base';
 import { KaravaanService } from '../domain/KaravaanService';
+import '../ServiceWrapper.js';
+
 export default class CreateUserComponent extends React.Component {
 
     constructor(props) {
@@ -43,9 +45,16 @@ export default class CreateUserComponent extends React.Component {
     }
 
     add(){
-        let service = new KaravaanService();        
-        global.service.addNewPerson(this.state.firstName,this.state.lastName);
-        this.props.navigation.goBack();
+        if (this.state.firstName.length == 0 || this.state.lastName.length == 0)
+        {
+            alert("Please enter the details.");
+        }
+        else
+        {
+            global.service.addNewPerson(this.state.firstName,this.state.lastName);
+            global.saveService();
+            this.props.navigation.goBack();
+        }
     }
 
     render() {

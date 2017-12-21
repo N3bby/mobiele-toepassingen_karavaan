@@ -23,6 +23,8 @@ import {
 import {Trip} from "../domain/Trip";
 import HomeComponent from './HomeComponent';
 import { Currency } from '../domain/Currency';
+import '../ServiceWrapper.js';
+
  const PickerItem = Picker.Item;
 export default class CreateTripComponent extends React.Component {
 
@@ -55,15 +57,14 @@ export default class CreateTripComponent extends React.Component {
 
     add(){
       var currency = this.state.slected1;
-      var a = Math.floor(Math.random()*1000);
-      const trip = new Trip(a,this.state.tripName,this.state.tripDescription,new Currency(this.state.selected1,1));
-      global.service.addTrip(trip);
+      global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
+      global.saveService();
       this.props.navigation.goBack();
-      global.homeComponent.forceUpdate();
     }
 
     render() {
         return (
+            
             <Container>
             <Header>
                 <Left>
@@ -86,33 +87,6 @@ export default class CreateTripComponent extends React.Component {
           <Item regular>
           <Input placeholder='Trip Description' placeholderTextColor='green' value={this.state.tripDescription} onChangeText={this.onValueChangeTripDescription.bind(this)} />
           </Item>
-
-          <Form style={{margin:5}}>
-          <Picker
-            renderHeader={backAction =>
-              <Header style={{ backgroundColor: 'green' }}>
-                <Left>
-                  <Button transparent onPress={backAction}>
-                    <Icon name="arrow-back" style={{ color: "#fff" }} />
-                  </Button>
-                </Left>
-                <Body style={{ flex: 3 }}>
-                  <Title style={{ color: "#fff" }}>Choose the currency</Title>
-                </Body>
-                <Right />
-              </Header>}
-            mode="dropdown"
-            style={{ width: Platform.OS === "ios" ? undefined : 200 }}
-            selectedValue={this.state.selected1}
-            onValueChange={this.onValueChange.bind(this)}
-          >
-            <PickerItem label="€ Euro" value="EUR" />
-            <PickerItem label="$ Dollar" value="USD" />
-            <PickerItem label="£ Pound" value="GBP" />
-            <PickerItem label="￥Yen" value="YEN" />
-            <PickerItem label="Choose the currency" value="key4"/>
-          </Picker>
-        </Form>
 
         <Button
           success

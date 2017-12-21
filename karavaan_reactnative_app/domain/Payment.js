@@ -19,38 +19,5 @@ class Payment {
         this.creditor = creditor;
         this.amount = amount;
     }
-    /**
-    * Get or set the ID of the Payment.
-    *
-    * @returns {number} The ID of the Payment.
-    */
-    get id() {
-        return this._id;
-    }
-    set id(newId) {
-        this._id = newId;
-    }
-    /**
-    * Get or set the creditor of this Payment.
-    *
-    * @rturns {Person} The creditor of this payment.
-    */
-    get creditor() {
-        return this._creditor;
-    }
-    set creditor(newCreditor) {
-        this._creditor = newCreditor;
-    }
-    /**
-    * Get or set the amount that the creditor of this Payment has paid the third party.
-    *
-    * @returns {number} The amount that the creditor of this Payment has paid the third party.
-    */
-    get amount() {
-        return this._amount;
-    }
-    set amount(newAmount) {
-        this._amount = newAmount;
-    }
 }
 exports.Payment = Payment;
