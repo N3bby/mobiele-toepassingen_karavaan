@@ -97,6 +97,7 @@ export default class CreateExpenseComponent extends React.Component {
                     <Body>
                         <Title>New Expense</Title> 
                     </Body>
+                    <Right/>
                 </Header>
                 
                 <Content>
