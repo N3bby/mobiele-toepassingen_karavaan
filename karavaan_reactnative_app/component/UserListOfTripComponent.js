@@ -39,7 +39,7 @@ export default class UserListOfTripComponent extends React.Component {
                return (
             <Container>
             <Content>
-                <List>
+                <List  style={{ flex: 1, backgroundColor: '#fff' }}>
                 {global.service.getParticipantsByTripId(tripId).map((item,index) => (
                     <ListItem key={index} button={true} onPress={() => this.props.navigation.goBack()} avatar>
                     <Body>

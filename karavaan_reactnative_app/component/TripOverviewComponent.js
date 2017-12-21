@@ -59,7 +59,7 @@ export default class TripOverviewComponent extends React.Component {
         var group = global.service.getTripById(groupId);
 
         return (
-            <Container>
+        <Container>
             <Header>
                 <Left>
                     <Button transparent onPress={()=> this.props.navigation.goBack()}>
@@ -75,17 +75,14 @@ export default class TripOverviewComponent extends React.Component {
                 <Icon active name="trash" />
                 </Button>
                 </Right>
-            </Header>
+                </Header>
             <Content>
-                <List>
+                <List style={{ flex: 1, backgroundColor: '#fff' }}>
                 {global.service.getParticipantsByTripId(groupId).map((item,index) => (
                     <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
-                    <Body>
+                    <Body> 
                         <Text>{item.name}</Text>
                         </Body>
-                        <Right>
-                        <Text note>{new Date().toLocaleString()}</Text>
-                        </Right>
                     </ListItem>
                 ))}
             </List>
