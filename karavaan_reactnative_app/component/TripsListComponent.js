@@ -11,13 +11,13 @@ import {
     Text,
     Thumbnail,
     Right,
-    Button
+    Button,
+    Fab
 }from 'native-base';
-import {Trip} from "../domain/Trip";
 import { Col, Row, Grid } from "react-native-easy-grid";
 export default class TripsListComponent extends React.Component {
 
-    constructor(navigation) {
+    constructor() {
         super();
         //Some test data
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
@@ -27,11 +27,8 @@ export default class TripsListComponent extends React.Component {
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
         global.service.addNewTrip("SomeTrip", "Some description for the trip");
     }
-    
-
 
     render() {
-
         //TODO Fix the weird touch effect here.
         //Bug report of it can be found here: https://github.com/GeekyAnts/NativeBase/issues/1378
         //Apparently an issue with the last version of NativeBase. Might need to wait for a fix

@@ -21,7 +21,6 @@ import {
     Badge
 }from 'native-base';
 import {Trip} from "../domain/Trip";
-import UserListForTripComponent from "./UserListForTripComponent";
 
 
 export default class TripOverviewComponent extends React.Component {
@@ -29,7 +28,6 @@ export default class TripOverviewComponent extends React.Component {
     constructor() {
         super();
         global.tripOverview = this;
-        this.UserListForTripComponent = new UserListForTripComponent();
     }
 
     deleteTrip(id){
@@ -45,12 +43,6 @@ export default class TripOverviewComponent extends React.Component {
 
 
     render() {
-        
-        if(this.UserListForTripComponent.props === undefined) this.UserListForTripComponent.props={};
-        this.UserListForTripComponent.props.navigation=this.props.navigation;
-
-
-
 
         var groupId = this.props.navigation.state.params.groupId;
         var group = global.service.getTripById(groupId);

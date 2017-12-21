@@ -4,8 +4,7 @@ import {Platform} from 'react-native';
 import { Root } from "native-base";
 import AppNavigator from "./AppNavigator";
 import {KaravaanService} from "./domain/KaravaanService";
-import {Person} from "./domain/Person";
-import {Trip} from "./domain/Trip";
+import {ObserverService} from "./ObserverService";
 
 const instructions = Platform.select({
     ios: 'Press Cmd+R to reload,\n' +
@@ -19,8 +18,7 @@ export default class App extends React.Component {
     constructor() {
         super();
         global.service = new KaravaanService();
-        global.person = new  Person();
-        global.trip = new Trip();
+        global.observerService = new ObserverService(global.service);
     }
 
     render() {

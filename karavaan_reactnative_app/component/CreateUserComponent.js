@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Platform } from "react-native";
 import {
     Container,
     Tab,
@@ -20,42 +19,39 @@ import {
     Form,
     Picker
 }from 'native-base';
-import {Trip} from "../domain/Trip";
-import HomeComponent from './HomeComponent';
 import { KaravaanService } from '../domain/KaravaanService';
 export default class CreateUserComponent extends React.Component {
 
     constructor(props) {
-      super(props);
-      this.state = {
-        firstName:"",
-        lastName:""
+        super(props);
+        this.state = {
+            firstName:"",
+            lastName:""
       };
-      }
+    }
 
     onValueChangeFName(value){
-      this.setState({
-          firstName:value,
-      });
-  }
-  onValueChangeLName(value){
-    this.setState({
-        lastName:value,
-    });
-}
+        this.setState({
+            firstName:value,
+        });
+    }
 
-
+    onValueChangeLName(value){
+        this.setState({
+            lastName:value,
+        });
+    }
 
     add(){
         let service = new KaravaanService();        
         global.service.addNewPerson(this.state.firstName,this.state.lastName);
         this.props.navigation.goBack();
-        global.homeComponent.forceUpdate();
     }
 
     render() {
         return (
-            <Container>
+        <Container>
+
             <Header>
                 <Left>
                 <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -68,24 +64,22 @@ export default class CreateUserComponent extends React.Component {
                 <Right />
             </Header>
             <Content>
-
             
-            <Item regular>
-            <Input placeholder='First Name' placeholderTextColor='green' value={this.state.firstName} onChangeText={this.onValueChangeFName.bind(this)} />
-          </Item>
+                <Item regular>
+                    <Input placeholder='First Name' placeholderTextColor='green' value={this.state.firstName} onChangeText={this.onValueChangeFName.bind(this)} />
+                </Item>
+                <Item regular>
+                     <Input placeholder='Last Name' placeholderTextColor='green' value={this.state.LastName} onChangeText={this.onValueChangeLName.bind(this)} />
+                 </Item>
 
-          <Item regular>
-          <Input placeholder='Last Name' placeholderTextColor='green' value={this.state.LastName} onChangeText={this.onValueChangeLName.bind(this)} />
-          </Item>
-        <Button
-          success
-          style={{ alignSelf: "center", margin:10 }}
-          onPress={() => this.add()}
-        ><Text> Create </Text></Button>
-         </Content>
+                <Button success style={{ alignSelf: "center", margin:10 }} onPress={() => this.add()}>
+                    <Text> Create </Text>
+                </Button>
+
+            </Content>
+
         </Container>
         );
     }
 }
-//style={{fontSize: 16}}            
 
