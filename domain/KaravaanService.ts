@@ -474,6 +474,23 @@ export class KaravaanService
         throw new Error("Participant with id " + participantId + " does not exist for Trip with id " + tripId);
     }
     
+    getNonParticipantsByTripId(tripId : number) : Array<Person>
+    {
+        let participantSet = new Set<Person>();
+        
+        for (let user of this.persons)
+        {
+            participantSet.add(user);
+        }
+        
+        for (let participant of this.getTripById(tripId).participants)
+        {
+            participantSet.delete(participant);
+        }
+        
+        return Array.from(participantSet);
+    }
+    
     /**
     * Add a new Expense to a Trip by using the Trips ID and specifying the ExpenseType.
     *
