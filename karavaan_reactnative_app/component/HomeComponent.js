@@ -26,11 +26,12 @@ export default class HomeComponent extends React.Component {
 
     constructor() {
         super();
-        //Test data
-        global.service.addPerson(new Person(-1, "Levi", "Vandenbempt"));
-        global.service.addPerson(new Person(-1, "Surendra", "Sapkota"));
-        global.service.addPerson(new Person(-1, "Artus", "Vranken"));
-        global.service.addPerson(new Person(-1, "Tim", "Vangilbergen"));
+    }
+
+    debugClear() {
+        global.clearService();
+        global.loadService();
+        this.forceUpdate();
     }
 
     render() {
@@ -47,8 +48,11 @@ export default class HomeComponent extends React.Component {
                     <Body>
                     <Title>Karavaan App</Title>
                     </Body>
-                    <Right/>
-
+                    <Right>
+                        <Button transparent onPress={() => this.debugClear()}>
+                            <Text>!!Clear!!</Text>
+                        </Button>
+                    </Right>
                 </Header>
 
                 <Tabs>
