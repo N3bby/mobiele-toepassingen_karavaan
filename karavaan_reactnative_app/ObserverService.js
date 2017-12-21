@@ -5,7 +5,7 @@ export class ObserverService {
         this._observedService = service;
         this._personMapObservers = [];
         this._tripMapObservers = [];
-        this._tripExpensesObservers = {}; //This is a map since every trip has its own array of expenses
+        this._tripExpensesObservers = new Map(); //This is a map since every trip has its own array of expenses
 
         this._applyObserverables()
     }
@@ -60,11 +60,37 @@ export class ObserverService {
         this._tripMapObservers.push(callback);
     }
 
-    // addTripExpensesObserver(tripId, callback) {
-    //     let trip = global.service.getTripById(tripId);
-    //
-    //     Map.prototype.set
-    //
-    // }
+    //Bit more complicated than the rest
+    addTripExpensesObserver(tripId, callback) {
+
+        let trip = global.service.getTripById(tripId);
+
+        //If the array for this trip is not being observed, add an observer for it
+        //And initialize the array
+        //Can probably be made a bit shorter by removing the duplicate code
+        if(this._tripExpensesObservers.get(tripId) === undefined) {
+            //For set
+            trip.expenseMap.set = (id, expense) => {
+                Map.prototype.set.apply(trip.expenseMap, [id, expense]);
+                let expensesMapCallbacksForTrip = observerService._tripExpensesObservers.get(tripId); //Fetch array here to simplify syntax in the next bit
+                for (let i = 0; i < expensesMapCallbacksForTrip.length; i++) {
+                    expensesMapCallbacksForTrip[i](expense);
+                }
+            };
+            //For delete
+            trip.expenseMap.delete = (id, expense) => {
+                Map.prototype.delete.apply(trip.expenseMap, [id, expense]);
+                let expensesMapCallbacksForTrip = observerService._tripExpensesObservers.get(tripId);
+                for (let i = 0; i < expensesMapCallbacksForTrip.length; i++) {
+                    expensesMapCallbacksForTrip[i](expense);
+                }
+            };
+            this._tripExpensesObservers.set(tripId, []);
+        }
+
+        //Add the callback
+        this._tripExpensesObservers.get(tripId).push(callback);
+
+    }
 
 }

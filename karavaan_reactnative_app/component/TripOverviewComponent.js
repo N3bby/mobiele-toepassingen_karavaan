@@ -31,12 +31,13 @@ import '../ServiceWrapper.js';
 
 export default class TripOverviewComponent extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         global.tripOverview = this;
-        this.CreateExpenseComponent = new CreateExpenseComponent();
+        global.observerService.addTripExpensesObserver(this.props.navigation.state.params.groupId, () => {this.forceUpdate()})
     }
 
+    //TODO: Add confirmation dialog with checkbox
     deleteTrip(id) {
         global.service.removeTripById(id);
         global.saveService();
@@ -52,20 +53,12 @@ export default class TripOverviewComponent extends React.Component {
     }
 
     removeExpense(tripId, expenseId) {
-        try {
-            global.service.removeExpenseFromTripById(tripId, expenseId);
-            global.saveService();
-        }
-        catch (error) {
-            alert(error);
-        }
+        global.service.removeExpenseFromTripById(tripId, expenseId);
+        global.saveService();
     }
 
 
     render() {
-
-        if (this.CreateExpenseComponent.props === undefined) this.CreateExpenseComponent.props = {};
-        this.CreateExpenseComponent.props.navigation = this.props.navigation;
 
         var groupId = this.props.navigation.state.params.groupId;
         var group = global.service.getTripById(groupId);
@@ -82,7 +75,7 @@ export default class TripOverviewComponent extends React.Component {
                     <Title>{group.name}</Title>
                     </Body>
                     <Right>
-                        <Button small danger onPress={() => this.deleteTrip(group.id)}>
+                        <Button transparent onPress={() => this.deleteTrip(group.id)}>
                             <Icon active name="trash"/>
                         </Button>
                     </Right>
@@ -107,7 +100,7 @@ export default class TripOverviewComponent extends React.Component {
                         </CardItem>
                     </Card>
 
-                    <View style={{ backgroundColor: 'white' }}>
+                    <View style={{ backgroundColor: 'white', minHeight:50 }}>
                         {/* TODO: Move this to a seperate component */}
                         <List dataArray={global.service.getExpensesByTripId(groupId)} renderRow={(expense) => (
                                 <ListItem key={expense.id} button={false}

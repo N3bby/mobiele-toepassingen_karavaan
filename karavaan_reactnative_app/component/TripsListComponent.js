@@ -26,7 +26,6 @@ export default class TripsListComponent extends React.Component {
     
     navigateToTrip(itemId : number)
     {
-        global.tripId = itemId;
         this.props.navigation.navigate("TripOverview", { groupId: itemId });
     }
 
