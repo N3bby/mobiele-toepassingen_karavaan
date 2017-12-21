@@ -146,14 +146,12 @@ export default class TripOverviewComponent extends React.Component {
                     
                 </List>
 
-                <List>
                 <List style={{ flex: 1, backgroundColor: '#fff' }}>
                 {global.service.getParticipantsByTripId(groupId).map((item,index) => (
                     <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
                     <Body> 
                         <Text>{item.name}</Text>
                     </Body>
-                        </Body>
                     </ListItem>
                 ))}
             </List>
