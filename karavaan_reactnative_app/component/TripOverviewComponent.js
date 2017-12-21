@@ -18,7 +18,8 @@ import {
     Grid,
     Center,
     Thumbnail,
-    Badge
+    Badge,
+    View
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 import UserListForTripComponent from "./UserListForTripComponent";
@@ -67,7 +68,7 @@ export default class TripOverviewComponent extends React.Component {
                 </Left>
                 <Body>
                     <Title>{group.name}</Title>
-                    <Text note>Activity</Text>
+                    <Text note>Expenses</Text>
                     </Body>
                 <Right>
                 <Button small danger onPress={() => this.deleteTrip(group.id)}>
@@ -76,33 +77,9 @@ export default class TripOverviewComponent extends React.Component {
                 </Right>
             </Header>
             <Content>
-            <Body>
-            <Grid>
-            <Col>
-                <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}>
-                <Icon active name="person"/>
-                <Text style={{fontSize:12}}>Add user to trip</Text>
-                </Button>
-                </Col>
-                <Col>
-                <Button rounded info>
-                <Icon active name="person"/>
-                <Text style={{fontSize:12}}>Add Expenses to trip</Text>
-                </Button>
-                </Col>
-                </Grid>
-                </Body>
-                <ListItem itemHeader first>
-                <Text style={{justifyContent: "center",alignItems: "center"}}>List of expenses</Text>
-                </ListItem>
-                <List style={{padding:5}}>
+                <List>
                 {global.service.getParticipantsByTripId(groupId).map((item,index) => (
                     <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
-                        <Left>
-                        <Badge primary>
-                        <Text>{item.id}</Text>
-                      </Badge>                        
-                      </Left>    
                     <Body>
                         <Text>{item.name}</Text>
                         </Body>
@@ -114,11 +91,12 @@ export default class TripOverviewComponent extends React.Component {
             </List>
             </Content>
             <Footer>
-                <Grid>
-                    <Col><Button><Text>Settle Up</Text></Button></Col>
-                    <Col><Button><Text>Balances</Text></Button></Col>
-                    <Col><Button><Text>Users</Text></Button></Col>
-                </Grid>
+            <Left style={{margin:5}}>
+            <Button success onPress={()=>this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}><Text>Add users</Text></Button>
+            </Left>
+            <Right style={{margin:5}}>
+            <Button info><Text>Add expenses</Text></Button>
+            </Right>
             </Footer>
         </Container>
     );
