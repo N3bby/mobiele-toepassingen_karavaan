@@ -49,10 +49,17 @@ export default class CreateUserComponent extends React.Component {
 
 
     add(){
-        global.service.addNewPerson(this.state.firstName,this.state.lastName);
-        global.saveService();
-        this.props.navigation.goBack();
-        global.homeComponent.forceUpdate();
+        if (this.state.firstName.length == 0 || this.state.lastName.length == 0)
+        {
+            alert("Please enter the details.");
+        }
+        else
+        {
+            global.service.addNewPerson(this.state.firstName,this.state.lastName);
+            global.saveService();
+            this.props.navigation.goBack();
+            global.homeComponent.forceUpdate();
+        }
     }
 
     render() {

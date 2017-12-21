@@ -30,6 +30,20 @@ export default class UserListComponent extends React.Component {
         global.service.addNewPerson("Artus","Vranken");
         global.service.addNewPerson("Tim", "Vangilbergen");*/
     }
+    
+    deletePerson(userId)
+    {
+        try
+        {
+            global.service.removePersonById(userId);
+            global.saveService();
+            global.homeComponent.forceUpdate();
+        }
+        catch (error)
+        {
+            alert(error);
+        }
+    }
 
     render() {
 
@@ -40,19 +54,18 @@ export default class UserListComponent extends React.Component {
             <Content>
                 <List>
                     {global.service.persons.map((item, index) => (
-                        <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
+                        <ListItem key={index} avatar>
+                            <Left>
+                                <Icon active name="person" />
+                            </Left>
                             <Body>
-                            <Grid>
-                            <Col>
-                            <Text>
-                            <Icon active name="person" style={{padding:30}}/>
-                            {item.name}
-                            </Text>
-                            </Col>
-                            <Col style={{width:50}}> 
-                            </Col>
-                            </Grid>
+                                <Text>{item.name}</Text>
                             </Body>
+                            <Right>
+                                <Button danger>
+                                    <Icon name='trash' onPress={() => this.deletePerson(item.id) } />
+                                </Button>
+                            </Right>
                         </ListItem>
                     ))}
                 </List>

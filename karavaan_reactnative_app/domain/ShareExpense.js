@@ -54,7 +54,7 @@ class ShareExpense {
         throw new Error('Adding participants to a ShareExpense is not supported. Add debts instead.');
     }
     removeParticipant(participantId) {
-        throw new Error('Removing participants from a ShareExpense is not supported. Remove participants instead.');
+        throw new Error('Removing participants from a ShareExpense is not supported. Remove debts instead.');
     }
     addPayment(newPayment) {
         if (newPayment.id < 0)
