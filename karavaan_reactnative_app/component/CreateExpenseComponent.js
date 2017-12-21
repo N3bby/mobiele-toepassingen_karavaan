@@ -23,41 +23,40 @@ import {
 import {Trip} from "../domain/Trip";
 import HomeComponent from './HomeComponent';
 import { Currency } from '../domain/Currency';
+import { ExpenseType } from '../domain/ExpenseType';
 import '../ServiceWrapper.js';
 
  const PickerItem = Picker.Item;
-export default class CreateTripComponent extends React.Component {
+export default class CreateExpenseComponent extends React.Component {
 
     constructor(props) {
       super(props);
         this.state = {
-          selected1: "EUR",
-          tripName: "",
-          tripDescription: ""
+          selectedExpenseType: ExpenseType.EvenExpense,
+          expenseDescription: "",
+          expenseCategory: "",
         };
       }
-
-    onValueChange(value){
+    
+      onValueChangeExpenseDescription(value){
         this.setState({
-            selected1:value
+            expenseDescription:value
         });
-    }
-    onValueChangeTripName(value){
-      this.setState({
-          tripName:value
-      });
-  }
-  onValueChangeTripDescription(value){
-    this.setState({
-        tripDescription:value
-    });
-}
+      }
+
+      onValueChangeExpenseCategory(value) {
+          this.setState({
+              expenseCategory: value;
+          });
+      }
 
 
-
-    add(){
+    add()
+    {
       var currency = this.state.slected1;
-      global.service.addNewTrip(this.state.tripname, this.state.tripDescription);
+      var a = Math.floor(Math.random()*1000);
+      const trip = new Trip(a,this.state.tripName,this.state.tripDescription,new Currency(this.state.selected1,1));
+      global.service.addTrip(trip);
       global.saveService();
       this.props.navigation.goBack();
       global.homeComponent.forceUpdate();
@@ -85,7 +84,7 @@ export default class CreateTripComponent extends React.Component {
           </Item>
 
           <Item regular>
-          <Input placeholder='Trip Description' placeholderTextColor='green' value={this.state.tripDescription} onChangeText={this.onValueChangeTripDescription.bind(this)} />
+          <Input placeholder='Expense Description' placeholderTextColor='green' value={this.state.expenseDescription} onChangeText={this.onValueChangeExpenseDescription.bind(this)} />
           </Item>
 
         <Button
@@ -98,5 +97,3 @@ export default class CreateTripComponent extends React.Component {
         );
     }
 }
-//style={{fontSize: 16}}            
-

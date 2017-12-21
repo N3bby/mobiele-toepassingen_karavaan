@@ -13,7 +13,6 @@ global.saveService = async function()
     try
     {
         await AsyncStorage.setItem('service', JSON.stringify(currentInstance.toDataObject()));
-        alert("saved");
     }
     catch (error)
     {

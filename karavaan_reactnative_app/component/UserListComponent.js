@@ -31,10 +31,6 @@ export default class UserListComponent extends React.Component {
         global.service.addNewPerson("Tim", "Vangilbergen");*/
     }
 
-    deleteUser(id){
-        alert("DELETE METHOD NOT FOUND IN KARAVAANSERVICE\n idnr: "+id);
-    }
-
     render() {
 
         //TODO Fix the weird touch effect here.
@@ -49,16 +45,11 @@ export default class UserListComponent extends React.Component {
                             <Grid>
                             <Col>
                             <Text>
-                            <Icon active name="person" style={{padding:5}}/>
-                            {item.firstName} {item.lastName}
+                            <Icon active name="person" style={{padding:30}}/>
+                            {item.name}
                             </Text>
                             </Col>
                             <Col style={{width:50}}> 
-                            <Right>
-                            <Button small danger onPress={() => this.deleteUser(item.id)}>
-                            <Icon active name="trash" />
-                            </Button>
-                            </Right>
                             </Col>
                             </Grid>
                             </Body>

@@ -32,6 +32,12 @@ export default class TripsListComponent extends React.Component {
         global.service.addNewTrip("SomeTrip", "Some description for the trip");*/
     }
     
+    navigateToTrip(itemId : number)
+    {
+        global.tripId = itemId;
+        this.props.navigation.navigate("TripOverview", { groupId: itemId });
+    }
+    
 
 
     render() {
@@ -43,7 +49,7 @@ export default class TripsListComponent extends React.Component {
             <Content>
                 <List>
                     {global.service.trips.map((item, index) => (
-                        <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("TripOverview", { groupId: item.id })} avatar>
+                        <ListItem key={index} button={true} onPress={ () => this.navigateToTrip(item.id) } avatar>
                             <Left>
                                 <Thumbnail small source={require('../images/house.jpg')}/>
                             </Left>

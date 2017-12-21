@@ -103,7 +103,7 @@ export class ShareExpense implements IExpense
     
     removeParticipant(participantId : number) : number
     {
-        throw new Error('Removing participants from a ShareExpense is not supported. Remove participants instead.')
+        throw new Error('Removing participants from a ShareExpense is not supported. Remove debts instead.')
     }
     
     addPayment(newPayment : Payment) : number
