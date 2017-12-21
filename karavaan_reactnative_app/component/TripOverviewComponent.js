@@ -19,7 +19,8 @@ import {
     Center,
     Thumbnail,
     Badge,
-    View
+    View,
+    H2
 }from 'native-base';
 import {Trip} from "../domain/Trip";
 import  UserListForTripComponent  from "./UserListForTripComponent";
@@ -64,7 +65,6 @@ export default class TripOverviewComponent extends React.Component {
         {
             global.service.removeExpenseFromTripById(tripId, expenseId);
             global.saveService();
-            global.homeComponent.forceUpdate();
         }
         catch (error)
         {
@@ -97,7 +97,6 @@ export default class TripOverviewComponent extends React.Component {
                 <Body>
                     <Title>{group.name}</Title>
                     <Text note>{group.description}</Text>
-                    <Text note>Expenses</Text>
                     </Body>
                 <Right>
                 <Button small danger onPress={() => this.deleteTrip(group.id)}>
@@ -122,7 +121,7 @@ export default class TripOverviewComponent extends React.Component {
                 </Col>
                 </Grid>
                 </Body>
-                <Text style={{justifyContent: "center",alignItems: "center"}}>List of expenses</Text>
+                <H2 style={{margin: 5}}>List of expenses</H2>
                     
                 <List>
                     
@@ -137,8 +136,8 @@ export default class TripOverviewComponent extends React.Component {
                              <Text>{item.expenseAmount}</Text>
                          </Body>
                          <Right>
-                             <Button danger>
-                                 <Icon name="trash" onPress={() => this.removeExpense(groupId, item.id)} />
+                             <Button danger onPress={() => this.removeExpense(groupId, item.id)} >
+                                 <Icon name="trash" />
                              </Button>
                          </Right>
                       </ListItem>
