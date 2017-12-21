@@ -56,10 +56,14 @@ export default class CreateTripComponent extends React.Component {
 
 
     add(){
+        if(this.state.tripName.length==0||this.state.tripDescription.length==0){
+            alert("Please enter the details");
+        }else {
       var currency = this.state.slected1;
       global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
       global.saveService();
       this.props.navigation.goBack();
+    }
     }
 
     render() {
