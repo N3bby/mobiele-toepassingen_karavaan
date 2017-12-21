@@ -105,22 +105,6 @@ export default class TripOverviewComponent extends React.Component {
                 </Right>
                 </Header>
             <Content>
-            <Body>
-            <Grid>
-                <Col>
-                <Button rounded success onPress={()=> this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}>
-                <Icon active name="person"/>
-                <Text style={{fontSize:12}}>Add user to trip</Text>
-                </Button>
-                </Col>
-                <Col>
-                <Button rounded info onPress={() => this.navigateToExpenseForm(groupId) } >
-                <Icon active name="person"/>
-                <Text style={{fontSize:12}}>Add Expenses to trip</Text>
-                </Button>
-                </Col>
-                </Grid>
-                </Body>
                 <H2 style={{margin: 5}}>List of expenses</H2>
                     
                 <List>
@@ -144,26 +128,17 @@ export default class TripOverviewComponent extends React.Component {
                      ))}
                     
                 </List>
-
-                <List style={{ flex: 1, backgroundColor: '#fff' }}>
-                {global.service.getParticipantsByTripId(groupId).map((item,index) => (
-                    <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
-                    <Body> 
-                        <Text>{item.name}</Text>
-                    </Body>
-                    </ListItem>
-                ))}
-            </List>
             </Content>
             <Footer>
             <Left style={{margin:5}}>
             <Button success onPress={()=>this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}><Text>Add users</Text></Button>
             </Left>
             <Right style={{margin:5}}>
-            <Button info><Text>Add expenses</Text></Button>
+            <Button info onPress={() => this.navigateToExpenseForm(groupId)}><Text>Add expenses</Text></Button>
             </Right>
             </Footer>
         </Container>
     );
 }
 }
+
