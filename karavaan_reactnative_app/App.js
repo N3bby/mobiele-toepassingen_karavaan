@@ -1,7 +1,7 @@
 import React from 'react';
 import {Platform} from 'react-native';
 
-import { Root } from "native-base";
+import { Root, Text } from "native-base";
 import AppNavigator from "./AppNavigator";
 import {KaravaanService} from "./domain/KaravaanService";
 import {ObserverService} from "./ObserverService";
@@ -19,11 +19,29 @@ export default class App extends React.Component {
 
     constructor() {
         super();
-        global.loadService();
-        global.observerService = new ObserverService(global.service);
+
+        this.state = {
+            isLoading: true
+        };
+
+        global.loadService().then(() =>
+        {
+            this.setState({
+                isLoading: false
+            })
+        });
     }
 
     render() {
+
+        if(this.state.isLoading) {
+            return (
+                <Root>
+                    <Text>Loading...</Text>
+                </Root>
+            );
+        }
+
         return (
             <Root>
                 <AppNavigator/>

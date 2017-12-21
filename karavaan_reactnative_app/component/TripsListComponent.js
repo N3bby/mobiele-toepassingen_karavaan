@@ -17,19 +17,11 @@ import {
 import { Col, Row, Grid } from "react-native-easy-grid";
 import '../ServiceWrapper.js';
 
-
-
 export default class TripsListComponent extends React.Component {
 
     constructor() {
         super();
-        //Some test data
-        /*global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");
-        global.service.addNewTrip("SomeTrip", "Some description for the trip");*/
+        global.observerService.addTripMapObserver(() => this.forceUpdate());
     }
     
     navigateToTrip(itemId : number)

@@ -3,6 +3,7 @@ import { Person } from "./domain/Person";
 import { Trip } from "./domain/Trip"
 
 import { AsyncStorage } from 'react-native';
+import {ObserverService} from "./ObserverService";
 
 global.service = new KaravaanService();
 
@@ -29,6 +30,7 @@ global.loadService = async function()
         if (jsonService !== null)
         {
             global.service = KaravaanService.fromDataObject(JSON.parse(jsonService));
+            global.observerService = new ObserverService(global.service);
         }
         else
         {
