@@ -65,6 +65,7 @@ export default class CreateTripComponent extends React.Component {
 
     render() {
         return (
+            
             <Container>
             <Header>
                 <Left>

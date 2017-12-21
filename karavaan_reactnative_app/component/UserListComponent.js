@@ -24,11 +24,6 @@ export default class UserListComponent extends React.Component {
 
     constructor(navigation) {
         super();
-        //Some test data
-        /*global.service.addNewPerson("surendra","sapkota");
-        global.service.addNewPerson("Levi","Vandenbempt");
-        global.service.addNewPerson("Artus","Vranken");
-        global.service.addNewPerson("Tim", "Vangilbergen");*/
     }
     
     deletePerson(userId)

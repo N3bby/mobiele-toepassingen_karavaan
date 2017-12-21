@@ -39,8 +39,8 @@ export default class UserListForTripComponent extends React.Component {
         var tripId = this.props.navigation.state.params.tripId;
         global.service.addExistingParticipantToTripById(tripId,id);
         global.saveService();
-        alert("persoon id \n idnr: "+id +"\n tripId:"+tripId+"\n successvol toegevoegd");
         this.props.navigation.goBack();
+        global.homeComponent.forceUpdate();
     }
 
     render() {
@@ -70,7 +70,7 @@ export default class UserListForTripComponent extends React.Component {
                 <Tab heading="List of all users">         
                 <Content>
                 <List>
-                    {global.service.persons.map((item, index) => (
+                    {global.service.getNonParticipantsByTripId(tripId).map((item, index) => (
                         <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
                             <Body>
                             <Grid>

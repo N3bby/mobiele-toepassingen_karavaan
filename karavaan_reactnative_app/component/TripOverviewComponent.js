@@ -21,7 +21,8 @@ import {
     Badge
 }from 'native-base';
 import {Trip} from "../domain/Trip";
-import UserListForTripComponent from "./UserListForTripComponent";
+import  UserListForTripComponent  from "./UserListForTripComponent";
+import  CreateExpenseComponent  from "./CreateExpenseComponent";
 import '../ServiceWrapper.js';
 
 
@@ -31,6 +32,7 @@ export default class TripOverviewComponent extends React.Component {
         super();
         global.tripOverview = this;
         this.UserListForTripComponent = new UserListForTripComponent();
+        this.CreateExpenseComponent = new CreateExpenseComponent();
     }
 
     deleteTrip(id){
@@ -44,15 +46,41 @@ export default class TripOverviewComponent extends React.Component {
        // this.props.navigation.navigate("Home");
         //global.homeComponent.forceUpdate();
     }
+    
+    navigateToExpenseForm(tripId)
+    {
+        this.props.navigation.navigate("CreateExpenseComponent", {tripId : tripId});
+    }
+    
+    navigateToExpenseOverview(tripId, expenseId)
+    {
+        // TODO
+    }
+    
+    removeExpense(tripId, expenseId)
+    {
+        try
+        {
+            global.service.removeExpenseFromTripById(tripId, expenseId);
+            global.saveService();
+            global.homeComponent.forceUpdate();
+        }
+        catch (error)
+        {
+            alert(error);
+        }
+        
+        global.homeComponent.forceUpdate();
+    }
 
 
     render() {
         
         if(this.UserListForTripComponent.props === undefined) this.UserListForTripComponent.props={};
         this.UserListForTripComponent.props.navigation=this.props.navigation;
-
-
-
+        
+        if(this.CreateExpenseComponent.props === undefined) this.CreateExpenseComponent.props={};
+        this.CreateExpenseComponent.props.navigation=this.props.navigation;
 
         var groupId = this.props.navigation.state.params.groupId;
         var group = global.service.getTripById(groupId);
@@ -67,7 +95,7 @@ export default class TripOverviewComponent extends React.Component {
                 </Left>
                 <Body>
                     <Title>{group.name}</Title>
-                    <Text note>Activity</Text>
+                    <Text note>{group.description}</Text>
                     </Body>
                 <Right>
                 <Button small danger onPress={() => this.deleteTrip(group.id)}>
@@ -78,24 +106,45 @@ export default class TripOverviewComponent extends React.Component {
             <Content>
             <Body>
             <Grid>
-            <Col>
-                <Button rounded success onPress={()=>this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}>
+                <Col>
+                <Button rounded success onPress={()=> this.props.navigation.navigate("UserOverviewForTrip",{tripId: groupId})}>
                 <Icon active name="person"/>
                 <Text style={{fontSize:12}}>Add user to trip</Text>
                 </Button>
                 </Col>
                 <Col>
-                <Button rounded info>
+                <Button rounded info onPress={() => this.navigateToExpenseForm(groupId) } >
                 <Icon active name="person"/>
                 <Text style={{fontSize:12}}>Add Expenses to trip</Text>
                 </Button>
                 </Col>
                 </Grid>
                 </Body>
-                <ListItem itemHeader first>
                 <Text style={{justifyContent: "center",alignItems: "center"}}>List of expenses</Text>
-                </ListItem>
-                <List style={{padding:5}}>
+                    
+                <List>
+                    
+                    {global.service.getExpensesByTripId(groupId).map((item, index) => (
+                     
+                     <ListItem key={index} button={true} onPress={() => this.navigateToExpenseOverview(item.id)}>
+                         <Left>
+                             <Icon name="cash" />
+                         </Left>
+                         <Body>
+                             <Text>{item.description}</Text>
+                             <Text>{item.expenseAmount}</Text>
+                         </Body>
+                         <Right>
+                             <Button danger>
+                                 <Icon name="trash" onPress={() => this.removeExpense(groupId, item.id)} />
+                             </Button>
+                         </Right>
+                      </ListItem>
+                     ))}
+                    
+                </List>
+
+                <List>
                 {global.service.getParticipantsByTripId(groupId).map((item,index) => (
                     <ListItem key={index} button={true} onPress={() => this.props.navigation.navigate("UserOverview", { groupId: item.id })} avatar>
                         <Left>
@@ -105,10 +154,7 @@ export default class TripOverviewComponent extends React.Component {
                       </Left>    
                     <Body>
                         <Text>{item.name}</Text>
-                        </Body>
-                        <Right>
-                        <Text note>{new Date().toLocaleString()}</Text>
-                        </Right>
+                    </Body>
                     </ListItem>
                 ))}
             </List>
