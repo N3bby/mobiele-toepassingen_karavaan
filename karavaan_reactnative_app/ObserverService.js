@@ -6,6 +6,7 @@ export class ObserverService {
         this._personMapCallbacks = [];
         this._tripMapCallbacks = [];
         this._tripExpensesCallbacks = new Map(); //Array of callbacks per trip
+        this._tripPersonMapCallbacks = new Map(); //Array of callbacks per trip
 
         //Apply hooks
         this._applyHooks()
@@ -38,6 +39,21 @@ export class ObserverService {
         //Create hook for the expensesMap of the correct trip
         let trip = global.service.getTripById(tripId);
         this._hookMap(trip.expenseMap, this._tripExpensesCallbacks.get(tripId));
+
+    }
+
+    //Add a callback for when a person is added or removed from a specific trip
+    addTripPersonMapCallback(tripId, callback) {
+
+        //Add the callback to our callback map. Create array if still undefined for this map
+        if(this._tripPersonMapCallbacks.get(tripId) === undefined) {
+            this._tripPersonMapCallbacks.set(tripId, []);
+        }
+        this._tripPersonMapCallbacks.get(tripId).push(callback);
+
+        //Create hook for the personMap of the correct trip
+        let trip = global.service.getTripById(tripId);
+        this._hookMap(trip.personMap, this._tripPersonMapCallbacks.get(tripId));
 
     }
 
