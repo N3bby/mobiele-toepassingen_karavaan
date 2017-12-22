@@ -21,21 +21,28 @@ import {
     H2,
     H3,
     Card,
-    CardItem
+    CardItem, Subtitle, Tabs
 } from 'native-base';
-import {Col, Row, Grid} from 'react-native-easy-grid';
 import UserListComponent from "./UserListComponent";
 import CreateExpenseComponent from "./CreateExpenseComponent";
 import '../ServiceWrapper.js';
 import {ExpenseListComponent} from "./ExpenseListComponent";
+import {Platform} from "react-native";
 
 
 export class BetterTripOverviewComponent extends React.Component {
 
+
     constructor(props) {
         super(props);
         global.tripOverview = this;
-        global.observerService.addTripExpensesCallback(this.props.navigation.state.params.groupId, () => {this.forceUpdate()})
+        global.observerService.addTripExpensesCallback(this.props.navigation.state.params.groupId, () => {
+            this.forceUpdate()
+        });
+
+        this.descriptionTitleHeight = 0;
+        this.descriptionTextHeight = 0;
+
     }
 
     //TODO: Add confirmation dialog with checkbox
@@ -58,9 +65,33 @@ export class BetterTripOverviewComponent extends React.Component {
         let tripId = this.props.navigation.state.params.groupId;
         let trip = global.service.getTripById(tripId);
 
+        //Trying to mimic a header-like style here so it blends in
+        //Taken from: https://github.com/GeekyAnts/NativeBase/blob/master/src/theme/variables/platform.js
+        let platform = Platform.OS;
+        let bgColor = platform === "ios" ? "#F8F8F8" : "#3F51B5";
+        let textColor = platform === "ios" ? "#000" : "#fff";
+
+        //This entire thing is to have the description view have the right height
+        //I couldn't find out to get this working with regular styling
+        let descriptionViewHeight = this.descriptionTextHeight + this.descriptionTitleHeight + 10;
+        let that = this;
+        let onLayoutDescriptionText = (event) => {
+            if (that.descriptionTextHeight === 0) {
+                that.descriptionTextHeight = event.nativeEvent.layout.height;
+                that.forceUpdate();
+            }
+        };
+        let onLayoutDescriptionTitle = (event) => {
+            if (that.descriptionTitleHeight === 0) {
+                that.descriptionTitleHeight = event.nativeEvent.layout.height;
+                that.forceUpdate();
+            }
+        };
+
         return (
             <Container>
-                <Header>
+
+                <Header hasTabs>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
                             <Icon name="arrow-back"/>
@@ -68,7 +99,6 @@ export class BetterTripOverviewComponent extends React.Component {
                     </Left>
                     <Body>
                     <Title>{trip.name}</Title>
-                    <Subtitle>{trip.description}</Subtitle>
                     </Body>
                     <Right>
                         <Button transparent onPress={() => this.deleteTrip(trip.id)}>
@@ -77,7 +107,21 @@ export class BetterTripOverviewComponent extends React.Component {
                     </Right>
                 </Header>
 
+                <View style={{height: descriptionViewHeight, backgroundColor: bgColor, padding: 10, paddingTop: 0}}>
+                    <Title onLayout={onLayoutDescriptionTitle} style={{marginBottom: 5, color: textColor, marginLeft: 0, fontSize: 18, textAlign: 'left'}}>Description</Title>
+                    <Text onLayout={onLayoutDescriptionText} style={{color: textColor, fontSize: 15, marginLeft: 0}}>{trip.description}</Text>
+                </View>
 
+                <Tabs>
+                    <Tab heading="Expenses">
+                        <ExpenseListComponent tripId={tripId}/>
+                    </Tab>
+                    <Tab heading="Participants">
+                        <UserListComponent navigation={this.props.navigation}
+                                           sourceFunc={() => global.service.getTripById(tripId).participants}
+                                           observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}/>
+                    </Tab>
+                </Tabs>
 
             </Container>
         );
