@@ -53,7 +53,7 @@ export default class TripOverviewComponent extends React.Component {
     render() {
 
         let tripId = this.props.navigation.state.params.groupId;
-        let group = global.service.getTripById(tripId);
+        let trip = global.service.getTripById(tripId);
 
         return (
             <Container>
@@ -64,10 +64,10 @@ export default class TripOverviewComponent extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>{group.name}</Title>
+                    <Title>{trip.name}</Title>
                     </Body>
                     <Right>
-                        <Button transparent onPress={() => this.deleteTrip(group.id)}>
+                        <Button transparent onPress={() => this.deleteTrip(trip.id)}>
                             <Icon active name="trash"/>
                         </Button>
                     </Right>
@@ -81,7 +81,7 @@ export default class TripOverviewComponent extends React.Component {
                         </CardItem>
                         <CardItem>
                             <Body>
-                            <Text>{group.description}</Text>
+                            <Text>{trip.description}</Text>
                             </Body>
                         </CardItem>
                     </Card>
