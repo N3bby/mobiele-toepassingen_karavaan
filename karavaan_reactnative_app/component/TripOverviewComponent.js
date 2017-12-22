@@ -100,7 +100,7 @@ export default class TripOverviewComponent extends React.Component {
                         </CardItem>
                     </Card>
 
-                    <View style={{ backgroundColor: 'white', minHeight:50 }}>
+                    <View style={{ backgroundColor: 'white'}}>
                         {/* TODO: Move this to a seperate component */}
                         <List dataArray={global.service.getExpensesByTripId(groupId)} renderRow={(expense) => (
                                 <ListItem key={expense.id} button={false}
@@ -121,6 +121,18 @@ export default class TripOverviewComponent extends React.Component {
                                     </Right>
                                 </ListItem>
                             )}/>
+                    </View>
+
+                    <Card style={{marginBottom:0, marginTop: 10}}>
+                        <CardItem header>
+                            <H3>Participants</H3>
+                        </CardItem>
+                    </Card>
+
+                    <View style={{backgroundColor:'white'}}>
+                    <UserListComponent navigation={this.props.navigation}
+                                       sourceFunc={() => global.service.getTripById(groupId).participants}
+                                       observerFunc={(component) => global.observerService.addTripPersonMapCallback(groupId, () => component.forceUpdate())}/>
                     </View>
 
                 </Content>

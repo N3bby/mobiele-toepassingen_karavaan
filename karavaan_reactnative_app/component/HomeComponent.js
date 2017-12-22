@@ -66,7 +66,7 @@ export default class HomeComponent extends React.Component {
                     </Tab>
                     <Tab heading="Users">
                         <UserListComponent navigation={this.props.navigation}
-                                           source={global.service.personMap}
+                                           sourceFunc={() => global.service.persons }
                                            observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}/>
                         <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
                             <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateUser")}/>

@@ -15,7 +15,8 @@ import {
     View,
     Right,
     Header,
-    Title
+    Title,
+    Fab
 } from 'native-base';
 import UserListComponent from "./UserListComponent";
 import '../ServiceWrapper.js';
@@ -31,23 +32,40 @@ export default class AddUserToTripComponent extends React.Component {
     }
 
     render() {
-       var groupId = this.props.navigation.state.params.tripId;
+        let tripId = this.props.navigation.state.params.tripId;
+
+        let that = this;
+        let tryAddToTripFunction = (user) => {
+            let tripId = that.props.navigation.state.params.tripId;
+            global.service.addExistingParticipantToTripById(tripId, user.id);
+            global.saveService();
+            this.props.navigation.goBack();
+        };
+
         return (
             <Container>
-            <Header>
-            <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-                <Icon name="arrow-back"/>
-            </Button>
-        </Left>
-        <Body>
-        <Title>Add users</Title>
-        </Body>
-        <Right/>
-            </Header>
-            <Content style={{backgroundColor:"white"}}>
-            <UserListComponent navigation={this.props.navigation} userSrcFunc={() => global.service.getNonParticipantsByTripId(groupId)}/>
-           </Content>
+                <Header>
+                    <Left>
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name="arrow-back"/>
+                        </Button>
+                    </Left>
+                    <Body>
+                    <Title>Add users</Title>
+                    </Body>
+                    <Right/>
+                </Header>
+                <Content style={{backgroundColor: "white"}}>
+                    <UserListComponent navigation={this.props.navigation}
+                                       sourceFunc={() => global.service.persons}
+                                       observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}
+                                       isPicker={true}
+                                       pickerFunc={tryAddToTripFunction}/>
+
+                </Content>
+                <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
+                    <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateUser")}/>
+                </Fab>
             </Container>
         );
     }

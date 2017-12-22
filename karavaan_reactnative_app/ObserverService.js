@@ -53,7 +53,7 @@ export class ObserverService {
 
         //Create hook for the personMap of the correct trip
         let trip = global.service.getTripById(tripId);
-        this._hookMap(trip.personMap, this._tripPersonMapCallbacks.get(tripId));
+        this._hookMap(trip.participantMap, this._tripPersonMapCallbacks.get(tripId));
 
     }
 
