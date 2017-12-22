@@ -15,7 +15,7 @@ import {
     Footer,
     Fab,
     navigation
-}from 'native-base';
+} from 'native-base';
 import TripsListComponent from "./TripsListComponent";
 import UserListComponent from "./UserListComponent";
 import {Person} from "../domain/Person";
@@ -48,23 +48,28 @@ export default class HomeComponent extends React.Component {
                     <Title>Karavaan App</Title>
                     </Body>
                     <Right>
-                        <Button transparent onPress={() => this.debugClear()}>
-                            <Text>!!Clear!!</Text>
-                        </Button>
+                        {__DEV__ ? (
+                            <Button transparent onPress={() => this.debugClear()}>
+                                <Text>RESET</Text>
+                            </Button>
+                        ) : <Text/>
+                        }
                     </Right>
                 </Header>
 
                 <Tabs>
                     <Tab heading="Trips">
                         <TripsListComponent navigation={this.props.navigation}/>
-                        <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
-                            <Icon name="md-add" onPress={()=>this.props.navigation.navigate("CreateTrip")}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
+                            <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateTrip")}/>
                         </Fab>
                     </Tab>
                     <Tab heading="Users">
-                        <UserListComponent navigation={this.props.navigation} userSrcFunc={() => global.service.persons}/>
-                        <Fab postion="bottomRight" style={{ backgroundColor: "#5067FF" }}>
-                            <Icon name="md-add" onPress={()=>this.props.navigation.navigate("CreateUser")}/>
+                        <UserListComponent navigation={this.props.navigation}
+                                           source={global.service.personMap}
+                                           observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
+                            <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateUser")}/>
                         </Fab>
                     </Tab>
                 </Tabs>
@@ -72,5 +77,6 @@ export default class HomeComponent extends React.Component {
             </Container>
         );
     }
+
 
 }
