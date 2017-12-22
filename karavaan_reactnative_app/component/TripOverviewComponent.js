@@ -24,7 +24,7 @@ import {
     CardItem
 } from 'native-base';
 import {Col, Row, Grid} from 'react-native-easy-grid';
-
+import UserListComponent from "./UserListComponent";
 import CreateExpenseComponent from "./CreateExpenseComponent";
 import '../ServiceWrapper.js';
 
@@ -128,7 +128,7 @@ export default class TripOverviewComponent extends React.Component {
                 <Footer>
                     <Left style={{margin: 5}}>
                         <Button success
-                                onPress={() => this.props.navigation.navigate("UserOverviewForTrip", {tripId: groupId})}><Text>Add
+                                onPress={() => this.props.navigation.navigate("addUserToTrip", {tripId: groupId})}><Text>Add
                             users</Text></Button>
                     </Left>
                     <Right style={{margin: 5}}>
