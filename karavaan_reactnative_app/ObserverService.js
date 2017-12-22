@@ -1,98 +1,76 @@
 
 export class ObserverService {
 
-    //TODO Create generic hookMapModification method
-    
     constructor(service) {
-        this._observedService = service;
-        this._personMapObservers = [];
-        this._tripMapObservers = [];
-        this._tripExpensesObservers = new Map(); //This is a map since every trip has its own array of expenses
+        //Callback array/map initialization
+        this._personMapCallbacks = [];
+        this._tripMapCallbacks = [];
+        this._tripExpensesCallbacks = new Map(); //Array of callbacks per trip
 
-        this._applyObserverables()
+        //Apply hooks
+        this._applyHooks()
     }
 
-    _applyObserverables() {
-
-        this._applyObservablePersonMap();
-        this._applyObservableTripMap();
-
+    _applyHooks() {
+        this._hookMap(global.service.personMap, this._personMapCallbacks);
+        this._hookMap(global.service.tripMap, this._tripMapCallbacks);
     }
 
-    //Applies only for set method (we agreed that people wouldn't be removed?)
-    _applyObservablePersonMap() {
-
-        let observerService = this; //So we can access 'this' within the lambda
-
-        this._observedService.personMap.set = (id, person) => {
-            Map.prototype.set.apply(observerService._observedService.personMap, [id, person]);
-            for(let i = 0; i < observerService._personMapObservers.length; i++) {
-                observerService._personMapObservers[i](person);
-            }
-        };
-
+    //Add a callback for when a person is added or removed
+    addPersonMapCallback(callback) {
+        this._personMapCallbacks.push(callback);
     }
 
-    //Applies for both set and delete
-    _applyObservableTripMap() {
-
-        let observerService = this; //So we can access 'this' within the lambda
-
-        this._observedService.tripMap.set = (id, trip) => {
-            Map.prototype.set.apply(observerService._observedService.tripMap, [id, trip]);
-            for(let i = 0; i < observerService._tripMapObservers.length; i++) {
-                observerService._tripMapObservers[i](trip);
-            }
-        };
-
-        this._observedService.tripMap.delete = (id) => {
-            Map.prototype.delete.apply(observerService._observedService.tripMap, [id]);
-            for(let i = 0; i < observerService._tripMapObservers.length; i++) {
-                observerService._tripMapObservers[i]();
-            }
-        };
-
+    //Add a callback for when a trip is added or removed
+    addTripMapCallback(callback) {
+        this._tripMapCallbacks.push(callback);
     }
 
-    addPersonMapObserver(callback) {
-        this._personMapObservers.push(callback);
-    }
+    //Add a callback for when an expense is added or removed from a specific trip
+    addTripExpensesCallback(tripId, callback) {
 
-    addTripMapObserver(callback) {
-        this._tripMapObservers.push(callback);
-    }
-
-    //Bit more complicated than the rest
-    addTripExpensesObserver(tripId, callback) {
-
-        let trip = global.service.getTripById(tripId);
-
-        //If the array for this trip is not being observed, add an observer for it
-        //And initialize the array
-        //Can probably be made a bit shorter by removing the duplicate code
-        if(this._tripExpensesObservers.get(tripId) === undefined) {
-            //For set
-            trip.expenseMap.set = (id, expense) => {
-                Map.prototype.set.apply(trip.expenseMap, [id, expense]);
-                let expensesMapCallbacksForTrip = observerService._tripExpensesObservers.get(tripId); //Fetch array here to simplify syntax in the next bit
-                for (let i = 0; i < expensesMapCallbacksForTrip.length; i++) {
-                    expensesMapCallbacksForTrip[i](expense);
-                }
-            };
-            //For delete
-            trip.expenseMap.delete = (id, expense) => {
-                Map.prototype.delete.apply(trip.expenseMap, [id, expense]);
-                let expensesMapCallbacksForTrip = observerService._tripExpensesObservers.get(tripId);
-                for (let i = 0; i < expensesMapCallbacksForTrip.length; i++) {
-                    expensesMapCallbacksForTrip[i](expense);
-                }
-            };
-            this._tripExpensesObservers.set(tripId, []);
+        //Add the callback to our callback map. Create array if still undefined for this map
+        if(this._tripExpensesCallbacks.get(tripId) === undefined) {
+            this._tripExpensesCallbacks.set(tripId, []);
         }
+        this._tripExpensesCallbacks.get(tripId).push(callback);
 
-        //Add the callback
-        this._tripExpensesObservers.get(tripId).push(callback);
+        //Create hook for the expensesMap of the correct trip
+        let trip = global.service.getTripById(tripId);
+        this._hookMap(trip.expenseMap, this._tripExpensesCallbacks.get(tripId));
 
+    }
+
+    // Hooks the 'set' and 'delete' functions of a map and calls the list of callbacks
+    // -------------------------------------------------------------------------------
+    // - map : The map of which we should hook functions
+    // - callbacks : An array of callback functions, signature: (entityThatWasAddedOrRemoved: object)
+    // -------------------------------------------------------------------------------
+    _hookMap(map, callbacks) {
+        let callbackCallFunction = (args) => callbacks.forEach((callback) => {callback(args[0])});
+        this._hookFunction(map, 'set', callbackCallFunction);
+        this._hookFunction(map, 'delete', callbackCallFunction);
+    }
+
+    // Hooks the function of an object and calls a given callback
+    // ----------------------------------------------------------
+    // - object : The object of which you want to hook a function
+    // - functionName : The function to hook
+    // - callback : Callback function to execute
+    // ----------------------------------------------------------
+    _hookFunction(object, functionName, callback) {
+        //Override function definition (in a closure)
+        (function(originalFunction) {
+            //Actually override the original function
+            object[functionName] = function () {
+                //Get the return value of the original function
+                let returnValue = originalFunction.apply(this, arguments);
+                //Call callback
+                callback(arguments, returnValue);
+                //Make sure wer also return the return value for functions that have one
+                return returnValue;
+            };
+        }(object[functionName])); //Call the override function
     }
 
 }

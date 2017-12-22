@@ -35,7 +35,6 @@ export default class HomeComponent extends React.Component {
     }
 
     render() {
-
         return (
             <Container>
 

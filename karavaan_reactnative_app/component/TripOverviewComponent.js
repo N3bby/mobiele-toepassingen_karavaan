@@ -34,7 +34,7 @@ export default class TripOverviewComponent extends React.Component {
     constructor(props) {
         super(props);
         global.tripOverview = this;
-        global.observerService.addTripExpensesObserver(this.props.navigation.state.params.groupId, () => {this.forceUpdate()})
+        global.observerService.addTripExpensesCallback(this.props.navigation.state.params.groupId, () => {this.forceUpdate()})
     }
 
     //TODO: Add confirmation dialog with checkbox
