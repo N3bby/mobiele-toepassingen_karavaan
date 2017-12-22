@@ -23,10 +23,10 @@ constructor() {
  	 super();
   
   	//With an anonymous function (entity argument ignored here
-  	global.observerService.addPersonMapObserver(() => this.forceUpdate())
+  	global.observerService.addPersonMapCallback(() => this.forceUpdate())
   
   	//Using another function (with entity argument here
-  	global.observerService.addPersonMapObserver(someOtherFunction);
+  	global.observerService.addPersonMapCallback(someOtherFunction);
   
 }
 
@@ -34,4 +34,4 @@ someOtherFunction(person) {
  	alert(person.firstName);
   	this.forceUpdate();
 }
-  
+```
