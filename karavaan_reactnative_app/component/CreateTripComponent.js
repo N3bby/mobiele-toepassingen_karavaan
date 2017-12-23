@@ -95,6 +95,24 @@ export default class CreateTripComponent extends React.Component {
           <Input placeholder='Trip Description' placeholderTextColor='green' value={this.state.tripDescription} onChangeText={this.onValueChangeTripDescription.bind(this)} />
           </Item>
 
+          <Form>
+                    
+          <Picker iosHeader="Select one"
+           mode="dropdown"
+           placeholder="select the currency"
+           selectedValue={this.state.selected1}
+           onValueChange={this.onTypeChange.bind(this)}
+          >
+              {(global.service.currencies).map((item, index) => (
+               
+               <Item key={item.name} label={item.name} value={item.name} />
+               
+               ))}
+          </Picker>
+              
+      </Form>
+
+
         <Button
           success
           style={{ alignSelf: "center", margin:10 }}

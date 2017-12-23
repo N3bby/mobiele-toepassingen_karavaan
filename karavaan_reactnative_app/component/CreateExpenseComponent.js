@@ -106,6 +106,7 @@ export default class CreateExpenseComponent extends React.Component {
                     
                         <Picker iosHeader="Select one"
                          mode="dropdown"
+                         placeholder="select the type of expense"
                          selectedValue={this.state.expenseType}
                          onValueChange={this.onTypeChange.bind(this)}
                         >
