@@ -31,7 +31,7 @@ export default class CreateTripComponent extends React.Component {
     constructor(props) {
       super(props);
         this.state = {
-          selected1: "EUR",
+          selected1: "",
           tripName: "",
           tripDescription: ""
         };
@@ -58,12 +58,21 @@ export default class CreateTripComponent extends React.Component {
     add(){
         if (this.state.tripName.length==0||this.state.tripName.length>30){
             alert("TripName should be between 1 and 30 characters.") ;
-
         }else if(this.state.tripDescription.length==0||this.state.tripDescription.length>100){
             alert("TripDescription should be between 1 and 55 characters.");
-        }else{    
-      var currency = this.state.slected1;
-      global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
+        }else{       
+      var currency = this.state.selected1;
+      console.warn(currency);
+      //global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
+      if(currency.length!=0){
+      let curr = global.service.getCurrency(currency);
+      let trip = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
+      global.service.addTrip(trip);
+      }else {
+      let curr = global.service.getCurrency("EUR");
+      let trip = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
+      global.service.addTrip(trip);
+      }
       global.saveService();
       this.props.navigation.goBack();
     }
@@ -95,22 +104,42 @@ export default class CreateTripComponent extends React.Component {
           <Input placeholder='Trip Description' placeholderTextColor='green' value={this.state.tripDescription} onChangeText={this.onValueChangeTripDescription.bind(this)} />
           </Item>
 
-          <Form>
-                    
-          <Picker iosHeader="Select one"
-           mode="dropdown"
-           placeholder="select the currency"
-           selectedValue={this.state.selected1}
-           onValueChange={this.onTypeChange.bind(this)}
-          >
-              {(global.service.currencies).map((item, index) => (
-               
-               <Item key={item.name} label={item.name} value={item.name} />
-               
-               ))}
-          </Picker>
-              
-      </Form>
+          
+
+
+                    <Form style={{margin:5}}>
+                    <Picker iosHeader="Select one"
+                    placeholder="Choose the currency"
+                      renderHeader={backAction =>
+                        <Header style={{ backgroundColor: 'green' }}>
+                          <Left>
+                            <Button transparent onPress={backAction}>
+                              <Icon name="arrow-back" style={{ color: "#fff" }} />
+                            </Button>
+                          </Left>
+                          <Body style={{ flex: 3 }}>
+                            <Title style={{ color: "#fff" }}>Choose the currency</Title>
+                          </Body>
+                          <Right />
+                        </Header>}
+                      mode="dropdown"
+                      style={{ width: Platform.OS === "ios" ? undefined : 200 }}
+                      selectedValue={this.state.selected1}
+                      onValueChange={this.onValueChange.bind(this)}
+                    >
+                    {(global.service.currencies).map((item, index) => (
+                        <Item key= {item.name} label={item.name} value={item.name} />
+                        ))}
+                    </Picker>
+                  </Form>
+
+
+
+
+
+
+
+
 
 
         <Button
