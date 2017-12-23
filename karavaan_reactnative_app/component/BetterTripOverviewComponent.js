@@ -21,7 +21,8 @@ import {
     H2,
     H3,
     Card,
-    CardItem, Subtitle, Tabs
+    CardItem, Subtitle, Tabs,
+    Fab
 } from 'native-base';
 import UserListComponent from "./UserListComponent";
 import CreateExpenseComponent from "./CreateExpenseComponent";
@@ -115,11 +116,17 @@ export class BetterTripOverviewComponent extends React.Component {
                 <Tabs>
                     <Tab heading="Expenses">
                         <ExpenseListComponent tripId={tripId}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
+                            <Icon name="md-add" onPress={() => this.navigateToExpenseForm(tripId)}/>
+                        </Fab>
                     </Tab>
                     <Tab heading="Participants">
                         <UserListComponent navigation={this.props.navigation}
                                            sourceFunc={() => global.service.getTripById(tripId).participants}
                                            observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}/>
+                    <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
+                        <Icon name="md-add" onPress={() => this.navigateToUserAdd(tripId)}/>
+                           </Fab>             
                     </Tab>
                 </Tabs>
 
