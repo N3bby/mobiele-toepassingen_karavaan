@@ -57,7 +57,7 @@ export default class AddUserToTripComponent extends React.Component {
                 </Header>
                 <Content style={{backgroundColor: "white"}}>
                     <UserListComponent navigation={this.props.navigation}
-                                       sourceFunc={() => global.service.persons}
+                                       sourceFunc={() => global.service.getNonParticipantsByTripId(tripId)}
                                        observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}
                                        isPicker={true}
                                        pickerFunc={tryAddToTripFunction}/>
