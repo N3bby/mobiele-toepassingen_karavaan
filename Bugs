@@ -1,0 +1,5 @@
+1) New Expense wordt ook aangemaakt wanneer er een string in "Expense cost" gezet wordt.
+
+*steps to reproduce*: go to expenses - create new expense - type something in "expense cost"
+
+2) knoppen werken niet accuraat. --> onclick event moet op de button gebonden zijn, niet de "+".
