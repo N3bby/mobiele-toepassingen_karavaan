@@ -3,3 +3,20 @@
 *steps to reproduce*: go to expenses - create new expense - type something in "expense cost"
 
 2) knoppen werken niet accuraat. --> onclick event moet op de button gebonden zijn, niet de "+".
+
+3) double click on "add button" opens multiple screens
+
+4) na wat trips aanmaken en dubbel klikken op een trip krijg ik deze error:
+screenshot: error1 -->  https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
+
+5) binaire code in tekstveld
+
+*reproduce*: add new user - klik in het tekstveld en duw de knop ctrl+a in.
+screenshot: error2 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
+
+https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
+
+6) bij het maken van een trip in munteenheid "aud" staat deze toch in "EUR" na het opslaan.
+
+*Reproduce*: create new trip - choose "AUD" als munteenheid - slaag op
+
