@@ -401,6 +401,32 @@ function adding_a_BillExpense_to_Trip_works()
 }
 adding_a_BillExpense_to_Trip_works();
 
+function adding_a_ShareExpense_to_Trip_works()
+{
+    let service = new KaravaanService();
+    let newTrip = service.addNewTrip("Rome");
+    let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.ShareExpense, 75, "Restaurant.", "food", "EUR");
+    
+    let firstParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+    let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Mark", "Zuckerberg");
+    let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "Paul", "Kalkbrenner");
+    
+    let newPayment = service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, 75);
+    
+    let firstDebt = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, 25);
+    let secondDebt = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, secondParticipant.id, 25);
+    let thirdDebt = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id, 25);
+    
+    let amountToBePaidIsZero = service.getExpenseById(newTrip.id, newExpense.id).amountUnpaid == 0;
+    
+    let has3Debts = service.getExpenseById(newTrip.id, newExpense.id).debts.size == 3;
+    
+    let result = amountToBePaidIsZero && has3Debts;
+    
+    functionalityWorks("Adding a ShareExpense to Trip works.", result);
+}
+adding_a_ShareExpense_to_Trip_works();
+
 function exporting_and_importing_DataObject_works()
 {
     let service = new KaravaanService();
@@ -425,7 +451,5 @@ function exporting_and_importing_DataObject_works()
     
     let serviceJSONString = JSON.stringify(service.toDataObject());
     let importedService = KaravaanService.fromDataObject(JSON.parse(serviceJSONString));
-    
-    console.log(importedService.persons);
 }
 exporting_and_importing_DataObject_works();

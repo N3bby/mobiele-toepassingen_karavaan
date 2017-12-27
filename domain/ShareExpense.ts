@@ -22,7 +22,7 @@ export class ShareExpense implements IExpense
     
     private idCounter = 0;
     
-    constructor(id : number = -1, expenseAmount : number = 100, category : string, description : string = "A new SharedExpense where participants enter their own debts.")
+    constructor(id : number = -1, expenseAmount : number = 100, category : string = "A new category", description : string = "A new SharedExpense where participants enter their own debts.")
     {
         this.id = id;
         this.expenseAmount = expenseAmount;

@@ -50,7 +50,6 @@ Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at workin
 
 ## TODO:
 
-10. Add an Expense to a Trip 
 11. Remove an Expense from a Trip
 12. Add a participant to an Expense
 13. Remove a participant from an Expense
@@ -488,6 +487,32 @@ All implementations of `IExpense` should be added to the `ExpenseType` enumerati
 
 When adding a new `IExpense` using the `addNewExpenseByTripId` method, the created `IExpense` implementation is returned.
 
+The default flow of creating and maintaining an `IExpense` is as follows:
+
+1. Create the `IExpense` with the `addNewExpenseByTripId` facade method.
+3. Add Participants to the `IExpense` by using the `addParticipantToExpenseById` facade method.
+2. Add `Payments` using the `addNewPaymentToExpenseById` facade method.
+3. Add `BillItems` using the `addNewBillItemToExpenseById` facade method.
+4. Add `Debts` using the `addNewDebtToExpenseById` facade method.
+
+Depending on the `ExpenseType` of the `IExpense`, this flow of logic will differ.    
+
+Removing entities from an `IExpense` can be done as follows:
+
+```javascript
+// Removing participants
+service.removeParticipantFromExpenseById(trip.id, expense.id, participant.id);
+
+// Removing payments
+service.removePaymentFromExpenseById(trip.id, expense.id, payment.id);
+
+// Removing billItems
+service.removeBillItemFromExpenseById(trip.id, expense.id, payment.id);
+
+// Removing debts
+service.removeDebtFromExpenseById(trip.id, expense.id, debt.id);
+```
+
 ## 16. 1. EvenExpense
 
 An `EvenExpense` is an `IExpense` implementation where the total amount of the expense is evenly shared among the participants. Adding an `EvenExpense` can easily be done using the `addNewExpenseByTripId` and passing the `ExpenseType.EvenExpense` parameter.   
@@ -520,6 +545,48 @@ Now, we can add participants from the `Trip` to this `EvenExpense` and add `Paym
 Like `EvenExpense`, `BillExpense` is an implementation of `IExpense`. A `BillExpense` is an `IExpense` that consists of `BillItems` that are tied to whomever should pay them. The flow of logic is to first create the `BillExpense`, then add `BillItems`, `Payments` and participants.
 Adding a `BillItem` works the same way as adding an `EvenExpense`, with the `addNewExpenseByTripId` and supplying `ExpenseType.BillExpense` as the `ExpenseType` parameter.
 
+The main entity in `BillExpense` are `BillItems` and `Payments`, which are used to calculate the `Debts`.
+
 ```javascript
-// TODO
+// Create a new Service
+let service = new KaravaanService();
+
+// Create a new trip and add a new Expense
+let newTrip = service.addNewTrip("Rome");
+let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.BillExpense, 100, "Restaurant.", "food", "EUR");
+
+// Add participants
+let firstParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Mark", "Zuckerberg");
+let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "Paul", "Kalkbrenner");
+
+// Add payments
+let newPayment = service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, 75);
+let secondPayment = service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, secondParticipant.id, 25);
+
+// Add billItems
+let firstBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, "Hawaii", 25);
+let secondBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.id, secondParticipant.id, "Marguerita", 25);
+let thirdBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id, "Prosciutto", 25);
 ```
+
+## 16. 3. ShareExpense
+
+`ShareExpense` is the last implementation of `IExpense`. A `ShareExpense` is an `IExpense` where each participant submits his own `Debt`, without adding `BillItems`.
+
+```javascript
+
+```
+
+## 17. Removing Expenses from a Trip
+
+Removing an Expense from a `Trip` can be done by simple calling the `removeExpenseFromTripById` facade method.
+
+```javascript
+let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 100, "Cab ride", "transportation");
+
+service.removeExpenseFromTripById(newTrip.id, newExpense.id);
+```
+
+> This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.    
+> This method will throw an Error when supplying a 

@@ -9,6 +9,7 @@ import { Debt } from './Debt';
 import { Payment } from './Payment';
 import { BillItem } from './BillItem';
 import { BillExpense } from './BillExpense';
+import { ShareExpense } from './ShareExpense';
 
 import { KaravaanServiceDO } from './KaravaanServiceDO';
 
@@ -525,7 +526,7 @@ export class KaravaanService
     *
     * @returns {IExpense} The newly created IExpense of given ExpenseType.
     */
-    addNewExpenseByTripId(tripId : number, expenseType : ExpenseType, expenseAmount : number = 100, description : string = "", category : string = "") : IExpense
+    addNewExpenseByTripId(tripId : number, expenseType : ExpenseType, expenseAmount : number = 100, description : string = "", category : string = "", currency : string = "EUR") : IExpense
     {
         let newExpense;
         
@@ -539,6 +540,10 @@ export class KaravaanService
                 newExpense = new BillExpense();
             break;
                 
+            case ExpenseType.ShareExpense:
+                newExpense = new ShareExpense();
+            break;
+                
             // No expenseType found
             default: 
                 throw new Error("ExpenseType " + expenseType + " not found.");
@@ -547,6 +552,7 @@ export class KaravaanService
         newExpense.expenseAmount = expenseAmount;
         newExpense.description = description;
         newExpense.category = category;
+        newExpense.currency = this.getCurrency(currency);
             
         return this.addExpenseToTrip(this.getTripById(tripId), newExpense);
     }
@@ -728,6 +734,25 @@ export class KaravaanService
     }
     
     /**
+    * Remove a Payment from an IExpense.
+    *
+    * @param {number} tripId - The ID of the Trip that maintains the IExpense with supplied ID.
+    * @param {number} expenseId - The ID of the IExpense.
+    * @param {number} paymentId - The ID of the Payment that needs to be removed.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    *
+    * @returns {IExpense} The IExpense after removal of the Payment.
+    */
+    removePaymentFromExpenseById(tripId : number, expenseId : number, paymentId : number) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.removePayment(paymentId);
+        return expense;
+    }
+    
+    /**
     * Add a Debt to a certain IExpense by using its ID, the ID of the Trip it belongs to and the ID of the participant whose debt this is.
     * This method will throw an Error when no IExpense with given ID is found.
     * This method will throw an Error when no participant with given ID is found.
@@ -770,6 +795,25 @@ export class KaravaanService
     {
         let expense = this.getExpenseById(tripId, expenseId);
         expense.addDebt(newDebt);
+        return expense;
+    }
+    
+    /**
+    * Remove a Debt from an IExpense.
+    *
+    * @param {number} tripId - The ID of the Trip that maintains the IExpense with supplied ID.
+    * @param {number} expenseId - The ID of the IExpense.
+    * @param {number} debtId - The ID of the Debt that needs to be removed.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    *
+    * @returns {IExpense} The IExpense after removal of the Debt.
+    */
+    removeDebtFromExpenseById(tripId : number, expenseId : number, debtId : number) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.removeDebt(debtId);
         return expense;
     }
     
@@ -827,6 +871,25 @@ export class KaravaanService
     {
         let expense = this.getExpenseById(tripId, expenseId);
         expense.addBillItem(newBillItem);
+        return expense;
+    }
+   
+    /**
+    * Remove a BillItem from an IExpense.
+    *
+    * @param {number} tripId - The ID of the Trip that maintains the IExpense with supplied ID.
+    * @param {number} expenseId - The ID of the IExpense.
+    * @param {number} billItemId - The ID of the BillItem that needs to be removed.
+    *
+    * @throws Will throw an error when no Trip with supplied ID is found.
+    * @throws Will throw an error when no IExpense with supplied ID is found.
+    *
+    * @returns {IExpense} The IExpense after removal of the BillItem.
+    */
+    removeBillItemFromExpenseById(tripId : number, expenseId : number, billItemId : number) : IExpense
+    {
+        let expense = this.getExpenseById(tripId, expenseId);
+        expense.removeBillItem(billItemId);
         return expense;
     }
     
