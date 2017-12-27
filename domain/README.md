@@ -44,21 +44,12 @@ Take a look at `KaravaanTests.ts` or `target/KaravaanTests.js` to look at workin
 13. Get a list of Currencies from a Trip ✔
 14. Get a single Currency from a Trip ✔
 15. Override the details of a Currency ✔
-16. Expenses 
-16. 1. EvenExpenses
-
-
-## TODO:
-
-11. Remove an Expense from a Trip
-12. Add a participant to an Expense
-13. Remove a participant from an Expense
-13. Add a Payment to an Expense
-14. Remove a Payment from an Expense
-15. Add a BillItem to an Expense
-16. Remove a BillItem from an Expense
-17. Assign a participant to a BillItem
-15. Get a list of debts from an Expense
+16. Expenses ✔
+16. 1. EvenExpense ✔
+16. 2. BillExpense ✔
+16. 3. ShareExpense ✔
+17. Removing an Expense from a Trip ✔
+18. Get a list of debts from an Expense ✔
 
 ## 1. Create KaravaanService
 
@@ -529,7 +520,7 @@ Everytime a new operation is performed on the `EvenExpense`, the `Debt` gets rec
 let newTrip = service.addNewTrip("Rome");
 
 // Create a new EvenExpense with a price of 100 to the previously created trip for a cab ride. Category is transportation.
-let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 100, "Cab ride", "transportation");
+let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.EvenExpense, 100, "Cab ride", "transportation", "EUR");
 ```
 
 Now, we can add participants from the `Trip` to this `EvenExpense` and add `Payments`.
@@ -575,7 +566,25 @@ let thirdBillItem = service.addNewBillItemToExpenseById(newTrip.id, newExpense.i
 `ShareExpense` is the last implementation of `IExpense`. A `ShareExpense` is an `IExpense` where each participant submits his own `Debt`, without adding `BillItems`.
 
 ```javascript
+// Create a new Service
+let service = new KaravaanService();
 
+// Create a new Trip and add a shareExpense
+let newTrip = service.addNewTrip("Rome");
+let newExpense = service.addNewExpenseByTripId(newTrip.id, ExpenseType.ShareExpense, 75, "Restaurant.", "food", "EUR");
+
+// Add participants
+let firstParticipant = service.addNewParticipantToTripById(newTrip.id, "John", "Lennon");
+let secondParticipant = service.addNewParticipantToTripById(newTrip.id, "Mark", "Zuckerberg");
+let thirdParticipant = service.addNewParticipantToTripById(newTrip.id, "Paul", "Kalkbrenner");
+
+// Add a Payment
+let newPayment = service.addNewPaymentToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, 75);
+
+// Add Debts
+let firstDebt = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, firstParticipant.id, 25);
+let secondDebt = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, secondParticipant.id, 25);
+let thirdDebt = service.addNewDebtToExpenseById(newTrip.id, newExpense.id, thirdParticipant.id, 25);
 ```
 
 ## 17. Removing Expenses from a Trip
@@ -589,4 +598,17 @@ service.removeExpenseFromTripById(newTrip.id, newExpense.id);
 ```
 
 > This method will throw an Error when supplying an ID that does not belong to an existing `Trip`.    
-> This method will throw an Error when supplying a 
+> This method will throw an Error when supplying an ID that does not belong to an existing `IExpense`.   
+
+## 18. Get a list of Debts from an Expense
+
+The whole purpose of this app is to maintain debts of different participants on a trip. Getting a list of `Debts` should be the most important functionality. Getting a list of `Debts` from an `IExpense` can be done using the `getDebtsByExpenseId` facade method.   
+This method will return an `Array<Debt>`.
+
+```javascript
+// Get a list of Debts from a previously maintained IExpense
+let debtList = service.getDebtsByExpenseId(newTrip.id, newExpense.id);
+
+// Get a list of Debts for a single participant from an IExpense
+let debtListForParticipant = service.getDebtsForParticipantByExpenseId(newTrip.id, newExpense.id, participant.id);
+```
