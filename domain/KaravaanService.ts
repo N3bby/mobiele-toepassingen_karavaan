@@ -552,7 +552,11 @@ export class KaravaanService
         newExpense.expenseAmount = expenseAmount;
         newExpense.description = description;
         newExpense.category = category;
-        newExpense.currency = this.getCurrency(currency);
+        
+        // Add the currency to the trip if it does not exist already
+        let currencyObject = this.getCurrency(currency);
+        this.addCurrencyToTrip(tripId, currencyObject);
+        newExpense.currency = this.getCurrencyFromTripByName(tripId, currency);
             
         return this.addExpenseToTrip(this.getTripById(tripId), newExpense);
     }
