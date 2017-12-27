@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const ExpenseType_1 = require("./ExpenseType");
 const IExpenseDO_1 = require("./IExpenseDO");
 class ShareExpense {
-    constructor(id = -1, expenseAmount = 100, category, description = "A new SharedExpense where participants enter their own debts.") {
+    constructor(id = -1, expenseAmount = 100, category = "A new category", description = "A new SharedExpense where participants enter their own debts.") {
         this.expenseType = ExpenseType_1.ExpenseType.ShareExpense;
         this.idCounter = 0;
         this.id = id;
