@@ -50,6 +50,10 @@ export default class CreateExpenseComponent extends React.Component {
             let expenseAmount = parseFloat(this.state.expenseAmount);
             if (expenseAmount <= 0)
                 throw new Error("Expense cost should be higher than 0.");
+
+                if(isNaN(expenseAmount)){
+                    throw new Error("The amount be number");
+                }
             
             global.service.addNewExpenseByTripId(tripId, ExpenseType.EvenExpense, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
             global.saveService();
