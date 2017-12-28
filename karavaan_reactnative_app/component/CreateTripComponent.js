@@ -66,12 +66,13 @@ export default class CreateTripComponent extends React.Component {
       //global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
       if(currency.length!=0){
       let curr = global.service.getCurrency(currency);
-      let trip = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
-      global.service.addTrip(trip);
+      let trip1 = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
+      global.service.addTrip(trip1);
       }else {
-      let curr = global.service.getCurrency("EUR");
-      let trip = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
-      global.service.addTrip(trip);
+      //let curr = global.service.getCurrency("EUR");
+      //let trip = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
+      //global.service.addTrip(trip);
+      global.service.addNewTrip(this.state.tripName,this.state.tripDescription);
       }
       global.saveService();
       this.props.navigation.goBack();

@@ -52,7 +52,7 @@ export default class CreateExpenseComponent extends React.Component {
                 throw new Error("Expense cost should be higher than 0.");
 
                 if(isNaN(expenseAmount)){
-                    throw new Error("The amount be number");
+                    throw new Error("The amount must be the number");
                 }
             
             global.service.addNewExpenseByTripId(tripId, ExpenseType.EvenExpense, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
