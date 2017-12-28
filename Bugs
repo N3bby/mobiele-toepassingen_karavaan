@@ -1,7 +1,3 @@
-1) New Expense wordt ook aangemaakt wanneer er een string in "Expense cost" gezet wordt.
-
-*steps to reproduce*: go to expenses - create new expense - type something in "expense cost"
-
 2) knoppen werken niet accuraat. --> onclick event moet op de button gebonden zijn, niet de "+".
 
 3) double click on "add button" opens multiple screens
@@ -21,3 +17,7 @@ https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY https://timvgb.stackstorage.co
 *Reproduce*: create new trip - choose "AUD" als munteenheid - slaag op
 
 7) RESET knop bovenaan werkt niet? message pop up: "please close the app"
+
+8) Ik krijg een stacktrace bij volgend scenario:
+     - create a trip - go into trip - add user - add new user- , wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace:
+     error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
