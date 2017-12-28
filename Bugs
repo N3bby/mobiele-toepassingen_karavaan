@@ -19,5 +19,5 @@ https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY https://timvgb.stackstorage.co
 7) RESET knop bovenaan werkt niet? message pop up: "please close the app"
 
 8) Ik krijg een stacktrace bij volgend scenario:
-     - create a trip - go into trip - add user - add new user- , wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace:
+     - create a trip - go into trip - participants - add user - add new user- , wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace:
      error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
