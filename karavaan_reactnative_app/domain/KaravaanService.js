@@ -451,7 +451,10 @@ class KaravaanService {
         newExpense.expenseAmount = expenseAmount;
         newExpense.description = description;
         newExpense.category = category;
-        newExpense.currency = this.getCurrency(currency);
+        // Add the currency to the trip if it does not exist already
+        let currencyObject = this.getCurrency(currency);
+        this.addCurrencyToTrip(tripId, currencyObject);
+        newExpense.currency = this.getCurrencyFromTripByName(tripId, currency);
         return this.addExpenseToTrip(this.getTripById(tripId), newExpense);
     }
     /**
@@ -768,6 +771,7 @@ class KaravaanService {
             let newTrip = new Trip_1.Trip(tripDO.id, tripDO.name);
             newTrip.description = tripDO.description;
             newTrip.date = new Date(tripDO.date);
+            newTrip.removeCurrency(new Currency_1.Currency("EUR", 1));
             newService.addTrip(newTrip);
             // Import participants of this trip
             for (let participant of tripDO.participants) {

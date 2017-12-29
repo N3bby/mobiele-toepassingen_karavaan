@@ -60,16 +60,16 @@ export default class HomeComponent extends React.Component {
                 <Tabs>
                     <Tab heading="Trips">
                         <TripsListComponent navigation={this.props.navigation}/>
-                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
-                            <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateTrip")}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.props.navigation.navigate("CreateTrip")}>
+                            <Icon name="md-add" />
                         </Fab>
                     </Tab>
                     <Tab heading="Users">
                         <UserListComponent navigation={this.props.navigation}
                                            sourceFunc={() => global.service.persons }
                                            observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}/>
-                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
-                            <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateUser")}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.props.navigation.navigate("CreateUser")}>
+                            <Icon name="md-add" />
                         </Fab>
                     </Tab>
                 </Tabs>

@@ -116,16 +116,16 @@ export class BetterTripOverviewComponent extends React.Component {
                 <Tabs>
                     <Tab heading="Expenses">
                         <ExpenseListComponent tripId={tripId}/>
-                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
-                            <Icon name="md-add" onPress={() => this.navigateToExpenseForm(tripId)}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.navigateToExpenseForm(tripId)}>
+                            <Icon name="md-add" />
                         </Fab>
                     </Tab>
                     <Tab heading="Participants">
                         <UserListComponent navigation={this.props.navigation}
                                            sourceFunc={() => global.service.getTripById(tripId).participants}
                                            observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}/>
-                    <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
-                        <Icon name="md-add" onPress={() => this.navigateToUserAdd(tripId)}/>
+                    <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.navigateToUserAdd(tripId)}>
+                        <Icon name="md-add" />
                            </Fab>             
                     </Tab>
                 </Tabs>

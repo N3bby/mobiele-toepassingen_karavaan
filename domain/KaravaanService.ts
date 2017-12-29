@@ -949,6 +949,7 @@ export class KaravaanService
             let newTrip = new Trip(tripDO.id, tripDO.name);
             newTrip.description = tripDO.description;
             newTrip.date = new Date(tripDO.date);
+            newTrip.removeCurrency(new Currency("EUR", 1));
             
             newService.addTrip(newTrip);
             
