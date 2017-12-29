@@ -39,12 +39,9 @@ export default class UserListComponent extends React.Component {
     
     removeUser(userId)
     {
-        alert("This function still needs to be implemented correctly, it only removes from the global scope.");
-        
         try
         {
             this.props.removeUserFunc(userId);
-            global.saveService();
         }
         catch (error)
         {

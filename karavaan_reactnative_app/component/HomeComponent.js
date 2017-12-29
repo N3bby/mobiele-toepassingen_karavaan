@@ -35,6 +35,12 @@ export default class HomeComponent extends React.Component {
     }
 
     render() {
+        
+        let removePerson = (userId) =>
+        {
+            global.service.removePersonById(userId);
+        }
+        
         return (
             <Container>
 
@@ -67,7 +73,8 @@ export default class HomeComponent extends React.Component {
                     <Tab heading="Users">
                         <UserListComponent navigation={this.props.navigation}
                                            sourceFunc={() => global.service.persons }
-                                           observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}/>
+                                           observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}
+                                           removeUserFunc={removePerson}/>
                         <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.props.navigation.navigate("CreateUser")}>
                             <Icon name="md-add" />
                         </Fab>

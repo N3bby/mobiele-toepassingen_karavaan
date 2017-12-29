@@ -88,6 +88,11 @@ export class BetterTripOverviewComponent extends React.Component {
                 that.forceUpdate();
             }
         };
+        
+        let removePerson = (userId) => {
+            global.service.removeParticipantById(tripId, userId);
+            global.saveService();
+        };
 
         return (
             <Container>
@@ -123,7 +128,8 @@ export class BetterTripOverviewComponent extends React.Component {
                     <Tab heading="Participants">
                         <UserListComponent navigation={this.props.navigation}
                                            sourceFunc={() => global.service.getTripById(tripId).participants}
-                                           observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}/>
+                                           observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}
+                                           removeUserFunc={removePerson}/>
                     <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.navigateToUserAdd(tripId)}>
                         <Icon name="md-add" />
                            </Fab>             

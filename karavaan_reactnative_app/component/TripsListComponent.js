@@ -30,6 +30,7 @@ export default class TripsListComponent extends React.Component {
     }
 
     render() {
+        
         //TODO Fix the weird touch effect here.
         //Bug report of it can be found here: https://github.com/GeekyAnts/NativeBase/issues/1378
         //Apparently an issue with the last version of NativeBase. Might need to wait for a fix
