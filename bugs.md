@@ -9,19 +9,17 @@
 
 ## TODO
 
-1. na wat trips aanmaken en dubbel klikken op een trip krijg ik deze error: screenshot: error1 -->  https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
-2. Binaire code in tekstveld bij Ctrl+A: screenshot: error2 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
-3. Stacktrace bij volgend scenario: 
+1. Na wat trips aanmaken en dubbel klikken op een trip krijg ik deze error: screenshot: error1 -->  https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
+2. Dubbelklikken op "Add" knop opent meerdere components
+
+## Not reconstructible on actual device
+1. Binaire code in tekstveld bij Ctrl+A: screenshot: error2 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
+
+## Not important 
+1. Stacktrace bij volgend scenario: 
    1. create a trip 
    2. go into trip - participants - add user - add new user
    3. wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace: error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
-
-## Unfixable
-
-1. Dubbelklikken op "Add" knop opent meerdere components
-
-
-
-
+Dit geeft een warning over forceUpdate op te roepen. Mag genegeerd worden in principe
 
 https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
