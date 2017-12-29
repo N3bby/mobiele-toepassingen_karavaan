@@ -17,6 +17,7 @@ import {
 } from 'native-base';
 
 import '../ServiceWrapper.js';
+import {Alert} from "react-native";
 
 export default class UserListComponent extends React.Component {
 
@@ -34,19 +35,32 @@ export default class UserListComponent extends React.Component {
     }
 
     executePickerFunc(user) {
-        if(this.props.isPicker) this.props.pickerFunc(user);
+        if (this.props.isPicker) this.props.pickerFunc(user);
     }
-    
-    removeUser(userId)
-    {
-        try
-        {
-            this.props.removeUserFunc(userId);
-        }
-        catch (error)
-        {
-            alert(error);
-        }
+
+    removeUser(userId) {
+        let removeUserFunc = this.props.removeUserFunc;
+        Alert.alert(
+            'Delete User',
+            'Are you sure you want to delete this user? All data will be lost',
+            [
+                {
+                    text: 'No', onPress: () => {
+                    }, style: 'cancel'
+                },
+                {
+                    text: 'Yes', onPress: () => {
+                        try {
+                            removeUserFunc(userId);
+                        }
+                        catch (error) {
+                            alert(error);
+                        }
+                    }
+                },
+            ],
+            {cancelable: false}
+        );
     }
 
     render() {
@@ -54,7 +68,8 @@ export default class UserListComponent extends React.Component {
         return (
             <Content>
                 <List dataArray={this.props.sourceFunc()} renderRow={(user) =>
-                    <ListItem key={user.userId} button={this.props.isPicker} onPress={() => this.executePickerFunc(user)} icon>
+                    <ListItem key={user.userId} button={this.props.isPicker}
+                              onPress={() => this.executePickerFunc(user)} icon>
                         <Left>
                             <Icon style={{fontSize: 25}} name="person"/>
                         </Left>

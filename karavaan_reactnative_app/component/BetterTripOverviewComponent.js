@@ -28,7 +28,7 @@ import UserListComponent from "./UserListComponent";
 import CreateExpenseComponent from "./CreateExpenseComponent";
 import '../ServiceWrapper.js';
 import {ExpenseListComponent} from "./ExpenseListComponent";
-import {Platform} from "react-native";
+import {Alert, Platform} from "react-native";
 
 
 export class BetterTripOverviewComponent extends React.Component {
@@ -48,9 +48,29 @@ export class BetterTripOverviewComponent extends React.Component {
 
     //TODO: Add confirmation dialog with checkbox
     deleteTrip(id) {
-        global.service.removeTripById(id);
-        global.saveService();
-        this.props.navigation.goBack();
+        Alert.alert(
+            'Delete Trip',
+            'Are you sure you want to delete this trip? All data will be lost',
+            [
+                {
+                    text: 'No', onPress: () => {
+                    }, style: 'cancel'
+                },
+                {
+                    text: 'Yes', onPress: () => {
+                        try {
+                            global.service.removeTripById(id);
+                            global.saveService();
+                            this.props.navigation.goBack();
+                        }
+                        catch (error) {
+                            alert(error);
+                        }
+                    }
+                },
+            ],
+            {cancelable: false}
+        );
     }
 
     navigateToExpenseForm(tripId) {
