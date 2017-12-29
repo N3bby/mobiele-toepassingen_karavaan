@@ -12,9 +12,9 @@
 1. na wat trips aanmaken en dubbel klikken op een trip krijg ik deze error: screenshot: error1 -->  https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
 2. Binaire code in tekstveld bij Ctrl+A: screenshot: error2 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
 3. Stacktrace bij volgend scenario: 
-3. 1. create a trip 
-3. 2. go into trip - participants - add user - add new user
-3. 3. wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace: error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
+   1. create a trip 
+   2. go into trip - participants - add user - add new user
+   3. wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace: error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
 
 ## Unfixable
 
