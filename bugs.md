@@ -14,7 +14,7 @@
 3. Stacktrace bij volgend scenario: 
 3. 1. create a trip 
 3. 2. go into trip - participants - add user - add new user
-3. 4. wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace: error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
+3. 3. wanneer een nieuwe user is aangemaakt en toegevoegd krijg ik volgende stacktrace: error 3 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
 
 ## Unfixable
 
