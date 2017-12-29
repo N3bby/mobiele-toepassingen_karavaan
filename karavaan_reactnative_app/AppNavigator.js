@@ -1,7 +1,6 @@
 import { StackNavigator } from "react-navigation";
 
 import HomeComponent from "./component/HomeComponent";
-import TripOverviewComponent from "./component/TripOverviewComponent";
 import CreateTripComponent from "./component/CreateTripComponent";
 import CreateUserComponent from "./component/CreateUserComponent";
 import addUserToTripComponent from "./component/AddUserToTripComponent";
