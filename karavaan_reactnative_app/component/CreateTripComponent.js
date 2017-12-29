@@ -59,7 +59,7 @@ export default class CreateTripComponent extends React.Component {
         if (this.state.tripName.length==0||this.state.tripName.length>30){
             alert("TripName should be between 1 and 30 characters.") ;
         }else if(this.state.tripDescription.length==0||this.state.tripDescription.length>100){
-            alert("TripDescription should be between 1 and 55 characters.");
+            alert("TripDescription should be between 1 and 100 characters.");
         }else{       
       var currency = this.state.selected1;
       if(currency.length!=0){

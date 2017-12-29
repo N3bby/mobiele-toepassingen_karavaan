@@ -40,8 +40,8 @@ export default class CreateExpenseComponent extends React.Component {
         try
         {
             // Check if the expense description is not too long
-            if (this.state.expenseDescription.length == 0 || this.state.expenseDescription.length > 50)
-                throw new Error("Expense Description should be between 1 and 50 characters.");
+            if (this.state.expenseDescription.length == 0 || this.state.expenseDescription.length > 100)
+                throw new Error("Expense Description should be between 1 and 100 characters.");
             
             // Check if the category is not too long
             if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50) 
