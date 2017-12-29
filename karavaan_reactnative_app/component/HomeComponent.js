@@ -39,6 +39,7 @@ export default class HomeComponent extends React.Component {
         let removePerson = (userId) =>
         {
             global.service.removePersonById(userId);
+            global.saveService();
         }
         
         return (

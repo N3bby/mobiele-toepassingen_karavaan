@@ -41,6 +41,12 @@ export default class AddUserToTripComponent extends React.Component {
             global.saveService();
             this.props.navigation.goBack();
         };
+        
+        let removePerson = (userId) =>
+        {
+            global.service.removePersonById(userId);
+            global.saveService();
+        }
 
         return (
             <Container>
@@ -60,7 +66,8 @@ export default class AddUserToTripComponent extends React.Component {
                                        sourceFunc={() => global.service.getNonParticipantsByTripId(tripId)}
                                        observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}
                                        isPicker={true}
-                                       pickerFunc={tryAddToTripFunction}/>
+                                       pickerFunc={tryAddToTripFunction}
+                                       removeUserFunc={removePerson}/>
 
                 </Content>
                 <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.props.navigation.navigate("CreateUser")}>
