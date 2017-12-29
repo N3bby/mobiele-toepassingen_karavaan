@@ -36,8 +36,22 @@ export default class UserListComponent extends React.Component {
     executePickerFunc(user) {
         if(this.props.isPicker) this.props.pickerFunc(user);
     }
+    
+    removeUser(userId)
+    {
+        try
+        {
+            global.service.removePersonById(userId);
+            global.saveService();
+        }
+        catch (error)
+        {
+            alert(error);
+        }
+    }
 
     render() {
+
         return (
             <Content>
                 <List dataArray={this.props.sourceFunc()} renderRow={(user) =>
@@ -48,6 +62,11 @@ export default class UserListComponent extends React.Component {
                         <Body>
                         <Text style={{fontSize: 18}}>{user.name}</Text>
                         </Body>
+                        <Right>
+                            <Button transparent onPress={() => this.removeUser(user.id)}>
+                                <Icon name="trash"/>
+                            </Button>
+                        </Right>
                     </ListItem>
                 }/>
             </Content>

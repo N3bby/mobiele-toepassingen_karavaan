@@ -63,8 +63,8 @@ export default class AddUserToTripComponent extends React.Component {
                                        pickerFunc={tryAddToTripFunction}/>
 
                 </Content>
-                <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}>
-                    <Icon name="md-add" onPress={() => this.props.navigation.navigate("CreateUser")}/>
+                <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.props.navigation.navigate("CreateUser")}>
+                    <Icon name="md-add" />
                 </Fab>
             </Container>
         );
