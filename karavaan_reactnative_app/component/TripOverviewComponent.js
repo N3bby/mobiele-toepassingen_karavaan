@@ -105,7 +105,8 @@ export default class TripOverviewComponent extends React.Component {
                     <View style={{backgroundColor:'white'}}>
                     <UserListComponent navigation={this.props.navigation}
                                        sourceFunc={() => global.service.getTripById(tripId).participants}
-                                       observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}/>
+                                       observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}
+                                       removeUserFunc={global.service.removePersonById}/>
                     </View>
 
                 </Content>

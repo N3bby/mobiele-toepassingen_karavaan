@@ -43,7 +43,7 @@ export default class UserListComponent extends React.Component {
         
         try
         {
-            global.service.removePersonById(userId);
+            this.props.removeUserFunc(userId);
             global.saveService();
         }
         catch (error)
