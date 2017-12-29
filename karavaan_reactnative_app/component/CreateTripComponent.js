@@ -31,7 +31,7 @@ export default class CreateTripComponent extends React.Component {
     constructor(props) {
       super(props);
         this.state = {
-          selected1: "",
+          selected1: "EUR",
           tripName: "",
           tripDescription: ""
         };
@@ -62,12 +62,8 @@ export default class CreateTripComponent extends React.Component {
             alert("TripDescription should be between 1 and 55 characters.");
         }else{       
       var currency = this.state.selected1;
-      console.warn(currency);
-      //global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
       if(currency.length!=0){
-      let curr = global.service.getCurrency(currency);
-      let trip1 = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);
-      global.service.addTrip(trip1);
+      global.service.addNewTrip(this.state.tripName, this.state.tripDescription, currency);
       }else {
       //let curr = global.service.getCurrency("EUR");
       //let trip = new Trip(-1,this.state.tripName,this.state.tripDescription,curr);

@@ -162,15 +162,21 @@ export class KaravaanService
     * Add a new Trip by name.
     *
     * @param {string} name - The name of the Trip to be created.
+    * @param {string} [description=""] - The description of the Trip to be created.
+    * @param {string} [currency="EUR"] - The currency to add to this Trip.
     *
     * @returns {Trip} The created Trip, with all properties set to the default values and an ID assigned by the KaravaanService.
     */
-    addNewTrip(name : string, description : string = "") : Trip
+    addNewTrip(name : string, description : string = "", currency : string = "EUR") : Trip
     {
         let newTrip = new Trip();
         newTrip.name = name;
         newTrip.description = description;
-        newTrip.addCurrency(this.currencyMap.get("EUR"));
+        
+        // Delete the default currency
+        newTrip.currencyMap = new Map<string, Currency>();
+        
+        newTrip.addCurrency(this.currencyMap.get(currency));
         return this.addTrip(newTrip);
     }
     
