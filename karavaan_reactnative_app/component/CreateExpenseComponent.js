@@ -23,6 +23,7 @@ import {
 import { ExpenseType } from '../domain/ExpenseType';
 import '../ServiceWrapper.js';
 import CurrencyInputComponent from "./CurrencyInputComponent";
+import { EvenExpense } from '../domain/EvenExpense';
 
 export default class CreateExpenseComponent extends React.Component {
 
@@ -32,7 +33,7 @@ export default class CreateExpenseComponent extends React.Component {
           expenseDescription: "",
           expenseCategory: "",
           expenseAmount: "",
-          selectedExpenseType: ExpenseType.EvenExpense
+          expenseType: ExpenseType.EvenExpense
         };
       }
 
@@ -55,8 +56,16 @@ export default class CreateExpenseComponent extends React.Component {
                 if(isNaN(expenseAmount)){
                     throw new Error("The amount must be the number");
                 }
-
-            global.service.addNewExpenseByTripId(tripId, ExpenseType.EvenExpense, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
+                let type = ExpenseType.EvenExpense;
+                if(this.state.expenseType==='EvenExpense'){
+                    this.type = ExpenseType.EvenExpense;
+                }else if(this.state.expenseType==='BillExpense'){
+                    this.type = ExpenseType.BillExpense;
+                }else{
+                    this.type= ExpenseType.ShareExpense;
+                }
+                console.warn(this.state.expenseType);
+            global.service.addNewExpenseByTripId(tripId, type, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
             global.saveService();
             this.props.navigation.goBack();
         }
