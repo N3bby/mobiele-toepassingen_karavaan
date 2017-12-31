@@ -56,7 +56,7 @@ export default class CreateExpenseComponent extends React.Component {
                 if(isNaN(expenseAmount)){
                     throw new Error("The amount must be the number");
                 }
-                let type = ExpenseType.EvenExpense;
+                let expenseType = ExpenseType.EvenExpense;
                 if(this.state.expenseType==='EvenExpense'){
                     this.type = ExpenseType.EvenExpense;
                 }else if(this.state.expenseType==='BillExpense'){
@@ -65,7 +65,7 @@ export default class CreateExpenseComponent extends React.Component {
                     this.type= ExpenseType.ShareExpense;
                 }
                 console.warn(this.state.expenseType);
-            global.service.addNewExpenseByTripId(tripId, type, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
+            global.service.addNewExpenseByTripId(tripId, expenseType, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
             global.saveService();
             this.props.navigation.goBack();
         }
