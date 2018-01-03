@@ -30,6 +30,10 @@ export default class App extends React.Component {
                 isLoading: false
             })
         });
+
+        //Disable warnings because they were annoying me
+        console.disableYellowBox = true;
+
     }
 
     render() {

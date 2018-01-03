@@ -14,7 +14,6 @@ import {
     Button,
     Fab
 }from 'native-base';
-import { Col, Row, Grid } from "react-native-easy-grid";
 import '../ServiceWrapper.js';
 
 export default class TripsListComponent extends React.Component {
@@ -24,9 +23,9 @@ export default class TripsListComponent extends React.Component {
         global.observerService.addTripMapCallback(() => this.forceUpdate());
     }
     
-    navigateToTrip(itemId : number)
+    navigateToTrip(tripId)
     {
-        this.props.navigation.navigate("TripOverview", { groupId: itemId });
+        this.props.navigation.navigate("TripOverview", { tripId: tripId });
     }
 
     render() {

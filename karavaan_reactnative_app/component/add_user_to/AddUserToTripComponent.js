@@ -18,35 +18,25 @@ import {
     Title,
     Fab
 } from 'native-base';
-import UserListComponent from "./UserListComponent";
-import '../ServiceWrapper.js';
+import UserListComponent from "../UserListComponent";
+import '../../ServiceWrapper.js';
 
 export default class AddUserToTripComponent extends React.Component {
-
-    //Properties
-    // - navigation: Navigation object
-    // - userSrcFunc: Function that gets the array for users -- see HomeComponent for an example
+    //I can't make a generic version of this as react-native-navigation doesn't allow passing functions as parameters
 
     constructor() {
         super();
     }
 
     render() {
+
         let tripId = this.props.navigation.state.params.tripId;
 
-        let that = this;
-        let tryAddToTripFunction = (user) => {
-            let tripId = that.props.navigation.state.params.tripId;
+        let addToTrip = (user) => {
             global.service.addExistingParticipantToTripById(tripId, user.id);
             global.saveService();
             this.props.navigation.goBack();
         };
-        
-        let removePerson = (userId) =>
-        {
-            global.service.removePersonById(userId);
-            global.saveService();
-        }
 
         return (
             <Container>
@@ -57,17 +47,15 @@ export default class AddUserToTripComponent extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Add users</Title>
+                    <Title>Add to trip</Title>
                     </Body>
                     <Right/>
                 </Header>
                 <Content style={{backgroundColor: "white"}}>
-                    <UserListComponent navigation={this.props.navigation}
-                                       sourceFunc={() => global.service.getNonParticipantsByTripId(tripId)}
+                    <UserListComponent sourceFunc={() => global.service.getNonParticipantsByTripId(tripId)}
                                        observerFunc={(component) => global.observerService.addPersonMapCallback(() => component.forceUpdate())}
                                        isPicker={true}
-                                       pickerFunc={tryAddToTripFunction}
-                                       removeUserFunc={removePerson}/>
+                                       pickerFunc={(user) => addToTrip(user)}/>
 
                 </Content>
                 <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.props.navigation.navigate("CreateUser")}>

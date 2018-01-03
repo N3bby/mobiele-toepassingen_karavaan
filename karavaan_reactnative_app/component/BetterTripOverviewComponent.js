@@ -29,6 +29,7 @@ import CreateExpenseComponent from "./CreateExpenseComponent";
 import '../ServiceWrapper.js';
 import {ExpenseListComponent} from "./ExpenseListComponent";
 import {Alert, Platform} from "react-native";
+import * as ExpenseType_1 from "../domain/ExpenseType";
 
 
 export class BetterTripOverviewComponent extends React.Component {
@@ -37,12 +38,18 @@ export class BetterTripOverviewComponent extends React.Component {
     constructor(props) {
         super(props);
         global.tripOverview = this;
-        global.observerService.addTripExpensesCallback(this.props.navigation.state.params.groupId, () => {
+        global.observerService.addTripExpensesCallback(this.props.navigation.state.params.tripId, () => {
             this.forceUpdate()
         });
 
         this.descriptionTitleHeight = 0;
         this.descriptionTextHeight = 0;
+
+        //Add test expense
+        // service.addNewExpenseByTripId(
+        //     this.props.navigation.state.params.tripId,
+        //     ExpenseType_1.ExpenseType.EvenExpense,
+        //     100, "Test expense description", "Food", "EUR");
 
     }
 
@@ -78,12 +85,12 @@ export class BetterTripOverviewComponent extends React.Component {
     }
 
     navigateToUserAdd(tripId) {
-        this.props.navigation.navigate("addUserToTrip", {tripId: tripId})
+        this.props.navigation.navigate("AddUserToTrip", {tripId: tripId})
     }
 
     render() {
 
-        let tripId = this.props.navigation.state.params.groupId;
+        let tripId = this.props.navigation.state.params.tripId;
         let trip = global.service.getTripById(tripId);
 
         //Trying to mimic a header-like style here so it blends in
@@ -108,7 +115,7 @@ export class BetterTripOverviewComponent extends React.Component {
                 that.forceUpdate();
             }
         };
-        
+
         let removePerson = (userId) => {
             global.service.removeParticipantById(tripId, userId);
             global.saveService();
@@ -134,25 +141,33 @@ export class BetterTripOverviewComponent extends React.Component {
                 </Header>
 
                 <View style={{height: descriptionViewHeight, backgroundColor: bgColor, padding: 10, paddingTop: 0}}>
-                    <Title onLayout={onLayoutDescriptionTitle} style={{marginBottom: 5, color: textColor, marginLeft: 0, fontSize: 18, textAlign: 'left'}}>Description</Title>
-                    <Text onLayout={onLayoutDescriptionText} style={{color: textColor, fontSize: 15, marginLeft: 0}}>{trip.description}</Text>
+                    <Title onLayout={onLayoutDescriptionTitle} style={{
+                        marginBottom: 5,
+                        color: textColor,
+                        marginLeft: 0,
+                        fontSize: 18,
+                        textAlign: 'left'
+                    }}>Description</Title>
+                    <Text onLayout={onLayoutDescriptionText}
+                          style={{color: textColor, fontSize: 15, marginLeft: 0}}>{trip.description}</Text>
                 </View>
 
                 <Tabs>
                     <Tab heading="Expenses">
-                        <ExpenseListComponent tripId={tripId}/>
-                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.navigateToExpenseForm(tripId)}>
-                            <Icon name="md-add" />
+                        <ExpenseListComponent navigation={this.props.navigation} tripId={tripId}/>
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}
+                             onPress={() => this.navigateToExpenseForm(tripId)}>
+                            <Icon name="md-add"/>
                         </Fab>
                     </Tab>
                     <Tab heading="Participants">
-                        <UserListComponent navigation={this.props.navigation}
-                                           sourceFunc={() => global.service.getTripById(tripId).participants}
+                        <UserListComponent sourceFunc={() => global.service.getTripById(tripId).participants}
                                            observerFunc={(component) => global.observerService.addTripPersonMapCallback(tripId, () => component.forceUpdate())}
                                            removeUserFunc={removePerson}/>
-                    <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}} onPress={() => this.navigateToUserAdd(tripId)}>
-                        <Icon name="md-add" />
-                           </Fab>             
+                        <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}
+                             onPress={() => this.navigateToUserAdd(tripId)}>
+                            <Icon name="md-add"/>
+                        </Fab>
                     </Tab>
                 </Tabs>
 

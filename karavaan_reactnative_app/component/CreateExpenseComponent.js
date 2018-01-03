@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import { Platform } from "react-native";
 import {
     Container,
     Tab,
@@ -19,28 +18,29 @@ import {
     Text,
     Form,
     Picker
-}from 'native-base';
-import { ExpenseType } from '../domain/ExpenseType';
+} from 'native-base';
+import {ExpenseType} from '../domain/ExpenseType';
 import '../ServiceWrapper.js';
+import {EvenExpense} from '../domain/EvenExpense';
+import {ShareExpense} from "../domain/ShareExpense";
+import {BillExpense} from "../domain/BillExpense";
+import * as ExpenseType_1 from "../domain/ExpenseType";
 import CurrencyInputComponent from "./CurrencyInputComponent";
-import { EvenExpense } from '../domain/EvenExpense';
 
 export default class CreateExpenseComponent extends React.Component {
 
     constructor(props) {
-      super(props);
+        super(props);
         this.state = {
-          expenseDescription: "",
-          expenseCategory: "",
-          expenseAmount: "",
-          expenseType: ExpenseType.EvenExpense
+            expenseDescription: "",
+            expenseCategory: "",
+            expenseType: "EvenExpense",
+            expenseAmount: 0
         };
-      }
+    }
 
-    addExpense(tripId: number)
-    {
-        try
-        {
+    addExpense(tripId: number) {
+        try {
             // Check if the expense description is not too long
             if (this.state.expenseDescription.length == 0 || this.state.expenseDescription.length > 100)
                 throw new Error("Expense Description should be between 1 and 100 characters.");
@@ -49,55 +49,53 @@ export default class CreateExpenseComponent extends React.Component {
             if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50)
                 throw new Error("Expense Category should be between 1 and 50 characters.");
 
-            let expenseAmount = parseFloat(this.state.expenseAmount);
-            if (expenseAmount <= 0)
-                throw new Error("Expense cost should be higher than 0.");
 
-                if(isNaN(expenseAmount)){
-                    throw new Error("The amount must be the number");
-                }
-                let expenseType = ExpenseType.EvenExpense;
-                if(this.state.expenseType==='EvenExpense'){
-                    this.type = ExpenseType.EvenExpense;
-                }else if(this.state.expenseType==='BillExpense'){
-                    this.type = ExpenseType.BillExpense;
-                }else{
-                    this.type= ExpenseType.ShareExpense;
-                }
-                console.warn(this.state.expenseType);
+            let expenseType;
+            switch(this.state.expenseType) {
+                case "EvenExpense":
+                    expenseType = ExpenseType_1.ExpenseType.EvenExpense;
+                    break;
+                case "ShareExpense":
+                    expenseType = ExpenseType_1.ExpenseType.ShareExpense;
+                    break;
+                case "BillExpense":
+                    expenseType = ExpenseType_1.ExpenseType.BillExpense;
+                    break;
+                default:
+                    throw "Problem creating expense: Invalid Type";
+            }
+
+            //TODO Might have to add currency selection here
             global.service.addNewExpenseByTripId(tripId, expenseType, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
+
             global.saveService();
             this.props.navigation.goBack();
         }
-        catch (error)
-        {
+        catch (error) {
             alert(error);
         }
     }
 
-    onDescriptionChange(value)
-    {
-        this.setState({ expenseDescription: value });
+    onDescriptionChange(value) {
+        this.setState({expenseDescription: value});
     }
 
-    onCategoryChange(value)
-    {
-        this.setState({ expenseCategory : value});
+    onCategoryChange(value) {
+        this.setState({expenseCategory: value});
     }
 
-    onAmountChange(value)
-    {
-        this.setState({ expenseAmount : value.toString() });
+    onValueChangeAmount(value) {
+        this.setState({expenseAmount: value});
     }
 
-    onTypeChange(value)
-    {
-        this.setState({ expenseType : value });
+    onTypeChange(value) {
+        this.setState({expenseType: value});
+
     }
 
     render() {
 
-        var tripId = this.props.navigation.state.params.tripId;
+        let tripId = this.props.navigation.state.params.tripId;
 
         return (
 
@@ -109,7 +107,7 @@ export default class CreateExpenseComponent extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                        <Title>New Expense</Title>
+                    <Title>New Expense</Title>
                     </Body>
                     <Right/>
                 </Header>
@@ -119,24 +117,24 @@ export default class CreateExpenseComponent extends React.Component {
                     <Form>
 
                         <Picker iosHeader="Select one"
-                         mode="dropdown"
-                         placeholder="select the type of expense"
-                         selectedValue={this.state.expenseType}
-                         onValueChange={this.onTypeChange.bind(this)}
+                                mode="dropdown"
+                                placeholder="select the type of expense"
+                                selectedValue={this.state.expenseType}
+                                onValueChange={this.onTypeChange.bind(this)}
                         >
                             {Object.keys(ExpenseType).map((item, index) => (
 
-                             <Item key={{item}} label={ExpenseType[item]} value={item} />
+                                <Item key={{item}} label={ExpenseType[item]} value={item}/>
 
-                             ))}
+                            ))}
                         </Picker>
 
                     </Form>
 
                     <Item regular>
                         <Input placeholder='Expense Description'
-                         value={this.state.expenseDescription}
-                         onChangeText={this.onDescriptionChange.bind(this)}
+                               value={this.state.expenseDescription}
+                               onChangeText={this.onDescriptionChange.bind(this)}
                         />
                     </Item>
 
@@ -147,11 +145,9 @@ export default class CreateExpenseComponent extends React.Component {
                         />
                     </Item>
 
-                    <Item regular>
-                        <CurrencyInputComponent onValueChange={this.onAmountChange.bind(this)}/>
-                    </Item>
+                    <CurrencyInputComponent onValueChange={this.onValueChangeAmount.bind(this)}/>
 
-                    <Button success style={{ alignSelf: "center", margin:10 }} onPress={() => this.addExpense(tripId)} >
+                    <Button success style={{alignSelf: "center", margin: 10}} onPress={() => this.addExpense(tripId)}>
                         <Text>Create</Text>
                     </Button>
                 </Content>

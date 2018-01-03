@@ -31,7 +31,7 @@ export default class UserListComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.props.observerFunc(this);
+        if (this.props.observerFunc !== undefined) this.props.observerFunc(this);
     }
 
     executePickerFunc(user) {
@@ -77,9 +77,11 @@ export default class UserListComponent extends React.Component {
                         <Text style={{fontSize: 18}}>{user.name}</Text>
                         </Body>
                         <Right>
+                            {this.props.removeUserFunc !== undefined &&
                             <Button transparent onPress={() => this.removeUser(user.id)}>
                                 <Icon name="trash"/>
                             </Button>
+                            }
                         </Right>
                     </ListItem>
                 }/>
