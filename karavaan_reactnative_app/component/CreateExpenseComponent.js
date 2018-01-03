@@ -49,6 +49,9 @@ export default class CreateExpenseComponent extends React.Component {
             if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50)
                 throw new Error("Expense Category should be between 1 and 50 characters.");
 
+            if(this.state.expenseAmount === 0) {
+                throw new Error("Expense Amount must be higher than 0");
+            }
 
             let expenseType;
             switch(this.state.expenseType) {
