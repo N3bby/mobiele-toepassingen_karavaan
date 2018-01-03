@@ -44,7 +44,6 @@ export class AddPaymentComponent extends React.Component {
             }
             global.service.addNewPaymentToExpenseById(tripId, expenseId,
                 this.state.creditorId, this.state.amount);
-                console.warn(creditorId);
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {
@@ -95,7 +94,7 @@ export class AddPaymentComponent extends React.Component {
                 <Content>
 
                     <Item regular>
-                        <TouchableHighlight style={{flex:1}} onPress={() => this.navigateToPicker()}>
+                        <TouchableHighlight style={{flex:1}} onPress={() => this.navigateToPicker()} underlayColor='rgba(0,0,0,0.2)'>
                             <View pointerEvents='none'>
                                 <Input placeholder='Participant' placeholderTextColor='green' value={this.state.creditorId !== undefined ? global.service.getPersonById(this.state.creditorId).name : ""} editable={false}/>
                             </View>
