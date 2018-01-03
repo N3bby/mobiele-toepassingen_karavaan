@@ -12,6 +12,8 @@
 1. Na wat trips aanmaken en dubbel klikken op een trip krijg ik deze error: screenshot: error1 -->  https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
 2. Dubbelklikken op "Add" knop opent meerdere components
 3. Elke participant moet uniek zijn. Er mogen niet meerdere participants toegevoegd worden met dezelfde voor -en achternaam.
+4. create new user: firstname en lastname limiteren op aantal karakters (1-30). Momenteel kunnen er oneindig veel getypt worden.
+
 
 ## Not reconstructible on actual device
 1. Binaire code in tekstveld bij Ctrl+A: screenshot: error2 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
@@ -24,3 +26,6 @@
 Dit geeft een warning over forceUpdate op te roepen. Mag genegeerd worden in principe
 
 https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
+
+2. Alert bij het leeglaten van velden in create new user "please enter the details" veranderen naar: please fill in firstname and lastname
+
