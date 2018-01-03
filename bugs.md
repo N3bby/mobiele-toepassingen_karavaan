@@ -11,6 +11,7 @@
 
 1. Na wat trips aanmaken en dubbel klikken op een trip krijg ik deze error: screenshot: error1 -->  https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY 
 2. Dubbelklikken op "Add" knop opent meerdere components
+3. Elke participant moet uniek zijn. Er mogen niet meerdere participants toegevoegd worden met dezelfde voor -en achternaam.
 
 ## Not reconstructible on actual device
 1. Binaire code in tekstveld bij Ctrl+A: screenshot: error2 --> https://timvgb.stackstorage.com/s/6N81PE2GA6ugzwY  
