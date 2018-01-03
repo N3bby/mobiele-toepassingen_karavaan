@@ -46,13 +46,13 @@ export default class HomeComponent extends React.Component {
             <Container>
 
                 <Header hasTabs>
-                    <Left>
-                        <Button transparent>
-                            <Icon name='menu'/>
-                        </Button>
-                    </Left>
+                    {/*<Left>*/}
+                        {/*<Button transparent>*/}
+                            {/*<Icon name='menu'/>*/}
+                        {/*</Button>*/}
+                    {/*</Left>*/}
                     <Body>
-                    <Title>Karavaan App</Title>
+                    <Title style={{marginLeft: 10}}>Karavaan App</Title>
                     </Body>
                     <Right>
                         {__DEV__ ? (
