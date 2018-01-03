@@ -1,15 +1,14 @@
 import React from "react";
 import CurrencyInputComponent from "../CurrencyInputComponent";
-import {Body, Button, Container, Content, Header, Icon, Input, Item, Left, Right, Text, Title, View} from "native-base";
+import {Body, Button, Container, Content, Header, Icon, Input, Item, Left, Right, Text, Title, View,Picker,Form} from "native-base";
 import {TouchableHighlight} from "react-native";
-
+import {Platform} from "react-native";
+const PickerItem = Picker.Item;
 export class AddPaymentComponent extends React.Component {
-
     // Properties
     // - navigation
     // - tripId (by navigation)
     // - expenseId (by navigation)
-
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +16,6 @@ export class AddPaymentComponent extends React.Component {
             amount: 0
         };
     }
-
     onValueChangeAmount(value) {
         this.setState({
             amount: value,
@@ -30,11 +28,14 @@ export class AddPaymentComponent extends React.Component {
         });
     }
 
+    
+
     add() {
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
         try {
+            //don't know how to pass id to of user to variable creditorID 
             if(this.state.creditorId === undefined) {
                 throw "You must select a participant";
             }
@@ -43,6 +44,7 @@ export class AddPaymentComponent extends React.Component {
             }
             global.service.addNewPaymentToExpenseById(tripId, expenseId,
                 this.state.creditorId, this.state.amount);
+                console.warn(creditorId);
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {
@@ -68,7 +70,6 @@ export class AddPaymentComponent extends React.Component {
     }
 
     render() {
-
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
@@ -93,10 +94,31 @@ export class AddPaymentComponent extends React.Component {
                 </Header>
                 <Content>
 
-                    <Item regular>
-                        <TouchableHighlight style={{flex:1}} onPress={() => this.navigateToPicker()}>
-                            <Input placeholder='Participant' placeholderTextColor='green' value={this.state.creditorId !== undefined ? global.service.getPersonById(this.state.creditorId).name : ""} disabled/>
-                        </TouchableHighlight>
+                <Item style={{marginLeft:10}} regular>
+                <Form style={{margin: 5}}>
+                        <Picker iosHeader="Select one"
+                                placeholder="Choose the participant"
+                                renderHeader={backAction =>
+                                    <Header style={{backgroundColor: 'green'}}>
+                                        <Left>
+                                            <Button transparent onPress={backAction}>
+                                                <Icon name="arrow-back" style={{color: "#fff"}}/>
+                                            </Button>
+                                        </Left>
+                                        <Body style={{flex: 3}}>
+                                        <Title style={{color: "#fff"}}>Choose the participant</Title>
+                                        </Body>
+                                        <Right/>
+                                    </Header>}
+                                mode="dropdown"
+                                style={{width: Platform.OS === "ios" ? undefined : 200}}
+                                selectedValue={this.state.creditorId}
+                                onValueChange={this.onValueChangeCreditor.bind(this)}>
+                                {(global.service.getParticipantsByExpenseId(tripId,expenseId)).map((item, index) => (
+                                    <Item style={{marginLeft:10}} regular  key={item.name} label={item.name} value={item.name}/>
+                                ))}
+                    </Picker>
+                    </Form>
                     </Item>
 
                     <Item style={{marginLeft:10}} regular>
