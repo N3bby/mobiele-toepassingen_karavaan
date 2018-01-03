@@ -1,3 +1,5 @@
+import * as ExpenseType_1 from "./domain/ExpenseType";
+
 export class ObserverService {
 
     constructor(service) {
@@ -93,18 +95,13 @@ export class ObserverService {
             //Apply hook
             let expense = global.service.getExpenseById(tripId, expenseId);
 
-            //Some expense types use a different name for their internal participants map.
-            //I don't want to break the domain code by refactoring, so I'm checking for all the cases here
-            try {
-                if (expense._debts !== undefined) this._hookMap(expense._debts, this._participantMapCallbacks.get(key));
-                if (expense.debts !== undefined) this._hookMap(expense.debts, this._participantMapCallbacks.get(key));
-            } catch (e) {
-                //ignored
-            }
-            try {
-                if (expense.billItems !== undefined) this._hookMap(expense.billItems, this._participantMapCallbacks.get(key));
-            } catch (e) {
-                //ignored
+            //Behaviour for types of expenses is somewhat different
+            if(expense.expenseType === ExpenseType_1.ExpenseType.EvenExpense) {
+                this._hookMap(expense._debts, this._participantMapCallbacks.get(key))
+            } else if(expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense) {
+                this._hookMap(expense.payments, this._participantMapCallbacks.get(key))
+            } else if(expense.expenseType === ExpenseType_1.ExpenseType.BillExpense) {
+                this._hookMap(expense.billItems, this._participantMapCallbacks.get(key));
             }
 
         }

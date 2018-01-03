@@ -7,8 +7,7 @@ import AddUserToTripComponent from "./component/add_user_to/AddUserToTripCompone
 import CreateExpenseComponent from "./component/CreateExpenseComponent";
 import {BetterTripOverviewComponent} from "./component/BetterTripOverviewComponent";
 import {ExpenseOverviewComponent} from "./component/expense/ExpenseOverviewComponent";
-import {AddUserToExpenseComponent} from "./component/add_user_to/AddUserToExpenseComponent";
-import {AddUserToPaymentComponent} from "./component/add_user_to/AddUserToPaymentComponent";
+import {TripUserPicker} from "./component/add_user_to/TripUserPicker";
 import {AddPaymentComponent} from "./component/expense/AddPaymentComponent";
 
 // Add the routes in which you want to be able to use the navigator
@@ -19,10 +18,9 @@ const AppNavigator = StackNavigator({
     CreateTrip: {screen: CreateTripComponent},
     CreateUser: {screen: CreateUserComponent},
     CreateExpenseComponent: {screen: CreateExpenseComponent},
-    AddUserToTrip: {screen: AddUserToTripComponent},
     ExpenseOverview: {screen: ExpenseOverviewComponent},
-    AddUserToExpense: {screen: AddUserToExpenseComponent},
-    AddUserToPayment: {screen: AddUserToPaymentComponent},
+    AddUserToTrip: {screen: AddUserToTripComponent},
+    TripUserPicker: {screen: TripUserPicker},
     AddPayment: {screen: AddPaymentComponent}
 }, {
     headerMode: "none",

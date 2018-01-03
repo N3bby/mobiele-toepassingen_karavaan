@@ -22,9 +22,14 @@ export class ExpenseOverviewComponent extends React.Component {
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
 
-        this.props.navigation.navigate("AddUserToExpense", {
+        let returnUser = (user) => {
+            global.service.addParticipantToExpenseById(tripId, expenseId, user.id);
+            global.saveService();
+        };
+
+        this.props.navigation.navigate("TripUserPicker", {
             tripId: tripId,
-            expenseId: expenseId
+            returnUser: returnUser.bind(this)
         });
     }
 
@@ -91,7 +96,7 @@ export class ExpenseOverviewComponent extends React.Component {
                             sourceFunc={() => global.service.getParticipantsByExpenseId(tripId, expenseId)}
                             observerFunc={(component) => global.observerService.addExpenseParticipantMapCallback(tripId, expenseId, () => component.forceUpdate())}
                         />
-                        {(expense.expenseType === ExpenseType_1.ExpenseType.EvenExpense || expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense) &&
+                        {expense.expenseType === ExpenseType_1.ExpenseType.EvenExpense &&
                         <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}
                              onPress={() => this.navigateParticipantAdd()}>
                             <Icon name="md-add"/>

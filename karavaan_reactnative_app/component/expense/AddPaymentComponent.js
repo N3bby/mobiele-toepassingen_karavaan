@@ -79,9 +79,8 @@ export class AddPaymentComponent extends React.Component {
             this.forceUpdate();
         };
 
-        this.props.navigation.navigate("AddUserToPayment", {
+        this.props.navigation.navigate("TripUserPicker", {
             tripId: tripId,
-            expenseId: expenseId,
             returnUser: returnUser.bind(this)
         });
     }
