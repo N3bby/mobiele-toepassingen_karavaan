@@ -7,6 +7,7 @@ import {
 import * as ExpenseType_1 from "../../domain/ExpenseType";
 import {BillItemListComponent} from "./BillItemListComponent";
 import UserListComponent from "../UserListComponent";
+import {DebtListComponent} from "./DebtListComponent";
 
 export class ExpenseOverviewComponent extends React.Component {
 
@@ -88,7 +89,7 @@ export class ExpenseOverviewComponent extends React.Component {
                     </Tab>
 
                     <Tab heading="Debts">
-
+                        <DebtListComponent tripId={tripId} expenseId={expenseId}/>
                     </Tab>
 
                     <Tab heading="Participants">
