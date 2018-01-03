@@ -248,6 +248,7 @@ class EvenExpense {
     */
     removePayment(paymentId) {
         this.payments.delete(paymentId);
+        this.recalculateDividedDebt();
         return this.payments.size;
     }
     /**
