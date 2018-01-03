@@ -28,7 +28,7 @@ export class AddPaymentComponent extends React.Component {
         });
     }
 
-    
+
 
     add() {
         let tripId = this.props.navigation.state.params.tripId;
@@ -94,34 +94,42 @@ export class AddPaymentComponent extends React.Component {
                 </Header>
                 <Content>
 
-                <Item style={{marginLeft:10}} regular>
-                <Form style={{margin: 5}}>
-                        <Picker iosHeader="Select one"
-                                placeholder="Choose the participant"
-                                renderHeader={backAction =>
-                                    <Header style={{backgroundColor: 'green'}}>
-                                        <Left>
-                                            <Button transparent onPress={backAction}>
-                                                <Icon name="arrow-back" style={{color: "#fff"}}/>
-                                            </Button>
-                                        </Left>
-                                        <Body style={{flex: 3}}>
-                                        <Title style={{color: "#fff"}}>Choose the participant</Title>
-                                        </Body>
-                                        <Right/>
-                                    </Header>}
-                                mode="dropdown"
-                                style={{width: Platform.OS === "ios" ? undefined : 200}}
-                                selectedValue={this.state.creditorId}
-                                onValueChange={this.onValueChangeCreditor.bind(this)}>
-                                {(global.service.getParticipantsByExpenseId(tripId,expenseId)).map((item, index) => (
-                                    <Item style={{marginLeft:10}} regular  key={item.name} label={item.name} value={item.name}/>
-                                ))}
-                    </Picker>
-                    </Form>
+                    <Item regular>
+                        <TouchableHighlight style={{flex:1}} onPress={() => this.navigateToPicker()}>
+                            <View pointerEvents='none'>
+                                <Input placeholder='Participant' placeholderTextColor='green' value={this.state.creditorId !== undefined ? global.service.getPersonById(this.state.creditorId).name : ""} editable={false}/>
+                            </View>
+                        </TouchableHighlight>
                     </Item>
 
-                    <Item style={{marginLeft:10}} regular>
+                {/*<Item style={{marginLeft:10}} regular>*/}
+                {/*<Form style={{margin: 5}}>*/}
+                        {/*<Picker iosHeader="Select one"*/}
+                                {/*placeholder="Choose the participant"*/}
+                                {/*renderHeader={backAction =>*/}
+                                    {/*<Header style={{backgroundColor: 'green'}}>*/}
+                                        {/*<Left>*/}
+                                            {/*<Button transparent onPress={backAction}>*/}
+                                                {/*<Icon name="arrow-back" style={{color: "#fff"}}/>*/}
+                                            {/*</Button>*/}
+                                        {/*</Left>*/}
+                                        {/*<Body style={{flex: 3}}>*/}
+                                        {/*<Title style={{color: "#fff"}}>Choose the participant</Title>*/}
+                                        {/*</Body>*/}
+                                        {/*<Right/>*/}
+                                    {/*</Header>}*/}
+                                {/*mode="dropdown"*/}
+                                {/*style={{width: Platform.OS === "ios" ? undefined : 200}}*/}
+                                {/*selectedValue={this.state.creditorId}*/}
+                                {/*onValueChange={this.onValueChangeCreditor.bind(this)}>*/}
+                                {/*{(global.service.getParticipantsByExpenseId(tripId,expenseId)).map((item, index) => (*/}
+                                    {/*<Item style={{marginLeft:10}} regular  key={item.name} label={item.name} value={item.name}/>*/}
+                                {/*))}*/}
+                    {/*</Picker>*/}
+                    {/*</Form>*/}
+                    {/*</Item>*/}
+
+                    <Item regular>
                         <CurrencyInputComponent onValueChange={this.onValueChangeAmount.bind(this)}/>
                     </Item>
 
