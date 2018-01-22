@@ -32,9 +32,15 @@ export default class CurrencyInputComponent extends React.Component {
         return inputString.replace(regex, '');
     }
 
-    stringToFloat(value) {
+    stringToFloatFormatted(value) {
         if(value === "") value = "0";
         value = (parseFloat(value) / 100).toFixed(2).toString();
+        return value;
+    }
+
+    stringToFloat(value) {
+        if(value === "") value = 0;
+        value = (parseFloat(value) / 100);
         return value;
     }
 
@@ -43,7 +49,7 @@ export default class CurrencyInputComponent extends React.Component {
         return (
             <Content>
                 <Input placeholder='Expense cost'
-                       value={this.stringToFloat(this.state.currencyRaw)}
+                       value={this.stringToFloatFormatted(this.state.currencyRaw)}
                        onFocus={() => {
                            this.refs.rawInput._root.focus();
                        }}/>

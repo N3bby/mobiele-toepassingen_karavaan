@@ -8,6 +8,7 @@ import * as ExpenseType_1 from "../../domain/ExpenseType";
 import {BillItemListComponent} from "./BillItemListComponent";
 import UserListComponent from "../UserListComponent";
 import {DebtListComponent} from "./DebtListComponent";
+import {Alert} from "react-native";
 
 export class ExpenseOverviewComponent extends React.Component {
 
@@ -17,6 +18,11 @@ export class ExpenseOverviewComponent extends React.Component {
 
     constructor(props) {
         super(props);
+        let tripId = this.props.navigation.state.params.tripId;
+        let expenseId = this.props.navigation.state.params.expenseId;
+        let callback = () => this.forceUpdate();
+        global.observerService.addExpensePaymentMapCallback(tripId, expenseId, callback);
+        global.observerService.addExpenseParticipantMapCallback(tripId, expenseId, callback);
     }
 
     navigateParticipantAdd() {
@@ -44,6 +50,45 @@ export class ExpenseOverviewComponent extends React.Component {
         });
     }
 
+    navigateAddBillItem() {
+        let tripId = this.props.navigation.state.params.tripId;
+        let expenseId = this.props.navigation.state.params.expenseId;
+
+        this.props.navigation.navigate("AddBillItem", {
+            tripId: tripId,
+            expenseId: expenseId
+        });
+    }
+
+    removeExpense() {
+        Alert.alert(
+            'Delete Expense',
+            'Are you sure you want to delete this expense? All data will be lost',
+            [
+                {
+                    text: 'No', onPress: () => {
+                    }, style: 'cancel'
+                },
+                {
+                    text: 'Yes', onPress: () => {
+                        try {
+                            let tripId = this.props.navigation.state.params.tripId;
+                            let expenseId = this.props.navigation.state.params.expenseId;
+                            global.service.removeExpenseFromTripById(tripId, expenseId);
+                            global.saveService();
+                            this.props.navigation.goBack();
+                        }
+                        catch (error) {
+                            alert(error);
+                        }
+                    }
+                },
+            ],
+            {cancelable: false}
+        );
+
+    }
+
     render() {
 
         let tripId = this.props.navigation.state.params.tripId;
@@ -65,7 +110,7 @@ export class ExpenseOverviewComponent extends React.Component {
                     <Subtitle>{expense.category}</Subtitle>
                     </Body>
                     <Right>
-                        <Button transparent>
+                        <Button onPress={() => this.removeExpense()} transparent>
                             <Icon active name="trash"/>
                         </Button>
                     </Right>
@@ -73,19 +118,17 @@ export class ExpenseOverviewComponent extends React.Component {
 
                 <Tabs>
                     <Tab heading="Overview">
-                        <H3>Total: {expense.expenseAmount}</H3>
-                        <H3>Payments</H3>
-                        <PaymentListComponent tripId={tripId} expenseId={expenseId}/>
-                        {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <BillItemListComponent/>}
-                        <View style={{flexDirection: "row", padding: 10}}>
-                            <Left>
-                                <Button onPress={() => this.navigateAddPayment()}><Text>Add Payment</Text></Button>
-                            </Left>
-                            <Right>
-                                {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense &&
-                                <Button><Text>Add BillItem</Text></Button>}
-                            </Right>
+                        <View style={{flexDirection: 'row', margin:10}}>
+                            <H3 style={{flex: 1}}>Total: {expense.expenseAmount.toFixed(2).toString()}</H3>
+                            <H3>Unpaid: {expense.expenseUnpaid.toFixed(2).toString()}</H3>
                         </View>
+                        <H3 style={{marginLeft:10, marginBottom:10}}>Payments</H3>
+                        <PaymentListComponent tripId={tripId} expenseId={expenseId}/>
+                        <Button style={{alignSelf:'center'}} onPress={() => this.navigateAddPayment()}><Text>Add Payment</Text></Button>
+                        {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <H3 style={{marginLeft: 10, marginBottom: 10}}>Bill Items</H3>}
+                        {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <BillItemListComponent tripId={tripId} expenseId={expenseId}/>}
+                        {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense &&
+                        <Button style={{alignSelf:'center', marginBottom: 10}} onPress={() => this.navigateAddBillItem()}><Text>Add BillItem</Text></Button>}
                     </Tab>
 
                     <Tab heading="Debts">
@@ -109,6 +152,7 @@ export class ExpenseOverviewComponent extends React.Component {
 
         );
     }
+
 
 
 }

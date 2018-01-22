@@ -41,13 +41,6 @@ export class AddPaymentComponent extends React.Component {
         });
     }
 
-    onValueChangeCreditor(value) {
-        this.setState({
-            creditorId: value,
-        });
-    }
-
-
     add() {
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
@@ -89,10 +82,6 @@ export class AddPaymentComponent extends React.Component {
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
-
-        let participants = [];
-        if (expense._participants !== undefined) participants = expense._participants;
-        if (expense.participants !== undefined) participants = expense.participants;
 
         return (
             <Container>

@@ -9,6 +9,7 @@ import {BetterTripOverviewComponent} from "./component/BetterTripOverviewCompone
 import {ExpenseOverviewComponent} from "./component/expense/ExpenseOverviewComponent";
 import {TripUserPicker} from "./component/add_user_to/TripUserPicker";
 import {AddPaymentComponent} from "./component/expense/AddPaymentComponent";
+import {AddBillItemComponent} from "./component/expense/AddBillItemComponent";
 
 // Add the routes in which you want to be able to use the navigator
 // They will only be able to access it if you got there through navigate()
@@ -21,7 +22,8 @@ const AppNavigator = StackNavigator({
     ExpenseOverview: {screen: ExpenseOverviewComponent},
     AddUserToTrip: {screen: AddUserToTripComponent},
     TripUserPicker: {screen: TripUserPicker},
-    AddPayment: {screen: AddPaymentComponent}
+    AddPayment: {screen: AddPaymentComponent},
+    AddBillItem: {screen: AddBillItemComponent}
 }, {
     headerMode: "none",
 });

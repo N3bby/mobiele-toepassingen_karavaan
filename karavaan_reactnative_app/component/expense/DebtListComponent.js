@@ -30,7 +30,6 @@ export class DebtListComponent extends React.Component {
             </Content>
         );
 
-
     }
 
 }

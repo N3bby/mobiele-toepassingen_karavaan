@@ -1,5 +1,5 @@
 import React from "react";
-import {Body, Content, Icon, Left, List, ListItem, Right, Text} from "native-base";
+import {Body, Button, Content, Icon, Left, List, ListItem, Right, Text} from "native-base";
 
 export class PaymentListComponent extends React.Component {
 
@@ -10,6 +10,10 @@ export class PaymentListComponent extends React.Component {
     constructor(props) {
         super(props);
         global.observerService.addExpensePaymentMapCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
+    }
+
+    removePayment(tripId, expenseId, paymentId) {
+
     }
 
     render() {
@@ -26,13 +30,16 @@ export class PaymentListComponent extends React.Component {
                 <List dataArray={payments} renderRow={(payment) =>
                     <ListItem icon>
                         <Left>
-                            <Icon name="md-cash"/>
+                            <Icon style={{color:'rgba(0,0,0,0.4)'}} name="md-cash"/>
                         </Left>
                         <Body>
                         <Text>{payment.creditor.name}</Text>
                         </Body>
                         <Right>
-                            <Text>{payment.amount}</Text>
+                            <Text>{payment.amount.toFixed(2).toString()}</Text>
+                            <Button transparent onPress={() => this.removePayment(this.props.tripId, expense.id, payment.id)}>
+                                <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
+                            </Button>
                         </Right>
                     </ListItem>
                 }/>
@@ -40,5 +47,6 @@ export class PaymentListComponent extends React.Component {
         );
 
     }
+
 
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import {Body, Button, Content, Icon, Left, List, ListItem, Right, Text, View} from "native-base";
+import {Alert} from "react-native";
 
 export class ExpenseListComponent extends React.Component {
 
@@ -17,8 +18,28 @@ export class ExpenseListComponent extends React.Component {
     }
 
     removeExpense(tripId, expenseId) {
-        global.service.removeExpenseFromTripById(tripId, expenseId);
-        global.saveService();
+        Alert.alert(
+            'Delete Expense',
+            'Are you sure you want to delete this expense? All data will be lost',
+            [
+                {
+                    text: 'No', onPress: () => {
+                    }, style: 'cancel'
+                },
+                {
+                    text: 'Yes', onPress: () => {
+                        try {
+                            global.service.removeExpenseFromTripById(tripId, expenseId);
+                            global.saveService();
+                        }
+                        catch (error) {
+                            alert(error);
+                        }
+                    }
+                },
+            ],
+            {cancelable: false}
+        );
     }
 
     render() {
@@ -28,21 +49,20 @@ export class ExpenseListComponent extends React.Component {
                     <ListItem key={expense.id} button={false}
                               onPress={() => this.navigateToExpenseOverview(this.props.tripId, expense.id)} icon>
                         <Left>
-                            <Icon name="cash"/>
+                            <Icon style={{color:'rgba(0,0,0,0.4)'}} name="cash"/>
                         </Left>
                         <Body>
                         <View style={{flexDirection: 'row'}}>
                             <Text numberOfLines={1} style={{flex: 1}}>{expense.description}</Text>
                             <Text style={{
                                 marginLeft: 'auto',
-                                fontWeight: 'bold',
-                                fontSize: 17
-                            }}>{expense.expenseAmount}</Text>
+                                color:'rgba(0,0,0,0.4)'
+                            }}>{expense.expenseAmount.toFixed(2).toString()}</Text>
                         </View>
                         </Body>
                         <Right>
                             <Button transparent onPress={() => this.removeExpense(this.props.tripId, expense.id)}>
-                                <Icon name="trash"/>
+                                <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>
                         </Right>
                     </ListItem>
