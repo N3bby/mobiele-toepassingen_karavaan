@@ -80,6 +80,12 @@ class BillExpense {
         throw new Error('BillExpense does not support removing detbs, remove debtors from BillItems instead.');
     }
     addBillItem(billItem) {
+        //TODO Add this in the typescript too
+        //Fixes issue with being able to add billitems so you go over total expense amount
+        let totalBillItemValue = 0;
+        Array.from(this.billItems.values()).forEach((b) => totalBillItemValue += b.amount);
+        if(totalBillItemValue + billItem.amount > this.expenseAmount) throw new Error("Can not add bill items more than the total price of the expense.");
+
         if (billItem.id < 0)
             billItem.id = this.idCounter++;
         this.billItems.set(billItem.id, billItem);
@@ -123,6 +129,7 @@ class BillExpense {
         }
         return newDebtMap;
     }
+
     get unfilteredDebts() {
         let newDebtMap = new Map();
         // Calculate the percentage paid by each creditor
@@ -151,6 +158,7 @@ class BillExpense {
         }
         return Array.from(debtorSet);
     }
+    //Gives a map with debtor and what they have to pay for all their bill items
     get debtByDebtor() {
         let debtMap = new Map();
         for (let billItem of this.billItems.values()) {
@@ -163,6 +171,7 @@ class BillExpense {
         }
         return debtMap;
     }
+    //Gives a map with creditor and what they payed (from payments)
     get creditByCreditor() {
         let creditMap = new Map();
         for (let payment of this.payments.values()) {
