@@ -135,13 +135,13 @@ export class BetterTripOverviewComponent extends React.Component {
                 </Header>
 
                 <View style={{height: descriptionViewHeight, backgroundColor: bgColor, padding: 10, paddingTop: 0}}>
-                    <Title onLayout={onLayoutDescriptionTitle} style={{
-                        marginBottom: 5,
-                        color: textColor,
-                        marginLeft: 0,
-                        fontSize: 18,
-                        textAlign: 'left'
-                    }}>Description</Title>
+                    {/*<Title onLayout={onLayoutDescriptionTitle} style={{*/}
+                        {/*marginBottom: 5,*/}
+                        {/*color: textColor,*/}
+                        {/*marginLeft: 0,*/}
+                        {/*fontSize: 18,*/}
+                        {/*textAlign: 'left'*/}
+                    {/*}}>Description</Title>*/}
                     <Text onLayout={onLayoutDescriptionText}
                           style={{color: textColor, fontSize: 15, marginLeft: 0}}>{trip.description}</Text>
                 </View>
@@ -162,6 +162,9 @@ export class BetterTripOverviewComponent extends React.Component {
                              onPress={() => this.navigateToUserAdd(tripId)}>
                             <Icon name="md-add"/>
                         </Fab>
+                    </Tab>
+                    <Tab heading="Debts">
+
                     </Tab>
                 </Tabs>
 
