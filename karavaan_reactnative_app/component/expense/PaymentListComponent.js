@@ -1,5 +1,6 @@
 import React from "react";
 import {Body, Button, Content, Icon, Left, List, ListItem, Right, Text} from "native-base";
+import {Alert} from "react-native";
 
 export class PaymentListComponent extends React.Component {
 
@@ -13,7 +14,28 @@ export class PaymentListComponent extends React.Component {
     }
 
     removePayment(tripId, expenseId, paymentId) {
-
+        Alert.alert(
+            'Delete Payment',
+            'Are you sure you want to delete this payment?',
+            [
+                {
+                    text: 'No', onPress: () => {
+                    }, style: 'cancel'
+                },
+                {
+                    text: 'Yes', onPress: () => {
+                        try {
+                            global.service.removePaymentFromExpenseById(tripId, expenseId, paymentId);
+                            global.saveService();
+                        }
+                        catch (error) {
+                            alert(error);
+                        }
+                    }
+                },
+            ],
+            {cancelable: false}
+        );
     }
 
     render() {
@@ -30,7 +52,7 @@ export class PaymentListComponent extends React.Component {
                 <List dataArray={payments} renderRow={(payment) =>
                     <ListItem icon>
                         <Left>
-                            <Icon style={{color:'rgba(0,0,0,0.4)'}} name="md-cash"/>
+                            <Icon style={{color:'rgba(0,0,0,0.7)'}} name="md-cash"/>
                         </Left>
                         <Body>
                         <Text>{payment.creditor.name}</Text>

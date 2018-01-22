@@ -18,7 +18,7 @@ export class DebtListComponent extends React.Component {
         let expense = global.service.getExpenseById(this.props.tripId, this.props.expenseId);
 
         //Convert map to array
-        let debts = Array.from(expense.debts.values());
+        let debts = global.service.getDebtsByExpenseId(this.props.tripId, this.props.expenseId);
 
         return (
             <Content>

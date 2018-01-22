@@ -2,7 +2,7 @@ import React from "react";
 import {Body, Button, Content, Icon, Left, List, ListItem, Right, Text} from "native-base";
 import {Alert} from "react-native";
 
-export class BillItemListComponent extends React.Component {
+export class ShareListComponent extends React.Component {
 
     //Props
     // - tripId
@@ -13,10 +13,10 @@ export class BillItemListComponent extends React.Component {
         global.observerService.addExpenseParticipantMapCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
     }
 
-    removeBillItem(tripId, expenseId, billItemId) {
+    removeDebt(tripId, expenseId, debtId) {
         Alert.alert(
-            'Delete Payment',
-            'Are you sure you want to delete this bill item?',
+            'Delete Share',
+            'Are you sure you want to delete this share?',
             [
                 {
                     text: 'No', onPress: () => {
@@ -25,7 +25,7 @@ export class BillItemListComponent extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         try {
-                            global.service.removeBillItemFromExpenseById(tripId, expenseId, billItemId);
+                            global.service.removeDebtFromExpenseById(tripId, expenseId, debtId);
                             global.saveService();
                         }
                         catch (error) {
@@ -43,22 +43,22 @@ export class BillItemListComponent extends React.Component {
         let expense = global.service.getExpenseById(this.props.tripId, this.props.expenseId);
 
         //Convert map to array
-        let billItems = [];
-        if(expense.billItems !== undefined) billItems = Array.from(expense.billItems.values());
+        let debts = [];
+        if(expense.debts !== undefined) debts = Array.from(expense.debts.values());
 
         return (
             <Content>
-                <List dataArray={billItems} renderRow={(billItem) =>
+                <List dataArray={debts} renderRow={(debt) =>
                     <ListItem icon>
                         <Left>
-                            <Icon name="md-clipboard"/>
+                            <Icon style={{color:'rgba(0,0,0,0.7)'}} name="md-cash"/>
                         </Left>
                         <Body>
-                        <Text>{billItem.description} - {billItem.debtor.firstName}</Text>
+                        <Text>{debt.debtor.name}</Text>
                         </Body>
                         <Right>
-                            <Text>{billItem.amount.toFixed(2).toString()}</Text>
-                            <Button transparent onPress={() => this.removeBillItem(this.props.tripId, expense.id, billItem.id)}>
+                            <Text>{debt.amount.toFixed(2).toString()}</Text>
+                            <Button transparent onPress={() => this.removeDebt(this.props.tripId, expense.id, debt.id)}>
                                 <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>
                         </Right>
@@ -68,5 +68,6 @@ export class BillItemListComponent extends React.Component {
         );
 
     }
+
 
 }

@@ -79,7 +79,7 @@ export default class UserListComponent extends React.Component {
                         <Right>
                             {this.props.removeUserFunc !== undefined &&
                             <Button transparent onPress={() => this.removeUser(user.id)}>
-                                <Icon name="trash"/>
+                                <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>
                             }
                         </Right>

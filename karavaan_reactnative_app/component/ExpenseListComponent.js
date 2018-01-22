@@ -49,7 +49,7 @@ export class ExpenseListComponent extends React.Component {
                     <ListItem key={expense.id} button={false}
                               onPress={() => this.navigateToExpenseOverview(this.props.tripId, expense.id)} icon>
                         <Left>
-                            <Icon style={{color:'rgba(0,0,0,0.4)'}} name="cash"/>
+                            <Icon style={{color:'rgba(0,0,0,0.7)'}} name="md-cash"/>
                         </Left>
                         <Body>
                         <View style={{flexDirection: 'row'}}>

@@ -45,12 +45,6 @@ export class BetterTripOverviewComponent extends React.Component {
         this.descriptionTitleHeight = 0;
         this.descriptionTextHeight = 0;
 
-        //Add test expense
-        // service.addNewExpenseByTripId(
-        //     this.props.navigation.state.params.tripId,
-        //     ExpenseType_1.ExpenseType.EvenExpense,
-        //     100, "Test expense description", "Food", "EUR");
-
     }
 
     //TODO: Add confirmation dialog with checkbox

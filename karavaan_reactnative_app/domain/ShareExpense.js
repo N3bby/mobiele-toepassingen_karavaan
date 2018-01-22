@@ -70,6 +70,12 @@ class ShareExpense {
         return this.payments.size;
     }
     addDebt(newDebt) {
+        //TODO Add this in the typescript too
+        //Fixes issue with being able to add shares so you go over total expense amount
+        let totalShareValue = 0;
+        Array.from(this.debts.values()).forEach((d) => totalShareValue += d.amount);
+        if(totalShareValue + newDebt.amount > this.expenseAmount) throw new Error("Can not add shares more than the total price of the expense.");
+
         if (newDebt.id < 0)
             newDebt.id = this.idCounter++;
         this.debts.set(newDebt.id, newDebt);

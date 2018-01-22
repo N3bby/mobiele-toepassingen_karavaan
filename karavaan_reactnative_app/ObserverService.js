@@ -101,6 +101,7 @@ export class ObserverService {
                 this._hookMap(expense._payments, this._participantMapCallbacks.get(key));
             } else if(expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense) {
                 this._hookMap(expense.payments, this._participantMapCallbacks.get(key));
+                this._hookMap(expense.debts, this._participantMapCallbacks.get(key));
             } else if(expense.expenseType === ExpenseType_1.ExpenseType.BillExpense) {
                 this._hookMap(expense.billItems, this._participantMapCallbacks.get(key));
             }

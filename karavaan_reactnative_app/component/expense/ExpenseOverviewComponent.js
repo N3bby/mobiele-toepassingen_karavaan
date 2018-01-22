@@ -9,6 +9,7 @@ import {BillItemListComponent} from "./BillItemListComponent";
 import UserListComponent from "../UserListComponent";
 import {DebtListComponent} from "./DebtListComponent";
 import {Alert} from "react-native";
+import {ShareListComponent} from "./ShareListComponent";
 
 export class ExpenseOverviewComponent extends React.Component {
 
@@ -55,6 +56,16 @@ export class ExpenseOverviewComponent extends React.Component {
         let expenseId = this.props.navigation.state.params.expenseId;
 
         this.props.navigation.navigate("AddBillItem", {
+            tripId: tripId,
+            expenseId: expenseId
+        });
+    }
+
+    navigateAddShare() {
+        let tripId = this.props.navigation.state.params.tripId;
+        let expenseId = this.props.navigation.state.params.expenseId;
+
+        this.props.navigation.navigate("AddShare", {
             tripId: tripId,
             expenseId: expenseId
         });
@@ -118,17 +129,26 @@ export class ExpenseOverviewComponent extends React.Component {
 
                 <Tabs>
                     <Tab heading="Overview">
+
                         <View style={{flexDirection: 'row', margin:10}}>
                             <H3 style={{flex: 1}}>Total: {expense.expenseAmount.toFixed(2).toString()}</H3>
                             <H3>Unpaid: {expense.expenseUnpaid.toFixed(2).toString()}</H3>
                         </View>
+
                         <H3 style={{marginLeft:10, marginBottom:10}}>Payments</H3>
                         <PaymentListComponent tripId={tripId} expenseId={expenseId}/>
                         <Button style={{alignSelf:'center'}} onPress={() => this.navigateAddPayment()}><Text>Add Payment</Text></Button>
+
                         {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <H3 style={{marginLeft: 10, marginBottom: 10}}>Bill Items</H3>}
                         {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <BillItemListComponent tripId={tripId} expenseId={expenseId}/>}
                         {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense &&
                         <Button style={{alignSelf:'center', marginBottom: 10}} onPress={() => this.navigateAddBillItem()}><Text>Add BillItem</Text></Button>}
+
+                        {expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense && <H3 style={{marginLeft: 10, marginBottom: 10}}>Shares</H3>}
+                        {expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense && <ShareListComponent tripId={tripId} expenseId={expenseId}/>}
+                        {expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense &&
+                        <Button style={{alignSelf:'center', marginBottom: 10}} onPress={() => this.navigateAddShare()}><Text>Add Share</Text></Button>}
+
                     </Tab>
 
                     <Tab heading="Debts">
@@ -152,7 +172,6 @@ export class ExpenseOverviewComponent extends React.Component {
 
         );
     }
-
 
 
 }
