@@ -30,6 +30,7 @@ import '../ServiceWrapper.js';
 import {ExpenseListComponent} from "./ExpenseListComponent";
 import {Alert, Platform} from "react-native";
 import * as ExpenseType_1 from "../domain/ExpenseType";
+import {DebtOverviewListComponent} from "./DebtOverviewListComponent";
 
 
 export class BetterTripOverviewComponent extends React.Component {
@@ -164,7 +165,7 @@ export class BetterTripOverviewComponent extends React.Component {
                         </Fab>
                     </Tab>
                     <Tab heading="Debts">
-
+                        <DebtOverviewListComponent tripId={tripId}/>
                     </Tab>
                 </Tabs>
 
