@@ -48,7 +48,7 @@ export class ExpenseListComponent extends React.Component {
 
         return (
             <Content>
-                <List dataArray={expenses} renderRow={(expense) => (
+                <List dataArray={global.service.getExpensesByTripId(this.props.tripId)} renderRow={(expense) => (
                     <ListItem key={expense.id} button={false}
                               onPress={() => this.navigateToExpenseOverview(this.props.tripId, expense.id)} icon>
                         <Left>
