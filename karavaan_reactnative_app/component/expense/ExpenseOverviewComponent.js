@@ -21,7 +21,10 @@ export class ExpenseOverviewComponent extends React.Component {
         super(props);
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
-        global.observerService.addExpenseCallback(tripId, expenseId, () => this.forceUpdate() );
+        global.observerService.addExpenseCallback(tripId, expenseId, () => {
+            this.forceUpdate();
+            this.props.navigation.state.params.onChange();
+        } );
 
     }
 

@@ -11,12 +11,10 @@ export class ExpenseListComponent extends React.Component {
     constructor(props) {
         super(props);
         global.observerService.addTripExpensesCallback(this.props.tripId, () => this.forceUpdate());
-
-        this._observedExpenses = [];
     }
 
     navigateToExpenseOverview(tripId, expenseId) {
-        this.props.navigation.navigate("ExpenseOverview", {tripId: tripId, expenseId: expenseId, callbackId: this._callbackId});
+        this.props.navigation.navigate("ExpenseOverview", {tripId: tripId, expenseId: expenseId, onChange: () => this.forceUpdate()});
     }
 
     removeExpense(tripId, expenseId) {
@@ -46,25 +44,29 @@ export class ExpenseListComponent extends React.Component {
 
     render() {
 
+        //Explanation for why we're wrapping all the expenses is the same as in DebtOverviewListComponent:52
+        let expenses = global.service.getExpensesByTripId(this.props.tripId);
+        let expenseWrappers = [];
+        expenses.forEach(e => expenseWrappers.push({value: e}));
+
         return (
             <Content>
-                <List dataArray={global.service.getExpensesByTripId(this.props.tripId)} renderRow={(expense) => (
-                    <ListItem key={expense.id} button={false}
-                              onPress={() => this.navigateToExpenseOverview(this.props.tripId, expense.id)} icon>
+                <List dataArray={expenseWrappers} renderRow={(expense) => (
+                    <ListItem button={true} onPress={() => this.navigateToExpenseOverview(this.props.tripId, expense.value.id)} icon>
                         <Left>
                             <Icon style={{color:'rgba(0,0,0,0.7)'}} name="md-cash"/>
                         </Left>
                         <Body>
                         <View style={{flexDirection: 'row'}}>
-                            <Text numberOfLines={1} style={{flex: 1}}>{expense.description}</Text>
+                            <Text numberOfLines={1} style={{flex: 1}}>{expense.value.description}</Text>
                             <Text style={{
                                 marginLeft: 'auto',
                                 color:'rgba(0,0,0,0.4)'
-                            }}>{expense.expenseAmount.toFixed(2).toString()}</Text>
+                            }}>{expense.value.expenseAmount.toFixed(2).toString()}</Text>
                         </View>
                         </Body>
                         <Right>
-                            <Button transparent onPress={() => this.removeExpense(this.props.tripId, expense.id)}>
+                            <Button transparent onPress={() => this.removeExpense(this.props.tripId, expense.value.id)}>
                                 <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>
                         </Right>

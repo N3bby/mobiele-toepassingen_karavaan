@@ -7,7 +7,7 @@ export class DebtUtility {
         //Get all debts
         let debts = DebtUtility._getAllDebtsForTrip(tripId);
         //Filter by creditor and return
-        return debts.filter((debt) => debt.creditor.id === creditor.id, this);
+        return debts.filter((debt) => debt.creditor.id === creditor.id);
 
     }
 
@@ -15,16 +15,9 @@ export class DebtUtility {
 
         //Get all debts
         let debts = DebtUtility._getAllDebtsForTrip(tripId);
-        alert(debts.length);
+
         //Filter by debtor and return
-        let filtered = [];
-        for(let debt of debts) {
-            if(debt.debtor.id === debtor.id) {
-                filtered.push(debt);
-            }
-        }
-        return filtered;
-        // return debts.filter((debt) => debt.debtor.id === debtor.id, this);
+        return debts.filter((debt) => debt.debtor.id === debtor.id);
 
     }
 
