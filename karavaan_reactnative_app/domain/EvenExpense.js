@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Debt_1 = require("./Debt");
 const Currency_1 = require("./Currency");
+const Payment_1 = require("./Payment");
 const ExpenseType_1 = require("./ExpenseType");
 const IExpenseDO_1 = require("./IExpenseDO");
 /**
@@ -31,6 +32,7 @@ class EvenExpense {
         this.expenseType = ExpenseType_1.ExpenseType.EvenExpense;
         this.idCounter = 0;
         this.currency = new Currency_1.Currency("EUR", 1);
+        this._participants = new Map();
         this._payments = new Map();
         this._debts = new Map();
         this.id = id;
@@ -81,7 +83,7 @@ class EvenExpense {
     }
     set expenseAmount(newExpenseAmount) {
         this._expenseAmount = newExpenseAmount;
-        this.recalculateDividedDebt();
+        this.recalculateDebts();
     }
     /**
     * Get the amount of what has not been paid yet to the third party. This goes down when a new Payment is added.
@@ -104,26 +106,6 @@ class EvenExpense {
         return this.expenseAmount - this.expenseUnpaid;
     }
     /**
-    * Get the total amount that still needs to be paid to creditors by debtors.
-    *
-    * @returns {number} The amount that still needs to be paid by creditors.
-    */
-    get amountUnpaid() {
-        return this.expenseAmount - this.amountPaid;
-    }
-    /**
-    * Get the total amount that has already been paid to creditors by debtors.
-    *
-    * @returns {number} The amount that has already been paid to creditors by debtors.
-    */
-    get amountPaid() {
-        let amountAlreadyPaid = 0;
-        for (let debt of this.unfilteredDebts.values()) {
-            amountAlreadyPaid += debt.amount;
-        }
-        return amountAlreadyPaid;
-    }
-    /**
     * Get or set the Currency that is associated with this EvenExpense.
     *
     * @returns {Currency} The Currency that has is associated with this EvenExpense.
@@ -140,14 +122,7 @@ class EvenExpense {
     * @returns {Array<Person>} The Array of participants for this EvenExpense.
     */
     get participants() {
-        let participantSet = new Set();
-        for (let payment of this.payments.values()) {
-            participantSet.add(payment.creditor);
-        }
-        for (let debt of this.unfilteredDebts.values()) {
-            participantSet.add(debt.debtor);
-        }
-        return Array.from(participantSet);
+        return Array.from(this.participantMap.values());
     }
     /**
     * Get a Map of participants for this expense. This list consists of both creditors and debtors.
@@ -155,11 +130,7 @@ class EvenExpense {
     * @returns {Map<number, Person>} A Map of all the participants, where the keys are the IDs of the participants and the values the Person instances.
     */
     get participantMap() {
-        let newParticipantMap = new Map();
-        for (let participant of this.participants) {
-            newParticipantMap.set(participant.id, participant);
-        }
-        return newParticipantMap;
+        return new Map(this._participants);
     }
     /**
     * Add a participant to the expense. Under the hood, this will add a new debt and evenly distribute the amountUnpaid.
@@ -167,34 +138,12 @@ class EvenExpense {
     * @param {Person} newParticipant - The participant that should be added to this EvenExpense.
     */
     addParticipant(newParticipant) {
-        if (!(this.participants.indexOf(newParticipant) > -1)) {
-            let newDebt = new Debt_1.Debt(this.idCounter++, newParticipant);
-            this.unfilteredDebts.set(newDebt.id, newDebt);
-            this.recalculateDividedDebt();
+        if (!(this.participants.indexOf(newParticipant) > -1)) { //If participant is not in map
+            this._participants.set(newParticipant.id, newParticipant);
+            this.recalculateDebts();
         }
     }
-    /**
-    * This method will calculate the Debts in this EvenExpense instance. This is done each time some information is added, like a new Payment, instead of everytime a list of Debts is requested.
-    * This is done to save device battery power.
-    */
-    recalculateDividedDebt() {
-        if (this._payments.size > 0) {
-            let newDebts = new Map();
-            // Add debts for all payments
-            for (let creditor of this.creditByCreditor.keys()) {
-                let paidPercentage = this.creditByCreditor.get(creditor) / this.expensePaid;
-                // Calculate new Debt for payment for all participants based on paidPercentage
-                for (let participant of this.participants) {
-                    let amountPerParticipant = this.expensePaid / this.participants.length;
-                    let amountPerParticipantForThisPayment = amountPerParticipant * paidPercentage;
-                    let debtDescription = participant.firstName + " owes " + creditor.firstName + " " + amountPerParticipantForThisPayment.toFixed(2) + "% of total payment of " + this.expensePaid + ".";
-                    let newDebt = new Debt_1.Debt(this.idCounter++, participant, creditor, amountPerParticipantForThisPayment, debtDescription);
-                    newDebts.set(newDebt.id, newDebt);
-                }
-            }
-            this._debts = newDebts;
-        }
-    }
+
     /**
     * Remove a participant from the list of debtors. Removing a participant that paid does not work with this method, use removePayment first.
     *
@@ -203,13 +152,8 @@ class EvenExpense {
     * @returns {number} The amount of participants maintained by this EvenExpense.
     */
     removeParticipant(participantId) {
-        let participant = this.participantMap.get(participantId);
-        for (let debtId of this.unfilteredDebts.keys()) {
-            let currentDebt = this.unfilteredDebts.get(debtId);
-            if (currentDebt.debtor == participant)
-                this.unfilteredDebts.delete(debtId);
-        }
-        this.recalculateDividedDebt();
+        this._participants.delete(participantId);
+        this.recalculateDebts();
         return this.participants.length;
     }
     /**
@@ -235,8 +179,9 @@ class EvenExpense {
         if (this.expensePaid + newPayment.amount > this.expenseAmount) {
             throw new Error("Can not pay more than the total price of the expense.");
         }
+        this.addParticipant(newPayment.creditor);
         this.payments.set(newPayment.id, newPayment);
-        this.recalculateDividedDebt();
+        this.recalculateDebts();
         return newPayment.id;
     }
     /**
@@ -248,7 +193,7 @@ class EvenExpense {
     */
     removePayment(paymentId) {
         this.payments.delete(paymentId);
-        this.recalculateDividedDebt();
+        this.recalculateDebts();
         return this.payments.size;
     }
     /**
@@ -289,40 +234,101 @@ class EvenExpense {
     * @returns {Map<number, Debt>} A Map containing all Debts maintained by this EvenExpense.
     */
     get debts() {
-        let newDebts = new Map();
-        for (let debt of this.unfilteredDebts.values()) {
-            newDebts.set(debt.id, debt);
-        }
-        // Subtract debts that cancel eachother out
-        for (let debtId of newDebts.keys()) {
-            let currentDebt = newDebts.get(debtId);
-            for (let otherDebtId of newDebts.keys()) {
-                let otherDebt = newDebts.get(otherDebtId);
-                if (currentDebt.creditor === otherDebt.debtor) {
-                    if (currentDebt.amount > otherDebt.amount) {
-                        let newAmount = currentDebt.amount - otherDebt.amount;
-                        currentDebt.amount = newAmount;
-                        currentDebt.description = currentDebt.debtor.firstName + " owes " + currentDebt.creditor.firstName + " " + newAmount.toFixed(2) + " of " + this.expenseAmount + ".";
-                        newDebts.delete(otherDebt.id);
-                    }
-                    if (currentDebt.amount === otherDebt.amount) {
-                        newDebts.delete(currentDebt.id);
-                        newDebts.delete(otherDebt.id);
-                    }
-                }
-            }
-        }
-        // Remove debts that creditors owe to themselves
-        for (let debtId of newDebts.keys()) {
-            let currentDebt = newDebts.get(debtId);
-            if (currentDebt.creditor == currentDebt.debtor)
-                newDebts.delete(debtId);
-        }
-        return newDebts;
-    }
-    get unfilteredDebts() {
         return this._debts;
     }
+
+    /**
+     * Recalculates the debts of this expense.
+     * Note, this is not an optimal solution, but I created a method that is somewhat generic
+     * You will find some of this code in the other expenses as well
+     * It could be a good idea to extract this stuff into separate methods if you're refactoring this :)
+     */
+    recalculateDebts() {
+
+        this._debts = new Map(); //Reset debts
+
+        let combinedPayments = this.combinedPayments; //In case the user created multiple payment for a single person
+        let amountToPay = this.expenseAmount / this.participants.length;
+        let medialDebts = new Map();
+
+        //Fill debt map with all participants and how much they need to pay
+        this.participants.forEach(p => medialDebts.set(p, amountToPay));
+
+        //Calculate the debt for each participant
+        //Debt to expense = amountToPay - amountPayed
+        for (let participant of this.participants) {
+            let combinedPayment = combinedPayments.get(participant);
+            if(combinedPayment !== undefined) {
+                medialDebts.set(participant, medialDebts.get(participant) - combinedPayment.amount);
+            }
+        }
+
+        //Sort debt map (from lowest debt (or due) to highest debt).
+        //Can't really sort a map, so create an array of keys sorted by their values
+        let sortedKeys = Array.from(medialDebts.keys());
+        sortedKeys.sort((k1, k2) => medialDebts.get(k1) - medialDebts.get(k2));
+
+        //Create actual debts
+        let lowerIndex = 0; //Lowest debt
+        let upperIndex = sortedKeys.length - 1; //Highest debt
+
+        while(upperIndex > lowerIndex) {
+
+            let lowerDebt = medialDebts.get(sortedKeys[lowerIndex]);
+            let upperDebt = medialDebts.get(sortedKeys[upperIndex]);
+
+            let newDebt = new Debt_1.Debt(this.idCounter++, sortedKeys[upperIndex], sortedKeys[lowerIndex]);
+
+            if(upperDebt > Math.abs(lowerDebt)) {
+                newDebt.amount = Math.abs(lowerDebt); //Set debt amount
+                medialDebts.set(sortedKeys[lowerIndex], 0); //Satisfy debt value in medialDebts for creditor
+                medialDebts.set(sortedKeys[upperIndex], upperDebt - Math.abs(lowerDebt)); //Decrease debt value in medialDebts for debtor
+                lowerIndex++; //Increment lowerIndex
+            } else if(upperDebt < Math.abs(lowerDebt)) {
+                newDebt.amount = upperDebt;
+                medialDebts.set(sortedKeys[lowerIndex], lowerDebt + upperDebt); //Increase debt value in medialDebts for creditor
+                medialDebts.set(sortedKeys[upperIndex], 0); //Satisfy debt value in medialDebts for debtor
+                upperIndex--; //Decrement upperIndex
+            } else { //upperDebt === lowerDebt
+                newDebt.amount = upperDebt;
+                //Satisfy both debts
+                medialDebts.set(sortedKeys[lowerIndex], 0);
+                medialDebts.set(sortedKeys[upperIndex], 0);
+                //Change both index pointers
+                lowerIndex++;
+                upperIndex--;
+            }
+
+            //Add debt to debt list
+            this._debts.set(newDebt.id, newDebt);
+
+        }
+
+    }
+
+    /**
+     * Get a map of payments where they are combined based on their creditor
+     */
+    get combinedPayments() {
+
+        let combinedPayments = new Map();
+
+        //You need to clone the objects everywhere to prevent modifying data in the original payment map
+        for(let payment of Array.from(this.payments.values())) {
+            if(combinedPayments.has(payment.creditor)) {
+                //If it already is in there, add amount to existing value
+                //No need to clone again here since we're already working on a cloned object
+                combinedPayments.get(payment.creditor).amount += payment.amount;
+            } else {
+                //Add new payment (needs to be a copy)
+                combinedPayments.set(payment.creditor, new Payment_1.Payment(-1, payment.creditor, payment.amount));
+            }
+        }
+
+        return combinedPayments;
+
+    }
+
     /**
     * Get a Map of BillItems maintained by this EvenExpense, where the keys are the IDs of the BillItems and the values are the Debt instances. Will throw an Error, BillItems are not supported by EvenExpense.
     *
@@ -336,25 +342,7 @@ class EvenExpense {
     *
     * @returns {Map<number, Person>} A Map containing all creditors maintained by this EvenExpense.
     */
-    get creditors() {
-        let creditorSet = new Set();
-        for (let payment of this.payments.values()) {
-            creditorSet.add(payment.creditor);
-        }
-        return Array.from(creditorSet);
-    }
-    /**
-    * Get a Map of debtors maintained by this EvenExpense, where the keys are the IDs of the debtors and the values are the Person instances.
-    *
-    * @returns {Map<number, Person>} A Map containing all debtors maintained by this EvenExpense.
-    */
-    get debtors() {
-        let debtorSet = new Set();
-        for (let debt of this.debts.values()) {
-            debtorSet.add(debt.debtor);
-        }
-        return Array.from(debtorSet);
-    }
+
     /**
     * Get a Map of all the total debt categorized by the debtor.
     *
