@@ -105,6 +105,8 @@ export class ExpenseOverviewComponent extends React.Component {
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
 
+        let addPaymentMarginBottom = expense.expenseType === ExpenseType_1.ExpenseType.EvenExpense ? 10 : 0;
+
         return (
 
             <Container>
@@ -136,7 +138,7 @@ export class ExpenseOverviewComponent extends React.Component {
 
                         <H3 style={{marginLeft:10, marginBottom:10}}>Payments</H3>
                         <PaymentListComponent tripId={tripId} expenseId={expenseId}/>
-                        <Button style={{alignSelf:'center'}} onPress={() => this.navigateAddPayment()}><Text>Add Payment</Text></Button>
+                        <Button style={{alignSelf:'center', marginBottom: addPaymentMarginBottom}} onPress={() => this.navigateAddPayment()}><Text>Add Payment</Text></Button>
 
                         {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <H3 style={{marginLeft: 10, marginBottom: 10}}>Bill Items</H3>}
                         {expense.expenseType === ExpenseType_1.ExpenseType.BillExpense && <BillItemListComponent tripId={tripId} expenseId={expenseId}/>}
