@@ -78,7 +78,7 @@ class BillExpense {
         if (newPayment.id < 0)
             newPayment.id = this.idCounter++;
         if (this.expensePaid + newPayment.amount > this.expenseAmount) {
-            throw new Error("Can not pay more than the total price of the expense.");
+            throw new Error("Can not pay more than the total price of the expense. Please add more Bill Items");
         }
         this._payments.set(newPayment.id, newPayment);
         this.recalculateDebts();
