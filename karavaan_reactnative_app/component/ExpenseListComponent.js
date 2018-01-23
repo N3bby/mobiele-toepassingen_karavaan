@@ -11,10 +11,12 @@ export class ExpenseListComponent extends React.Component {
     constructor(props) {
         super(props);
         global.observerService.addTripExpensesCallback(this.props.tripId, () => this.forceUpdate());
+
+        this._observedExpenses = [];
     }
 
     navigateToExpenseOverview(tripId, expenseId) {
-        this.props.navigation.navigate("ExpenseOverview", {tripId: tripId, expenseId: expenseId});
+        this.props.navigation.navigate("ExpenseOverview", {tripId: tripId, expenseId: expenseId, callbackId: this._callbackId});
     }
 
     removeExpense(tripId, expenseId) {
@@ -43,9 +45,10 @@ export class ExpenseListComponent extends React.Component {
     }
 
     render() {
+
         return (
             <Content>
-                <List dataArray={global.service.getExpensesByTripId(this.props.tripId)} renderRow={(expense) => (
+                <List dataArray={expenses} renderRow={(expense) => (
                     <ListItem key={expense.id} button={false}
                               onPress={() => this.navigateToExpenseOverview(this.props.tripId, expense.id)} icon>
                         <Left>

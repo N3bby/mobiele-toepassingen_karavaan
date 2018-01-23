@@ -10,7 +10,7 @@ export class ShareListComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        global.observerService.addExpenseParticipantMapCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
+        global.observerService.addExpenseCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
     }
 
     removeDebt(tripId, expenseId, debtId) {

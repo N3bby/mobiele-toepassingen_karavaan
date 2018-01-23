@@ -10,8 +10,11 @@ export class ObserverService {
         this._tripPersonMapCallbacks = new Map(); //Array of callbacks per trip
 
         //Key is {tripId, expenseId}, value is array of callback functions
-        this._paymentMapCallbacks = new Map();
-        this._participantMapCallbacks = new Map();
+        this._expenseCallbacks = new Map();
+
+        //Key is 'id'
+        this._arbitraryCallbacksIdCounter = 0;
+        this._arbitraryCallbacks = new Map();
 
         //Apply hooks
         this._applyHooks()
@@ -64,53 +67,37 @@ export class ObserverService {
 
     }
 
-    addExpensePaymentMapCallback(tripId, expenseId, callback) {
+    //Binds to everything from expense
+    addExpenseCallback(tripId, expenseId, callback) {
 
         //Create callback array and hook if still undefined
         let key = {tripId: tripId, expenseId: expenseId};
-        if (this._paymentMapCallbacks.get(key) === undefined) {
-            this._paymentMapCallbacks.set(key, []);
+        if (this._expenseCallbacks.get(key) === undefined) {
+            this._expenseCallbacks.set(key, []);
 
-            //Apply hook
             let expense = global.service.getExpenseById(tripId, expenseId);
 
-            //Some expense types use a different name for their internal payments map.
-            //I don't want to break the domain code by refactoring, so I'm checking for all the cases here
-            if (expense._payments !== undefined) this._hookMap(expense._payments, this._paymentMapCallbacks.get(key));
-            if (expense.payments !== undefined) this._hookMap(expense.payments, this._paymentMapCallbacks.get(key));
+            this._hookMap(expense._payments, this._expenseCallbacks.get(key));
+            if(expense._participants !== undefined) this._hookMap(expense._participants, this._expenseCallbacks.get(key));
+            if(expense._billItems !== undefined) this._hookMap(expense._billItems, this._expenseCallbacks.get(key));
+
         }
 
         //Add new callback
-        this._paymentMapCallbacks.get(key).push(callback);
+        this._expenseCallbacks.get(key).push(callback);
 
     }
 
-    addExpenseParticipantMapCallback(tripId, expenseId, callback) {
+    //Arbitrary callbacks, for when you can't pass stuff by reference through a navigation action ;)
+    //Returns callback id
+    addArbitraryCallback(callback) {
+        let id = this._arbitraryCallbacksIdCounter++;
+        this._arbitraryCallbacks.set(id, callback);
+        return id;
+    }
 
-        //Create callback array and hook if still undefined
-        let key = {tripId: tripId, expenseId: expenseId};
-        if (this._participantMapCallbacks.get(key) === undefined) {
-            this._participantMapCallbacks.set(key, []);
-
-            //Apply hook
-            let expense = global.service.getExpenseById(tripId, expenseId);
-
-            //Behaviour for types of expenses is somewhat different
-            if(expense.expenseType === ExpenseType_1.ExpenseType.EvenExpense) {
-                this._hookMap(expense._debts, this._participantMapCallbacks.get(key));
-                this._hookMap(expense._payments, this._participantMapCallbacks.get(key));
-            } else if(expense.expenseType === ExpenseType_1.ExpenseType.ShareExpense) {
-                this._hookMap(expense.payments, this._participantMapCallbacks.get(key));
-                this._hookMap(expense.debts, this._participantMapCallbacks.get(key));
-            } else if(expense.expenseType === ExpenseType_1.ExpenseType.BillExpense) {
-                this._hookMap(expense.billItems, this._participantMapCallbacks.get(key));
-            }
-
-        }
-
-        //Add new callback
-        this._participantMapCallbacks.get(key).push(callback);
-
+    getArbitraryCallback(id) {
+        return this._arbitraryCallbacks.get(id);
     }
 
     // Hooks the 'set' and 'delete' functions of a map and calls the list of callbacks

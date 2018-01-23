@@ -134,7 +134,7 @@ class EvenExpense {
         if (newPayment.id < 0)
             newPayment.id = this.idCounter++;
         this.addParticipant(newPayment.creditor);
-        this.payments.set(newPayment.id, newPayment);
+        this._payments.set(newPayment.id, newPayment);
         this.recalculateDebts();
         return newPayment.id;
     }
@@ -147,7 +147,7 @@ class EvenExpense {
      * @returns {number} - The amount of Payments still maintained by this EvenExpense after removal.
      */
     removePayment(paymentId) {
-        this.payments.delete(paymentId);
+        this._payments.delete(paymentId);
         this.recalculateDebts();
         return this.payments.size;
     }

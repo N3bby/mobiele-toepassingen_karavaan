@@ -10,7 +10,7 @@ export class PaymentListComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        global.observerService.addExpensePaymentMapCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
+        global.observerService.addExpenseCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
     }
 
     removePayment(tripId, expenseId, paymentId) {

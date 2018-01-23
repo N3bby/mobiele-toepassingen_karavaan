@@ -21,9 +21,8 @@ export class ExpenseOverviewComponent extends React.Component {
         super(props);
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
-        let callback = () => this.forceUpdate();
-        global.observerService.addExpensePaymentMapCallback(tripId, expenseId, callback);
-        global.observerService.addExpenseParticipantMapCallback(tripId, expenseId, callback);
+        global.observerService.addExpenseCallback(tripId, expenseId, () => this.forceUpdate() );
+
     }
 
     navigateParticipantAdd() {
@@ -158,7 +157,7 @@ export class ExpenseOverviewComponent extends React.Component {
                     <Tab heading="Participants">
                         <UserListComponent
                             sourceFunc={() => global.service.getParticipantsByExpenseId(tripId, expenseId)}
-                            observerFunc={(component) => global.observerService.addExpenseParticipantMapCallback(tripId, expenseId, () => component.forceUpdate())}
+                            observerFunc={(component) => global.observerService.addExpenseCallback(tripId, expenseId, () => component.forceUpdate())}
                         />
                         {expense.expenseType === ExpenseType_1.ExpenseType.EvenExpense &&
                         <Fab postion="bottomRight" style={{backgroundColor: "#5067FF"}}

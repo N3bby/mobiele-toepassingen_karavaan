@@ -45,9 +45,11 @@ export default class CreateUserComponent extends React.Component {
     }
 
     add(){
-        if (this.state.firstName.length == 0 || this.state.lastName.length == 0)
+        if (this.state.firstName.length === 0 || this.state.lastName.length === 0)
         {
             alert("Please enter the details.");
+        } else if(this.state.firstName.length > 30 || this.state.lastName.length > 30) {
+            alert("Name or First Name is too long. (max 30)")
         }
         else
         {

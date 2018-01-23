@@ -596,7 +596,6 @@ class KaravaanService {
         return returnedParticipant;
     }
     addNewPaymentToExpenseById(tripId, expenseId, participantId, amount) {
-        let expense = this.getExpenseById(tripId, expenseId);
         let participant = this.getParticipantById(tripId, participantId);
         let newPayment = new Payment_1.Payment();
         newPayment.creditor = participant;
