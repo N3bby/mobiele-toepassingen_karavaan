@@ -7,7 +7,7 @@
 3. Reset knop werkt niet (Works as intended) ✔
 4. Bij het maken van een trip in munteenheid "aud" staat deze toch in "EUR" na het opslaan. ✔
 5. create new user: firstname en lastname limiteren op aantal karakters (1-30). Momenteel kunnen er oneindig veel getypt worden. ✔
-6. ExpenseList doesn't update amount of expense. React-native doesn't allow updating background components, so this is a hard problem to fix.
+6. ExpenseList doesn't update amount of expense. React-native doesn't allow updating background components, so this is a hard problem to fix. ✔
 
 ## TODO
 
