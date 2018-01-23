@@ -84,9 +84,9 @@ export class DebtOverviewListComponent extends React.Component {
 
                 <List dataArray={debtWrappers}
                       renderRow={(debt) =>
-                          <ListItem>
+                          <ListItem style={{height:50}}>
                               <Body>
-                              <Text>{debt.value.debtor.name} owes {debt.value.creditor.name} {debt.value.amount}</Text>
+                              <Text style={{marginLeft: 0}}>{debt.value.debtor.name} owes {debt.value.creditor.name} {debt.value.amount.toFixed(2)}</Text>
                               </Body>
                               <Right>
                                   <Button transparent onPress={() => this.togglePaid(debt.value)}>

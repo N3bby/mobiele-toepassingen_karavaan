@@ -185,6 +185,13 @@ class BillExpense {
 
         }
 
+        for(let medialDebt of medialDebts.values()) {
+            //Debts cannot be resolved, show no debts (the user is most likely creating the expense atm)
+            if(medialDebt !== 0) {
+                this._debts = new Map();
+            }
+        }
+
     }
 
     get combinedPayments() {
@@ -218,6 +225,7 @@ class BillExpense {
         newDO.currency = this.currency;
         newDO.payments = Array.from(this._payments.values());
         newDO.billItems = Array.from(this._billItems.values());
+        newDO.debts = Array.from(this._debts.values());
         return newDO;
     }
 }

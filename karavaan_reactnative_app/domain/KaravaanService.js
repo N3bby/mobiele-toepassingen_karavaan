@@ -795,9 +795,15 @@ class KaravaanService {
                 for (let payment of expenseDO.payments) {
                     newService.addNewPaymentToExpenseById(newTrip.id, newExpense.id, payment.creditor.id, payment.amount);
                 }
+                newExpense._debts = new Map(); //Removed automatically calculated debts
                 for (let debt of expenseDO.debts) {
                     let id = newExpense.idCounter++;
-                    newExpense._debts.set(id, debt);
+                    newExpense._debts.set(id, new Debt_1.Debt(id,
+                        newService.getPersonById(debt.debtor.id),
+                        newService.getPersonById(debt.creditor.id),
+                        debt.amount,
+                        debt.description,
+                        debt.isPaid));
                 }
             }
         }

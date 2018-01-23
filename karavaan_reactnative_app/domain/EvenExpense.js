@@ -246,6 +246,13 @@ class EvenExpense {
 
         }
 
+        for(let medialDebt of medialDebts.values()) {
+            //Debts cannot be resolved, show no debts (the user is most likely creating the expense atm)
+            if(medialDebt !== 0) {
+                this._debts = new Map();
+            }
+        }
+
     }
 
     /**
@@ -296,6 +303,7 @@ class EvenExpense {
         newDO.currency = this.currency;
         newDO.participants = this.participants;
         newDO.payments = Array.from(this.payments.values());
+        newDO.debts = Array.from(this.debts.values());
         return newDO;
     }
 }
