@@ -2,6 +2,8 @@ const EvenExpense_1 = require("../EvenExpense");
 const Payment_1 = require("../Payment");
 const Person_1 = require("../Person");
 
+//This test is manual, change the code below to test different cases.
+//Run with node
 function test_even_expense_debts() {
 
     let expense = new EvenExpense_1.EvenExpense(5, "cat", "test");
