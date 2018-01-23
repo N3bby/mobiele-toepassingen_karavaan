@@ -22,7 +22,6 @@ import {
 import {ExpenseType} from '../domain/ExpenseType';
 import '../ServiceWrapper.js';
 import {EvenExpense} from '../domain/EvenExpense';
-import {ShareExpense} from "../domain/ShareExpense";
 import {BillExpense} from "../domain/BillExpense";
 import * as ExpenseType_1 from "../domain/ExpenseType";
 import CurrencyInputComponent from "./CurrencyInputComponent";

@@ -36,8 +36,8 @@ export class AddShareComponent extends React.Component {
             if (this.state.amount === 0) {
                 throw "Amount may not be 0";
             }
-            global.service.addNewDebtToExpenseById(tripId, expenseId,
-                this.state.participantId, this.state.amount);
+            global.service.addNewBillItemToExpenseById(tripId, expenseId,
+                this.state.participantId, "", this.state.amount);
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {
@@ -77,7 +77,7 @@ export class AddShareComponent extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>New Bill Item</Title>
+                    <Title>New Share</Title>
                     </Body>
                     <Right/>
                 </Header>

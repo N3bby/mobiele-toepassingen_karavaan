@@ -10,7 +10,6 @@ const Debt_1 = require("./Debt");
 const Payment_1 = require("./Payment");
 const BillItem_1 = require("./BillItem");
 const BillExpense_1 = require("./BillExpense");
-const ShareExpense_1 = require("./ShareExpense");
 const KaravaanServiceDO_1 = require("./KaravaanServiceDO");
 /**
 * Class representing a KaravaanService.
@@ -446,9 +445,9 @@ class KaravaanService {
                 newExpense = new BillExpense_1.BillExpense();
                 break;
             case ExpenseType_1.ExpenseType.ShareExpense:
-                newExpense = new ShareExpense_1.ShareExpense();
+                newExpense = new BillExpense_1.BillExpense();
+                newExpense.expenseType = ExpenseType_1.ExpenseType.ShareExpense;
                 break;
-            // No expenseType found
             default:
                 throw new Error("ExpenseType " + expenseType + " not found.");
         }
@@ -674,7 +673,7 @@ class KaravaanService {
     */
     removeDebtFromExpenseById(tripId, expenseId, debtId) {
         let expense = this.getExpenseById(tripId, expenseId);
-        expense.removeDebt(debtId);
+        expense.removeShare(debtId);
         return expense;
     }
     /**
@@ -787,17 +786,18 @@ class KaravaanService {
             for (let expenseDO of tripDO.expenses) {
                 let newExpense = newService.addNewExpenseByTripId(newTrip.id, expenseDO.expenseType, expenseDO.description, expenseDO.category);
                 newExpense.currency = newService.getCurrency(expenseDO.currency.name);
-                for (let payment of expenseDO.payments) {
-                    newService.addNewPaymentToExpenseById(newTrip.id, newExpense.id, payment.creditor.id, payment.amount);
+                for (let billItem of expenseDO.billItems) {
+                    newService.addNewBillItemToExpenseById(newTrip.id, newExpense.id, billItem.debtor.id, billItem.description, billItem.amount);
                 }
                 for (let participant of expenseDO.participants) {
                     newService.addParticipantToExpenseById(newTrip.id, newExpense.id, participant.id);
                 }
-                for (let billItem of expenseDO.billItems) {
-                    newService.addNewBillItemToExpenseById(newTrip.id, newExpense.id, billItem.debtor.id, billItem.description, billItem.amount);
+                for (let payment of expenseDO.payments) {
+                    newService.addNewPaymentToExpenseById(newTrip.id, newExpense.id, payment.creditor.id, payment.amount);
                 }
                 for (let debt of expenseDO.debts) {
-                    newService.addNewDebtToExpenseById(newTrip.id, newExpense.id, debt.debtor.id, debt.amount);
+                    let id = newExpense.idCounter++;
+                    newExpense._debts.set(id, debt);
                 }
             }
         }

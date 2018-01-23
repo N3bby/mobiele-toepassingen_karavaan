@@ -63,11 +63,11 @@ class BillExpense {
     }
 
     addParticipant(newParticipant) {
-        throw new Error('Adding participants to a BillExpense is not supported. Add Payments or assign persons to BillItems instead.');
+        throw new Error('Adding participants to a BillExpense is not supported.');
     }
 
     removeParticipant(participantId) {
-        throw new Error('Removing participants from a BillExpense is not supported. Remove Payments or debtors from Billitems instead.');
+        throw new Error('Removing participants from a BillExpense is not supported.');
     }
 
     get payments() {
@@ -78,7 +78,7 @@ class BillExpense {
         if (newPayment.id < 0)
             newPayment.id = this.idCounter++;
         if (this.expensePaid + newPayment.amount > this.expenseAmount) {
-            throw new Error("Can not pay more than the total price of the expense. Please add more Bill Items");
+            throw new Error("Can not pay more than the total price of the expense.");
         }
         this._payments.set(newPayment.id, newPayment);
         this.recalculateDebts();
@@ -106,7 +106,7 @@ class BillExpense {
     removeBillItem(billItemId) {
         let billItem = this._billItems.get(billItemId);
         if (billItem !== undefined && this.expenseAmount - billItem.amount < this.expensePaid) {
-            throw new Error("Cannot remove this Bill Item. Please remove some payments first.")
+            throw new Error("Cannot remove this. Please remove some payments first.")
         } else {
             this._billItems.delete(billItemId);
             this.recalculateDebts();

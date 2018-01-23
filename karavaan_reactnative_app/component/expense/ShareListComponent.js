@@ -13,7 +13,7 @@ export class ShareListComponent extends React.Component {
         global.observerService.addExpenseCallback(this.props.tripId, this.props.expenseId, () => this.forceUpdate());
     }
 
-    removeDebt(tripId, expenseId, debtId) {
+    removeShare(tripId, expenseId, shareId) {
         Alert.alert(
             'Delete Share',
             'Are you sure you want to delete this share?',
@@ -25,7 +25,7 @@ export class ShareListComponent extends React.Component {
                 {
                     text: 'Yes', onPress: () => {
                         try {
-                            global.service.removeDebtFromExpenseById(tripId, expenseId, debtId);
+                            global.service.removeBillItemFromExpenseById(tripId, expenseId, shareId);
                             global.saveService();
                         }
                         catch (error) {
@@ -43,22 +43,22 @@ export class ShareListComponent extends React.Component {
         let expense = global.service.getExpenseById(this.props.tripId, this.props.expenseId);
 
         //Convert map to array
-        let debts = [];
-        if(expense.debts !== undefined) debts = Array.from(expense.debts.values());
+        let shares = [];
+        if(expense.debts !== undefined) shares = Array.from(expense.billItems.values());
 
         return (
             <Content>
-                <List dataArray={debts} renderRow={(debt) =>
+                <List dataArray={shares} renderRow={(share) =>
                     <ListItem icon>
                         <Left>
                             <Icon style={{color:'rgba(0,0,0,0.7)'}} name="md-cash"/>
                         </Left>
                         <Body>
-                        <Text>{debt.debtor.name}</Text>
+                        <Text>{share.debtor.name}</Text>
                         </Body>
                         <Right>
-                            <Text>{debt.amount.toFixed(2).toString()}</Text>
-                            <Button transparent onPress={() => this.removeDebt(this.props.tripId, expense.id, debt.id)}>
+                            <Text>{share.amount.toFixed(2).toString()}</Text>
+                            <Button transparent onPress={() => this.removeShare(this.props.tripId, expense.id, share.id)}>
                                 <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>
                         </Right>
