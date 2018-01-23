@@ -34,8 +34,7 @@ export default class CreateExpenseComponent extends React.Component {
         this.state = {
             expenseDescription: "",
             expenseCategory: "",
-            expenseType: "EvenExpense",
-            expenseAmount: 0
+            expenseType: "EvenExpense"
         };
     }
 
@@ -48,10 +47,6 @@ export default class CreateExpenseComponent extends React.Component {
             // Check if the category is not too long
             if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50)
                 throw "Expense category should be between 1 and 50 characters.";
-
-            if(this.state.expenseAmount === 0) {
-                throw "Expense amount must be higher than 0";
-            }
 
             let expenseType;
             switch(this.state.expenseType) {
@@ -69,7 +64,7 @@ export default class CreateExpenseComponent extends React.Component {
             }
 
             //TODO Might have to add currency selection here
-            global.service.addNewExpenseByTripId(tripId, expenseType, this.state.expenseAmount, this.state.expenseDescription, this.state.expenseCategory);
+            global.service.addNewExpenseByTripId(tripId, expenseType, this.state.expenseDescription, this.state.expenseCategory);
 
             global.saveService();
             this.props.navigation.goBack();
@@ -85,10 +80,6 @@ export default class CreateExpenseComponent extends React.Component {
 
     onCategoryChange(value) {
         this.setState({expenseCategory: value});
-    }
-
-    onValueChangeAmount(value) {
-        this.setState({expenseAmount: value});
     }
 
     onTypeChange(value) {
@@ -147,8 +138,6 @@ export default class CreateExpenseComponent extends React.Component {
                                onChangeText={this.onCategoryChange.bind(this)}
                         />
                     </Item>
-
-                    <CurrencyInputComponent onValueChange={this.onValueChangeAmount.bind(this)}/>
 
                     <Button success style={{alignSelf: "center", margin: 10}} onPress={() => this.addExpense(tripId)}>
                         <Text>Create</Text>

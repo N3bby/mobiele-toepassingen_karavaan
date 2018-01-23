@@ -436,7 +436,7 @@ class KaravaanService {
     *
     * @returns {IExpense} The newly created IExpense of given ExpenseType.
     */
-    addNewExpenseByTripId(tripId, expenseType, expenseAmount = 100, description = "", category = "", currency = "EUR") {
+    addNewExpenseByTripId(tripId, expenseType, description = "", category = "", currency = "EUR") {
         let newExpense;
         switch (expenseType) {
             case ExpenseType_1.ExpenseType.EvenExpense:
@@ -452,7 +452,6 @@ class KaravaanService {
             default:
                 throw new Error("ExpenseType " + expenseType + " not found.");
         }
-        newExpense.expenseAmount = expenseAmount;
         newExpense.description = description;
         newExpense.category = category;
         // Add the currency to the trip if it does not exist already
@@ -787,7 +786,7 @@ class KaravaanService {
             }
             // Import Expenses for this trip
             for (let expenseDO of tripDO.expenses) {
-                let newExpense = newService.addNewExpenseByTripId(newTrip.id, expenseDO.expenseType, expenseDO.expenseAmount, expenseDO.description, expenseDO.category);
+                let newExpense = newService.addNewExpenseByTripId(newTrip.id, expenseDO.expenseType, expenseDO.description, expenseDO.category);
                 newExpense.currency = newService.getCurrency(expenseDO.currency.name);
                 for (let payment of expenseDO.payments) {
                     newService.addNewPaymentToExpenseById(newTrip.id, newExpense.id, payment.creditor.id, payment.amount);

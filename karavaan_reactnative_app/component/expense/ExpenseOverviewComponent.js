@@ -132,7 +132,7 @@ export class ExpenseOverviewComponent extends React.Component {
 
                         <View style={{flexDirection: 'row', margin:10}}>
                             <H3 style={{flex: 1}}>Total: {expense.expenseAmount.toFixed(2).toString()}</H3>
-                            <H3>Unpaid: {expense.expenseUnpaid.toFixed(2).toString()}</H3>
+                            {expense.expenseType !== ExpenseType_1.ExpenseType.EvenExpense && <H3>Unpaid: {expense.expenseUnpaid.toFixed(2).toString()}</H3>}
                         </View>
 
                         <H3 style={{marginLeft:10, marginBottom:10}}>Payments</H3>

@@ -4,7 +4,7 @@ const Person_1 = require("../Person");
 
 function test_even_expense_debts() {
 
-    let expense = new EvenExpense_1.EvenExpense(5, 15, "cat", "test");
+    let expense = new EvenExpense_1.EvenExpense(5, "cat", "test");
 
     let person1 = new Person_1.Person(1, "Person 1", "");
     let person2 = new Person_1.Person(2, "Person 2", "");
@@ -23,7 +23,9 @@ function test_even_expense_debts() {
 
     console.log("Debts");
     let debts = Array.from(expense.debts.values());
-    debts.forEach(d => console.log(d.debtor.firstName + " owes " + d.creditor.firstName + " " + d.amount.toFixed(2)))
+    debts.forEach(d => console.log(d.debtor.firstName + " owes " + d.creditor.firstName + " " + d.amount.toFixed(2)));
+
+    console.log(expense.expenseAmount)
 
 }
 

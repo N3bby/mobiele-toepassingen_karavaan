@@ -1,52 +1,59 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+Object.defineProperty(exports, "__esModule", {value: true});
 const ExpenseType_1 = require("./ExpenseType");
 const Currency_1 = require("./Currency");
 const Debt_1 = require("./Debt");
 const IExpenseDO_1 = require("./IExpenseDO");
+const Payment_1 = require("./Payment");
+
 class BillExpense {
-    constructor(id = -1, expenseAmount = 100, category = "category", description = "New split by BillItem Expense.") {
+    constructor(id = -1, category = "category", description = "New split by BillItem Expense.") {
         this.expenseType = ExpenseType_1.ExpenseType.BillExpense;
         this.idCounter = 0;
         this.id = id;
-        this.expenseAmount = expenseAmount;
         this.category = category;
         this.description = description;
-        this.payments = new Map();
-        this.billItems = new Map();
         this.currency = new Currency_1.Currency("EUR", 1);
+
+        this._billItems = new Map();
+        this._payments = new Map();
+        this._debts = new Map();
     }
+
+    get expenseAmount() {
+        return Array.from(this._billItems.values())
+            .map(b => b.amount)
+            .reduce((p1, p2) => p1 + p2, 0);
+    }
+
     get expenseUnpaid() {
-        let amountToPay = this.expenseAmount;
-        for (let payment of this.payments.values()) {
-            amountToPay -= payment.amount;
-        }
-        return amountToPay;
+        return this.expenseAmount - this.expensePaid;
     }
+
     get expensePaid() {
-        return this.expenseAmount - this.expenseUnpaid;
-    }
-    get amountPaid() {
-        let amountAlreadyPaid = 0;
-        for (let debt of this.unfilteredDebts.values()) {
-            amountAlreadyPaid += debt.amount;
+        let paid = 0;
+        for (let payment of this._payments.values()) {
+            paid += payment.amount;
         }
-        return amountAlreadyPaid;
+        return paid;
     }
-    get amountUnpaid() {
-        return this.expenseAmount - this.amountPaid;
-    }
+
     get participants() {
-        let participantSet = new Set();
-        for (let payment of this.payments.values()) {
-            participantSet.add(payment.creditor);
+        let result = [];
+        //Add participants from both BillItems and Payments
+        for(let billItem of this._billItems.values()) {
+            if (result.indexOf(billItem.debtor) === -1) {
+                result.push(billItem.debtor);
+            }
         }
-        for (let billItem of this.billItems.values()) {
-            if (typeof billItem.debtor != 'undefined')
-                participantSet.add(billItem.debtor);
+        for(let payment of this._payments.values()) {
+            if(result.indexOf(payment.creditor) === -1) {
+                result.push(payment.creditor);
+            }
         }
-        return Array.from(participantSet);
+        return result;
     }
+
     get participantMap() {
         let newParticipantMap = new Map();
         for (let participant of this.participants) {
@@ -54,136 +61,152 @@ class BillExpense {
         }
         return newParticipantMap;
     }
+
     addParticipant(newParticipant) {
         throw new Error('Adding participants to a BillExpense is not supported. Add Payments or assign persons to BillItems instead.');
     }
+
     removeParticipant(participantId) {
         throw new Error('Removing participants from a BillExpense is not supported. Remove Payments or debtors from Billitems instead.');
     }
+
+    get payments() {
+        return new Map(this._payments);
+    }
+
     addPayment(newPayment) {
         if (newPayment.id < 0)
             newPayment.id = this.idCounter++;
         if (this.expensePaid + newPayment.amount > this.expenseAmount) {
             throw new Error("Can not pay more than the total price of the expense.");
         }
-        this.payments.set(newPayment.id, newPayment);
+        this._payments.set(newPayment.id, newPayment);
+        this.recalculateDebts();
         return newPayment.id;
     }
-    removePayment(paymentId) {
-        this.payments.delete(paymentId);
-        return this.payments.size;
-    }
-    addDebt(newDebt) {
-        throw new Error('BillExpense does not support adding debts, assign debtors to BillItems instead.');
-    }
-    removeDebt(debtId) {
-        throw new Error('BillExpense does not support removing detbs, remove debtors from BillItems instead.');
-    }
-    addBillItem(billItem) {
-        //TODO Add this in the typescript too
-        //Fixes issue with being able to add billitems so you go over total expense amount
-        let totalBillItemValue = 0;
-        Array.from(this.billItems.values()).forEach((b) => totalBillItemValue += b.amount);
-        if(totalBillItemValue + billItem.amount > this.expenseAmount) throw new Error("Can not add bill items more than the total price of the expense.");
 
+    removePayment(paymentId) {
+        this._payments.delete(paymentId);
+        this.recalculateDebts();
+        return this._payments.size;
+    }
+
+    get billItems() {
+        return new Map(this._billItems);
+    }
+
+    addBillItem(billItem) {
         if (billItem.id < 0)
             billItem.id = this.idCounter++;
-        this.billItems.set(billItem.id, billItem);
+        this._billItems.set(billItem.id, billItem);
+        this.recalculateDebts();
         return billItem.id;
     }
+
     removeBillItem(billItemId) {
-        this.billItems.delete(billItemId);
-        return this.billItems.size;
-    }
-    get debts() {
-        let newDebtMap = new Map();
-        for (let debt of this.unfilteredDebts.values()) {
-            newDebtMap.set(debt.id, debt);
+        let billItem = this._billItems.get(billItemId);
+        if (billItem !== undefined && this.expenseAmount - billItem.amount < this.expensePaid) {
+            throw new Error("Cannot remove this Bill Item. Please remove some payments first.")
+        } else {
+            this._billItems.delete(billItemId);
+            this.recalculateDebts();
+            return this._billItems.size;
         }
-        for (let creditor of this.creditByCreditor.keys()) {
-            // Filter out debts that creditors owe to themselves
-            for (let debtId of newDebtMap.keys()) {
-                let currentDebt = newDebtMap.get(debtId);
-                if (currentDebt.debtor == creditor)
-                    newDebtMap.delete(debtId);
-            }
-        }
-        // Subtract debts that cancel eachother out
-        for (let debtId of newDebtMap.keys()) {
-            let currentDebt = newDebtMap.get(debtId);
-            for (let otherDebtId of newDebtMap.keys()) {
-                let otherDebt = newDebtMap.get(otherDebtId);
-                if (currentDebt.creditor == otherDebt.debtor) {
-                    if (currentDebt.amount > otherDebt.amount) {
-                        let newAmount = currentDebt.amount - otherDebt.amount;
-                        currentDebt.amount = newAmount;
-                        currentDebt.description = currentDebt.debtor.firstName + "owes " + currentDebt.creditor.firstName + " " + currentDebt.amount + " " + this.currency.name;
-                        newDebtMap.delete(otherDebtId);
-                    }
-                    if (currentDebt.amount == otherDebt.amount) {
-                        newDebtMap.delete(debtId);
-                        newDebtMap.delete(otherDebtId);
-                    }
-                }
-            }
-        }
-        return newDebtMap;
     }
 
-    get unfilteredDebts() {
-        let newDebtMap = new Map();
-        // Calculate the percentage paid by each creditor
-        for (let creditor of this.creditByCreditor.keys()) {
-            let paidPercentage = this.creditByCreditor.get(creditor) / this.expenseAmount;
-            for (let debtor of this.debtByDebtor.keys()) {
-                let amountToPay = this.debtByDebtor.get(debtor) * paidPercentage;
-                let description = debtor.firstName + " owes " + creditor.firstName + " " + amountToPay + " " + this.currency.name;
-                let newDebt = new Debt_1.Debt(this.idCounter++, debtor, creditor, amountToPay, description);
-                newDebtMap.set(newDebt.id, newDebt);
+    get debts() {
+        return new Map(this._debts);
+    }
+
+    recalculateDebts() {
+
+        this._debts = new Map(); //Reset debts
+
+        let combinedPayments = this.combinedPayments; //In case the user created multiple payment for a single person
+        let medialDebts = new Map();
+
+        //Fill debt map with all participants
+        this.participants.forEach(p => medialDebts.set(p, 0));
+
+        //Change debt based on BillItems
+        for (let billItem of this._billItems.values()) {
+            if (medialDebts.has(billItem.debtor)) { //If debtor is already in there, add this amount to his current amount
+                medialDebts.set(billItem.debtor, medialDebts.get(billItem.debtor) + billItem.amount);
+            } else {
+                medialDebts.set(billItem.debtor, billItem.amount);
             }
         }
-        return newDebtMap;
-    }
-    get creditors() {
-        let creditorSet = new Set();
-        for (let payment of this.payments.values()) {
-            creditorSet.add(payment.creditor);
+
+        //Change debt based on Payments
+        for (let payment of Array.from(combinedPayments.values())) {
+            medialDebts.set(payment.creditor, medialDebts.get(payment.creditor) - payment.amount);
         }
-        return Array.from(creditorSet);
-    }
-    get debtors() {
-        let debtorSet = new Set();
-        for (let debt of this.debts.values()) {
-            debtorSet.add(debt.debtor);
-        }
-        return Array.from(debtorSet);
-    }
-    //Gives a map with debtor and what they have to pay for all their bill items
-    get debtByDebtor() {
-        let debtMap = new Map();
-        for (let billItem of this.billItems.values()) {
-            if (debtMap.has(billItem.debtor)) {
-                let newAmount = debtMap.get(billItem.debtor) + billItem.amount;
-                debtMap.set(billItem.debtor, newAmount);
+
+        //Next bit is the same for all expense types
+
+        //Sort debt map (from lowest debt (or due) to highest debt).
+        //Can't really sort a map, so create an array of keys sorted by their values
+        let sortedKeys = Array.from(medialDebts.keys());
+        sortedKeys.sort((k1, k2) => medialDebts.get(k1) - medialDebts.get(k2));
+
+        //Create actual debts
+        let lowerIndex = 0; //Lowest debt
+        let upperIndex = sortedKeys.length - 1; //Highest debt
+
+        while (upperIndex > lowerIndex) {
+
+            let lowerDebt = medialDebts.get(sortedKeys[lowerIndex]);
+            let upperDebt = medialDebts.get(sortedKeys[upperIndex]);
+
+            let newDebt = new Debt_1.Debt(this.idCounter++, sortedKeys[upperIndex], sortedKeys[lowerIndex]);
+
+            if (upperDebt > Math.abs(lowerDebt)) {
+                newDebt.amount = Math.abs(lowerDebt); //Set debt amount
+                medialDebts.set(sortedKeys[lowerIndex], 0); //Satisfy debt value in medialDebts for creditor
+                medialDebts.set(sortedKeys[upperIndex], upperDebt - Math.abs(lowerDebt)); //Decrease debt value in medialDebts for debtor
+                lowerIndex++; //Increment lowerIndex
+            } else if (upperDebt < Math.abs(lowerDebt)) {
+                newDebt.amount = upperDebt;
+                medialDebts.set(sortedKeys[lowerIndex], lowerDebt + upperDebt); //Increase debt value in medialDebts for creditor
+                medialDebts.set(sortedKeys[upperIndex], 0); //Satisfy debt value in medialDebts for debtor
+                upperIndex--; //Decrement upperIndex
+            } else { //upperDebt === lowerDebt
+                newDebt.amount = upperDebt;
+                //Satisfy both debts
+                medialDebts.set(sortedKeys[lowerIndex], 0);
+                medialDebts.set(sortedKeys[upperIndex], 0);
+                //Change both index pointers
+                lowerIndex++;
+                upperIndex--;
             }
-            else
-                debtMap.set(billItem.debtor, billItem.amount);
+
+            //Add debt to debt list
+            this._debts.set(newDebt.id, newDebt);
+
         }
-        return debtMap;
+
     }
-    //Gives a map with creditor and what they payed (from payments)
-    get creditByCreditor() {
-        let creditMap = new Map();
-        for (let payment of this.payments.values()) {
-            if (creditMap.has(payment.creditor)) {
-                let newAmount = creditMap.get(payment.creditor) + payment.amount;
-                creditMap.set(payment.creditor, newAmount);
+
+    get combinedPayments() {
+
+        let combinedPayments = new Map();
+
+        //You need to clone the objects everywhere to prevent modifying data in the original payment map
+        for (let payment of Array.from(this.payments.values())) {
+            if (combinedPayments.has(payment.creditor)) {
+                //If it already is in there, add amount to existing value
+                //No need to clone again here since we're already working on a cloned object
+                combinedPayments.get(payment.creditor).amount += payment.amount;
+            } else {
+                //Add new payment (needs to be a copy)
+                combinedPayments.set(payment.creditor, new Payment_1.Payment(-1, payment.creditor, payment.amount));
             }
-            else
-                creditMap.set(payment.creditor, payment.amount);
         }
-        return creditMap;
+
+        return combinedPayments;
+
     }
+
     toDataObject() {
         let newDO = new IExpenseDO_1.IExpenseDO();
         newDO.id = this.id;
@@ -193,9 +216,10 @@ class BillExpense {
         newDO.description = this.description;
         newDO.expenseAmount = this.expenseAmount;
         newDO.currency = this.currency;
-        newDO.payments = Array.from(this.payments.values());
-        newDO.billItems = Array.from(this.billItems.values());
+        newDO.payments = Array.from(this._payments.values());
+        newDO.billItems = Array.from(this._billItems.values());
         return newDO;
     }
 }
+
 exports.BillExpense = BillExpense;
