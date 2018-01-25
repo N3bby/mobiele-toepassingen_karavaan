@@ -1,5 +1,5 @@
 import React from "react";
-import CurrencyInputComponent from "../CurrencyInputComponent";
+import CurrencyInputComponent from "../currency/TripCurrencyPickerComponent";
 import {
     Body,
     Button,

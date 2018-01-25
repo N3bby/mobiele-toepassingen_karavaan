@@ -22,7 +22,7 @@ import {
     H3,
     Card,
     CardItem, Subtitle, Tabs,
-    Fab
+    Fab, Picker, Item
 } from 'native-base';
 import UserListComponent from "./UserListComponent";
 import CreateExpenseComponent from "./CreateExpenseComponent";
@@ -42,6 +42,9 @@ export class BetterTripOverviewComponent extends React.Component {
         global.observerService.addTripExpensesCallback(this.props.navigation.state.params.tripId, () => {
             this.forceUpdate()
         });
+        this.state = {
+            activeCurrency: global.service.getTripById(this.props.navigation.state.params.tripId).activeCurrency
+        };
 
         this.descriptionTitleHeight = 0;
         this.descriptionTextHeight = 0;
@@ -81,6 +84,28 @@ export class BetterTripOverviewComponent extends React.Component {
 
     navigateToUserAdd(tripId) {
         this.props.navigation.navigate("AddUserToTrip", {tripId: tripId})
+    }
+
+    onValueChangeCurrency(value) {
+        this.setState({
+            activeCurrency: value
+        });
+        let tripId = this.props.navigation.state.params.tripId;
+        let trip = global.service.getTripById(tripId);
+        try {
+            trip.activeCurrency = value;
+            global.saveService();
+        } catch (e) {
+            alert("Something went wrong: " + e);
+        }
+    }
+
+    navigateEditCurrencies() {
+        let tripId = this.props.navigation.state.params.tripId;
+        this.props.navigation.navigate("CurrencyPicker", {
+            tripId: tripId,
+            onPick: () => this.forceUpdate()
+        });
     }
 
     render() {
@@ -126,9 +151,13 @@ export class BetterTripOverviewComponent extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>{trip.name}</Title>
+                    <Title style={{marginTop:3}}>{trip.name}</Title>
                     </Body>
                     <Right>
+                        <Button transparent onPress={() => this.navigateEditCurrencies()}>
+                            <Icon active style={{color:'rgba(255,255,255,0.8)', marginRight: 12}} name='md-create'/>
+                        </Button>
+                        <Text style={{color:'rgba(255,255,255,0.8)', fontSize: 16, marginBottom: 9, marginRight: 5, fontWeight:'bold'}}>{trip.activeCurrency}</Text>
                         <Button transparent onPress={() => this.deleteTrip(trip.id)}>
                             <Icon active name="trash"/>
                         </Button>
@@ -172,5 +201,6 @@ export class BetterTripOverviewComponent extends React.Component {
             </Container>
         );
     }
+
 }
 

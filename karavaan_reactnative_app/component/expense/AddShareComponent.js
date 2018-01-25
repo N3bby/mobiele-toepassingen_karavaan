@@ -1,7 +1,7 @@
 import React from "react";
 import {Body, Button, Container, Content, Header, Icon, Input, Item, Left, Right, Text, Title, View} from "native-base";
 import {TouchableHighlight} from "react-native";
-import CurrencyInputComponent from "../CurrencyInputComponent";
+import CurrencyInputComponent from "../currency/TripCurrencyPickerComponent";
 
 export class AddShareComponent extends React.Component {
 

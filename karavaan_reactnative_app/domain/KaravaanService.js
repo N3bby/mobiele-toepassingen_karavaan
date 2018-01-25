@@ -132,9 +132,10 @@ class KaravaanService {
         let newTrip = new Trip_1.Trip();
         newTrip.name = name;
         newTrip.description = description;
-        // Delete the default currency
-        newTrip.currencyMap = new Map();
-        newTrip.addCurrency(this.currencyMap.get(currency));
+        //Add all currencies from currencyService
+        Array.from(this.currencyService.currencies.values()).forEach(c => newTrip.currencies.set(c.name, new Currency_1.Currency(c.name, c.rateComparedToEUR)));
+        //Set active currency
+        newTrip.activeCurrency = currency;
         return this.addTrip(newTrip);
     }
     /**
@@ -181,69 +182,6 @@ class KaravaanService {
         let trip = this.getTripById(tripId);
         this.tripMap.delete(trip.id);
         return this.tripMap.size;
-    }
-    /**
-    * Add a specific currency to a Trip.
-    *
-    * @param {number} tripId - The ID of the Trip the Currency needs to be added to.
-    * @param {Currency} newCurrency - The Currency that needs to be added.
-    *
-    * @throws Will throw an Error when no Trip with supplied ID is found.
-    *
-    * @returns {number} The amount of Currencies maintained by the Trip with supplied ID after addition of the new Currency.
-    */
-    addCurrencyToTrip(tripId, newCurrency) {
-        let trip = this.getTripById(tripId);
-        trip.addCurrency(newCurrency);
-        return trip.currencyMap.size;
-    }
-    /**
-    * Remove a specific currency from a Trip.
-    *
-    * @param {number} tripId - The ID of the Tip the Currency needs to be removed from.
-    * @param {string} currencyName - The name of the Currency that needs to be removed.
-    *
-    * @throws Will throw an Error when no Trip with supplied ID is found.
-    * @throws Will throw an Error when no Currency with supplied name is found in the Trip.
-    *
-    * @returns {number} The amount of Currencies maintained by the Trip with supplied ID after removal of the Currency.
-    */
-    removeCurrencyFromTrip(tripId, currencyName) {
-        let trip = this.getTripById(tripId);
-        let currency = this.getCurrencyFromTripByName(tripId, currencyName);
-        return trip.removeCurrency(currency);
-    }
-    /**
-    * Get an Array of Currencies from a Trip.
-    *
-    * @param {number} tripId - The ID of the Trip we need the Currencies from.
-    *
-    * @throws Will throw an Error when no Trip with supplied ID is found.
-    *
-    * @returns {Array<Currency>} The Array of Currencies maintained by the Trip with supplied ID.
-    */
-    getCurrenciesByTripId(tripId) {
-        let trip = this.getTripById(tripId);
-        return trip.currencies;
-    }
-    /**
-    * Get a Currency from a Trip.
-    *
-    * @param {number} tripId - The ID of the Trip we want to retrieve the Currency from.
-    * @param {string} currencyName - The name of the Currency we want to retrieve. (e.g. "EUR")
-    *
-    * @throws Will throw an Error when no Trip with supplied ID is found.
-    * @throws Will throw an Error when no Currency with supplied name is found in the Trip.
-    *
-    * @returns The Currency with supplied name from Trip with supplied ID.
-    */
-    getCurrencyFromTripByName(tripId, currencyName) {
-        let trip = this.getTripById(tripId);
-        let currency = trip.currencyMap.get(currencyName);
-        // Check if a Currency is returned.
-        if (typeof currency == 'undefined')
-            throw new Error("Currency with name " + currencyName + " not found in Trip with id " + tripId + ".");
-        return currency;
     }
     /**
     * Get a list of all participants to all Trips.
@@ -435,7 +373,7 @@ class KaravaanService {
     *
     * @returns {IExpense} The newly created IExpense of given ExpenseType.
     */
-    addNewExpenseByTripId(tripId, expenseType, description = "", category = "", currency = "EUR") {
+    addNewExpenseByTripId(tripId, expenseType, description = "", category = "") {
         let newExpense;
         switch (expenseType) {
             case ExpenseType_1.ExpenseType.EvenExpense:
@@ -454,9 +392,6 @@ class KaravaanService {
         newExpense.description = description;
         newExpense.category = category;
         // Add the currency to the trip if it does not exist already
-        let currencyObject = this.getCurrency(currency);
-        this.addCurrencyToTrip(tripId, currencyObject);
-        newExpense.currency = this.getCurrencyFromTripByName(tripId, currency);
         return this.addExpenseToTrip(this.getTripById(tripId), newExpense);
     }
     /**
@@ -771,16 +706,13 @@ class KaravaanService {
         for (let tripDO of karavaanDO.trips) {
             let newTrip = new Trip_1.Trip(tripDO.id, tripDO.name);
             newTrip.description = tripDO.description;
+            tripDO.currencies.forEach(c => newTrip.currencies.set(c.name, c));
+            newTrip.activeCurrency = tripDO.activeCurrency;
             newTrip.date = new Date(tripDO.date);
-            newTrip.removeCurrency(new Currency_1.Currency("EUR", 1));
             newService.addTrip(newTrip);
             // Import participants of this trip
             for (let participant of tripDO.participants) {
                 newService.addExistingParticipantToTripById(newTrip.id, participant.id);
-            }
-            // Import currencies of this trip
-            for (let currency of tripDO.currencies) {
-                newService.addCurrencyToTrip(newTrip.id, newService.getCurrency(currency.name));
             }
             // Import Expenses for this trip
             for (let expenseDO of tripDO.expenses) {

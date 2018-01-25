@@ -8,11 +8,13 @@ export default class CurrencyInputComponent extends React.Component {
 
     // Properties:
     // - onValueChange : function(value) : returns the new value as a float
+    // - startValue (optional) : starting value as a number
 
     constructor(props) {
         super(props);
+        let startValue = this.props.startValue !== undefined ? (parseFloat(this.props.startValue) * 100).toString() : "";
         this.state = {
-            currencyRaw: ""
+            currencyRaw: startValue
         };
     }
 

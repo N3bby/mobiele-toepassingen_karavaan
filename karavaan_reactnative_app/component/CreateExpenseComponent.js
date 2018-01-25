@@ -24,7 +24,7 @@ import '../ServiceWrapper.js';
 import {EvenExpense} from '../domain/EvenExpense';
 import {BillExpense} from "../domain/BillExpense";
 import * as ExpenseType_1 from "../domain/ExpenseType";
-import CurrencyInputComponent from "./CurrencyInputComponent";
+import CurrencyInputComponent from "./currency/TripCurrencyPickerComponent";
 
 export default class CreateExpenseComponent extends React.Component {
 

@@ -11,6 +11,8 @@ import {TripUserPicker} from "./component/add_user_to/TripUserPicker";
 import {AddPaymentComponent} from "./component/expense/AddPaymentComponent";
 import {AddBillItemComponent} from "./component/expense/AddBillItemComponent";
 import {AddShareComponent} from "./component/expense/AddShareComponent";
+import TripCurrencyPickerComponent from "./component/currency/TripCurrencyPickerComponent";
+import CurrencyEditComponent from "./component/currency/CurrencyEditComponent";
 
 // Add the routes in which you want to be able to use the navigator
 // They will only be able to access it if you got there through navigate()
@@ -25,7 +27,9 @@ const AppNavigator = StackNavigator({
     TripUserPicker: {screen: TripUserPicker},
     AddPayment: {screen: AddPaymentComponent},
     AddBillItem: {screen: AddBillItemComponent},
-    AddShare: {screen: AddShareComponent}
+    AddShare: {screen: AddShareComponent},
+    CurrencyPicker: {screen: TripCurrencyPickerComponent},
+    EditCurrency: {screen: CurrencyEditComponent}
 }, {
     headerMode: "none",
 });

@@ -57,13 +57,13 @@ export default class CreateTripComponent extends React.Component {
 
 
     add() {
-        // if (this.state.tripName.length == 0 || this.state.tripName.length > 30) {
-        //     alert("TripName should be between 1 and 30 characters.");
-        // } else if (this.state.tripDescription.length == 0 || this.state.tripDescription.length > 100) {
-        //     alert("TripDescription should be between 1 and 100 characters.");
-        // } else {
-            var currency = this.state.selected1;
-            if (currency.length != 0) {
+        if (this.state.tripName.trim().length === 0 ) {
+            alert("Please enter a name for the trip");
+        } else if (this.state.tripDescription.trim().length === 0) {
+            alert("Please enter a description for the trip");
+        } else {
+            let currency = this.state.selected1;
+            if (currency.length !== 0) {
                 global.service.addNewTrip(this.state.tripName, this.state.tripDescription, currency);
             } else {
                 //let curr = global.service.getCurrency("EUR");
@@ -73,7 +73,7 @@ export default class CreateTripComponent extends React.Component {
             }
             global.saveService();
             this.props.navigation.goBack();
-        //}
+        }
     }
 
     render() {
@@ -109,18 +109,6 @@ export default class CreateTripComponent extends React.Component {
                     <Form style={{margin: 5}}>
                         <Picker iosHeader="Select one"
                                 placeholder="Choose the currency"
-                                renderHeader={backAction =>
-                                    <Header style={{backgroundColor: 'green'}}>
-                                        <Left>
-                                            <Button transparent onPress={backAction}>
-                                                <Icon name="arrow-back" style={{color: "#fff"}}/>
-                                            </Button>
-                                        </Left>
-                                        <Body style={{flex: 3}}>
-                                        <Title style={{color: "#fff"}}>Choose the currency</Title>
-                                        </Body>
-                                        <Right/>
-                                    </Header>}
                                 mode="dropdown"
                                 style={{width: Platform.OS === "ios" ? undefined : 200}}
                                 selectedValue={this.state.selected1}

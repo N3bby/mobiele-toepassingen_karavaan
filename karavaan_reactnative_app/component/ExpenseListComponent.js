@@ -44,6 +44,8 @@ export class ExpenseListComponent extends React.Component {
 
     render() {
 
+        let trip = global.service.getTripById(this.props.tripId);
+
         //Explanation for why we're wrapping all the expenses is the same as in DebtOverviewListComponent:52
         let expenses = global.service.getExpensesByTripId(this.props.tripId);
         let expenseWrappers = [];
@@ -62,7 +64,7 @@ export class ExpenseListComponent extends React.Component {
                             <Text style={{
                                 marginLeft: 'auto',
                                 color:'rgba(0,0,0,0.4)'
-                            }}>{expense.value.expenseAmount.toFixed(2).toString()}</Text>
+                            }}>{expense.value.expenseAmount.toFixed(2).toString()} {trip.activeCurrency}</Text>
                         </View>
                         </Body>
                         <Right>

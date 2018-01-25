@@ -12,22 +12,26 @@ class Trip {
     * @param {number} [id=-1] - The ID of the new Trip.
     * @param {string} [name=""] - The name of the new Trip.
     * @param {string} [description=""] - The description of the new Trip.
-    * @param {Currency} [currency=new Currency()] - The default Currency of the new Trip.
+    * @param currencies
+    * @param activeCurrency
     * @param {Array<IExpense>} [expenses=New Array<IExpense>] - The list of IExpenses the new Trip will maintain.
     * @param {Array<Person>} [participants=New Array<Person>] - The list of participants the new Trip will maintain.
     * @param {Date} [date=new Date()] - The date of the new Trip.
     *
     * @class Trip
     */
-    constructor(id = -1, name = "", description = "", currency = new Currency_1.Currency("EUR", 1), expenses = new Array(), participants = new Array(), date = new Date()) {
+    constructor(id = -1, name = "", description = "", currencies = new Map(), activeCurrency = "EUR", expenses = new Array(), participants = new Array(), date = new Date()) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.currencies = new Array();
-        this.addCurrency(currency);
+        this.currencies = currencies;
+        this.activeCurrency = activeCurrency;
         this.expenses = expenses;
         this.participants = participants;
         this.date = date;
+    }
+    convertToActiveCurrency(amount) {
+        
     }
     /**
     * Get or set the ID of the Trip.
@@ -61,32 +65,6 @@ class Trip {
     }
     set description(newDescription) {
         this._description = newDescription;
-    }
-    /**
-    * Get or set a list of Currencies maintained by this Trip.
-    *
-    * @returns {Array<Currency>} An Array<Currency> containing all the Currenceis that are maintained by this Trip.
-    */
-    get currencies() {
-        return Array.from(this.currencyMap.values());
-    }
-    set currencies(newCurrencies) {
-        let newCurrencyMap = new Map();
-        for (let currency of newCurrencies) {
-            newCurrencyMap.set(currency.name, currency);
-        }
-        this.currencyMap = newCurrencyMap;
-    }
-    /**
-    * Get or set a Map of Currencies maintained by this Trip, where the keys are the names of the Currencies and the values are the Currencys instances.
-    *
-    * @returns {Map<string, Currency>} A Map<string, Currency> containing all the Currencies maintained by this Trip.
-    */
-    get currencyMap() {
-        return this._currencies;
-    }
-    set currencyMap(newCurrencyMap) {
-        this._currencies = newCurrencyMap;
     }
     /**
     * Get or set a list of IExpenses that are maintained by this Trip.
@@ -198,34 +176,13 @@ class Trip {
         this.expenseMap.delete(expense.id);
         return this.expenseMap.size;
     }
-    /**
-    * Add a new Currency to this Trip.
-    *
-    * @param {Currency} newCurrency - The Currency that should be added to this Trip.
-    *
-    * @returns {Currency} The newly added Currency.
-    */
-    addCurrency(newCurrency) {
-        this.currencyMap.set(newCurrency.name, newCurrency);
-        return newCurrency;
-    }
-    /**
-    * Remove a Currency from this Trip.
-    *
-    * @param {Currency} currency - The Currency that should be removed from this Trip;
-    *
-    * @returns {number} The amount of Currencies maintained by this Trip after removal.
-    */
-    removeCurrency(currency) {
-        this.currencyMap.delete(currency.name);
-        return this.currencyMap.size;
-    }
     toDataObject() {
         let newDO = new TripDO_1.TripDO();
         newDO.id = this.id;
         newDO.name = this.name;
         newDO.description = this.description;
-        newDO.currencies = this.currencies;
+        newDO.currencies = Array.from(this.currencies.values());
+        newDO.activeCurrency = this.activeCurrency;
         for (let IExpense of this.expenses) {
             newDO.expenses.push(IExpense.toDataObject());
         }
