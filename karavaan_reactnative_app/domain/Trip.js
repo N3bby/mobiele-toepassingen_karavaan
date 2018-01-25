@@ -31,12 +31,20 @@ class Trip {
         this.date = date;
     }
 
-    /**
-     *
-     * @param amount (in euro)
-     */
+    //Input is in EUR
     convertToActiveCurrency(amount) {
+        //Get active currency
+        let currency = this.currencies.get(this.activeCurrency);
+        //Convert and return
+        return amount * currency.rateComparedToEUR;
+    }
 
+    //Input is in foreign currency (which is currently active)
+    convertFromActiveCurrency(amount) {
+        //Get active currency
+        let currency = this.currencies.get(this.activeCurrency);
+        //Convert and return
+        return amount / currency.rateComparedToEUR;
     }
     /**
     * Get or set the ID of the Trip.

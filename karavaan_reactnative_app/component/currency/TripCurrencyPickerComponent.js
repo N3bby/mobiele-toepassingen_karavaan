@@ -67,7 +67,7 @@ export default class TripCurrencyPickerComponent extends React.Component {
                     <List dataArray={currencyWrappers}
                           renderRow={(currency) =>
                               <ListItem style={{flexDirection: 'row'}}>
-                                  <Text style={{flex: 1}}>1 {currency.value.name} = {currency.value.rateComparedToEUR} EUR</Text>
+                                  <Text style={{flex: 1}}>1 {currency.value.name} = {(1/currency.value.rateComparedToEUR).toFixed(4)} EUR</Text>
                                   {currency.value.name !== 'EUR' &&
                                   <Button transparent onPress={() => this.navigateEditCurrency(currency.value)}>
                                       <Text>Edit</Text>

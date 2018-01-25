@@ -3,7 +3,7 @@ import {
     Title, View
 } from "native-base";
 import React from "react";
-import CurrencyInputComponent from "../CurrencyInputComponent";
+import AccurateCurrencyInputComponent from "../AccurateCurrencyInputComponent";
 
 export default class CurrencyEditComponent extends React.Component {
 
@@ -32,7 +32,7 @@ export default class CurrencyEditComponent extends React.Component {
         let trip = global.service.getTripById(tripId);
         let currency = trip.currencies.get(this.props.navigation.state.params.currency);
         try {
-            currency.rateComparedToEUR = this.state.newAmount;
+            currency.rateComparedToEUR = 1 / this.state.newAmount;
             global.saveService();
             this.props.navigation.state.params.onBack();
             this.props.navigation.goBack();
@@ -86,7 +86,7 @@ export default class CurrencyEditComponent extends React.Component {
 
                     <Text style={{color: 'rgba(0,0,0,0.7)', marginBottom: 5, marginTop: 5}}>New</Text>
                     <Item regular>
-                        <CurrencyInputComponent onValueChange={this.onValueChangeCurrency.bind(this)}/>
+                        <AccurateCurrencyInputComponent onValueChange={this.onValueChangeCurrency.bind(this)}/>
                     </Item>
 
                     <View style={{flexDirection: 'row'}}>
