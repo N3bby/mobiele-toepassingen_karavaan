@@ -57,11 +57,11 @@ export default class CreateTripComponent extends React.Component {
 
 
     add() {
-        if (this.state.tripName.length == 0 || this.state.tripName.length > 30) {
-            alert("TripName should be between 1 and 30 characters.");
-        } else if (this.state.tripDescription.length == 0 || this.state.tripDescription.length > 100) {
-            alert("TripDescription should be between 1 and 100 characters.");
-        } else {
+        // if (this.state.tripName.length == 0 || this.state.tripName.length > 30) {
+        //     alert("TripName should be between 1 and 30 characters.");
+        // } else if (this.state.tripDescription.length == 0 || this.state.tripDescription.length > 100) {
+        //     alert("TripDescription should be between 1 and 100 characters.");
+        // } else {
             var currency = this.state.selected1;
             if (currency.length != 0) {
                 global.service.addNewTrip(this.state.tripName, this.state.tripDescription, currency);
@@ -73,7 +73,7 @@ export default class CreateTripComponent extends React.Component {
             }
             global.saveService();
             this.props.navigation.goBack();
-        }
+        //}
     }
 
     render() {
@@ -96,13 +96,13 @@ export default class CreateTripComponent extends React.Component {
 
                     <Item regular>
                         <Input placeholder='Trip Name' placeholderTextColor='green' value={this.state.tripName}
-                               onChangeText={this.onValueChangeTripName.bind(this)}/>
+                               onChangeText={this.onValueChangeTripName.bind(this)} maxLength={30}/>
                     </Item>
 
                     <Item regular>
                         <Input placeholder='Trip Description' placeholderTextColor='green'
                                value={this.state.tripDescription}
-                               onChangeText={this.onValueChangeTripDescription.bind(this)}/>
+                               onChangeText={this.onValueChangeTripDescription.bind(this)} maxLength={100}/>
                     </Item>
 
 

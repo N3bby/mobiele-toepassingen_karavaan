@@ -45,18 +45,18 @@ export default class CreateUserComponent extends React.Component {
     }
 
     add(){
-        if (this.state.firstName.length === 0 || this.state.lastName.length === 0)
-        {
-            alert("Please enter the details.");
-        } else if(this.state.firstName.length > 30 || this.state.lastName.length > 30) {
-            alert("Name or First Name is too long. (max 30)")
-        }
-        else
-        {
+        // if (this.state.firstName.length === 0 || this.state.lastName.length === 0)
+        // {
+        //     alert("Please enter the details.");
+        // } else if(this.state.firstName.length > 30 || this.state.lastName.length > 30) {
+        //     alert("Name or First Name is too long. (max 30)")
+        // }
+        // else
+        // {
             global.service.addNewPerson(this.state.firstName,this.state.lastName);
             global.saveService();
             this.props.navigation.goBack();
-        }
+        //}
     }
 
     render() {
@@ -77,10 +77,10 @@ export default class CreateUserComponent extends React.Component {
             <Content>
             
                 <Item regular>
-                    <Input placeholder='First Name' placeholderTextColor='green' value={this.state.firstName} onChangeText={this.onValueChangeFName.bind(this)} />
+                    <Input placeholder='First Name' placeholderTextColor='green' value={this.state.firstName} onChangeText={this.onValueChangeFName.bind(this)} maxLength={30} />
                 </Item>
                 <Item regular>
-                     <Input placeholder='Last Name' placeholderTextColor='green' value={this.state.LastName} onChangeText={this.onValueChangeLName.bind(this)} />
+                     <Input placeholder='Last Name' placeholderTextColor='green' value={this.state.LastName} onChangeText={this.onValueChangeLName.bind(this)} maxLength={30} />
                  </Item>
 
                 <Button success style={{ alignSelf: "center", margin:10 }} onPress={() => this.add()}>

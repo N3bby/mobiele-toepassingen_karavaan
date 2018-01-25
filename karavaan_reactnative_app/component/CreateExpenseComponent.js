@@ -40,12 +40,12 @@ export default class CreateExpenseComponent extends React.Component {
     addExpense(tripId: number) {
         try {
             // Check if the expense description is not too long
-            if (this.state.expenseDescription.length == 0 || this.state.expenseDescription.length > 100)
-                throw "Expense description should be between 1 and 100 characters.";
+            //if (this.state.expenseDescription.length == 0 || this.state.expenseDescription.length > 100)
+              //  throw "Expense description should be between 1 and 100 characters.";
 
             // Check if the category is not too long
-            if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50)
-                throw "Expense category should be between 1 and 50 characters.";
+            //if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50)
+              //  throw "Expense category should be between 1 and 50 characters.";
 
             let expenseType;
             switch(this.state.expenseType) {
@@ -127,14 +127,14 @@ export default class CreateExpenseComponent extends React.Component {
                     <Item regular>
                         <Input placeholder='Expense Description'
                                value={this.state.expenseDescription}
-                               onChangeText={this.onDescriptionChange.bind(this)}
+                               onChangeText={this.onDescriptionChange.bind(this)} maxLength={100} 
                         />
                     </Item>
 
                     <Item regular>
                         <Input placeholder='Expense category'
                                value={this.state.expenseCategory}
-                               onChangeText={this.onCategoryChange.bind(this)}
+                               onChangeText={this.onCategoryChange.bind(this)} maxLength={50} 
                         />
                     </Item>
 
