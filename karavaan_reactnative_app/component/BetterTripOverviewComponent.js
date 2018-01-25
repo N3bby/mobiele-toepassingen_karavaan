@@ -104,7 +104,14 @@ export class BetterTripOverviewComponent extends React.Component {
         let tripId = this.props.navigation.state.params.tripId;
         this.props.navigation.navigate("CurrencyPicker", {
             tripId: tripId,
-            onPick: () => this.forceUpdate()
+            onPick: () => {
+                this.forceUpdate();
+                this.props.navigation.state.params.onBack();
+                //Not actually correct, but idk how to intercept an actual goBack event
+                //Just updating when something changes that should be reflected in parent works too
+                //This is becoming a huge mess of spaghetti-code though
+                //Rip my career as a js dev (not that I'd want to be one)
+            }
         });
     }
 
