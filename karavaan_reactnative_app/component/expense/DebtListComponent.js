@@ -20,6 +20,7 @@ export class DebtListComponent extends React.Component {
 
     render() {
 
+        let trip = global.service.getTripById(this.props.tripId);
         let expense = global.service.getExpenseById(this.props.tripId, this.props.expenseId);
 
         //Convert map to array
@@ -32,7 +33,7 @@ export class DebtListComponent extends React.Component {
                 <List dataArray={debtWrappers} renderRow={(debt) =>
                     <ListItem style={{height:50}}>
                         <Body>
-                        <Text style={{marginLeft: 0}}>{debt.value.debtor.name} owes {debt.value.creditor.name} {debt.value.amount.toFixed(2)}</Text>
+                        <Text style={{marginLeft: 0}}>{debt.value.debtor.name} owes {debt.value.creditor.name} {trip.convertToActiveCurrency(debt.value.amount).toFixed(2)}</Text>
                         </Body>
                         <Right>
                             <Button transparent onPress={() => this.togglePaid(debt.value)}>

@@ -43,8 +43,9 @@ export class AddBillItemComponent extends React.Component {
             if (this.state.amount === 0) {
                 throw "Amount may not be 0";
             }
+            let convertedAmount = global.service.getTripById(tripId).convertFromActiveCurrency(this.state.amount);
             global.service.addNewBillItemToExpenseById(tripId, expenseId,
-                this.state.debtorId, this.state.description, this.state.amount);
+                this.state.debtorId, this.state.description, convertedAmount);
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {

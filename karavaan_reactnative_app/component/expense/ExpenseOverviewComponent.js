@@ -105,6 +105,7 @@ export class ExpenseOverviewComponent extends React.Component {
     render() {
 
         let tripId = this.props.navigation.state.params.tripId;
+        let trip = global.service.getTripById(tripId);
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
 
@@ -135,8 +136,8 @@ export class ExpenseOverviewComponent extends React.Component {
                     <Tab heading="Overview">
 
                         <View style={{flexDirection: 'row', margin:10}}>
-                            <H3 style={{flex: 1}}>Total: {expense.expenseAmount.toFixed(2).toString()}</H3>
-                            {expense.expenseType !== ExpenseType_1.ExpenseType.EvenExpense && <H3>Unpaid: {expense.expenseUnpaid.toFixed(2).toString()}</H3>}
+                            <H3 style={{flex: 1}}>Total: {trip.convertToActiveCurrency(expense.expenseAmount).toFixed(2).toString()} {trip.activeCurrency}</H3>
+                            {expense.expenseType !== ExpenseType_1.ExpenseType.EvenExpense && <H3>Unpaid: {trip.convertToActiveCurrency(expense.expenseUnpaid).toFixed(2).toString()} {trip.activeCurrency}</H3>}
                         </View>
 
                         <H3 style={{marginLeft:10, marginBottom:10}}>Payments</H3>

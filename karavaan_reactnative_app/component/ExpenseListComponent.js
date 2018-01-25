@@ -64,7 +64,7 @@ export class ExpenseListComponent extends React.Component {
                             <Text style={{
                                 marginLeft: 'auto',
                                 color:'rgba(0,0,0,0.4)'
-                            }}>{expense.value.expenseAmount.toFixed(2).toString()} {trip.activeCurrency}</Text>
+                            }}>{trip.convertToActiveCurrency(expense.value.expenseAmount).toFixed(2).toString()} {trip.activeCurrency}</Text>
                         </View>
                         </Body>
                         <Right>

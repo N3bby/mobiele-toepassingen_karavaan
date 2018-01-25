@@ -36,8 +36,9 @@ export class AddShareComponent extends React.Component {
             if (this.state.amount === 0) {
                 throw "Amount may not be 0";
             }
+            let convertedAmount = global.service.getTripById(tripId).convertFromActiveCurrency(this.state.amount);
             global.service.addNewBillItemToExpenseById(tripId, expenseId,
-                this.state.participantId, "", this.state.amount);
+                this.state.participantId, "", convertedAmount);
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {

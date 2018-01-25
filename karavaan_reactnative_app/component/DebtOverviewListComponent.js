@@ -40,6 +40,7 @@ export class DebtOverviewListComponent extends React.Component {
     render() {
 
         let tripId = this.props.tripId;
+        let trip = global.service.getTripById(tripId);
 
         let debts = [];
 
@@ -86,7 +87,7 @@ export class DebtOverviewListComponent extends React.Component {
                       renderRow={(debt) =>
                           <ListItem style={{height:50}}>
                               <Body>
-                              <Text style={{marginLeft: 0}}>{debt.value.debtor.name} owes {debt.value.creditor.name} {debt.value.amount.toFixed(2)}</Text>
+                              <Text style={{marginLeft: 0}}>{debt.value.debtor.name} owes {debt.value.creditor.name} {trip.convertToActiveCurrency(debt.value.amount).toFixed(2)} {trip.activeCurrency}</Text>
                               </Body>
                               <Right>
                                   <Button transparent onPress={() => this.togglePaid(debt.value)}>

@@ -40,6 +40,7 @@ export class ShareListComponent extends React.Component {
 
     render() {
 
+        let trip = global.service.getTripById(this.props.tripId);
         let expense = global.service.getExpenseById(this.props.tripId, this.props.expenseId);
 
         //Convert map to array
@@ -57,7 +58,7 @@ export class ShareListComponent extends React.Component {
                         <Text>{share.debtor.name}</Text>
                         </Body>
                         <Right>
-                            <Text>{share.amount.toFixed(2).toString()}</Text>
+                            <Text>{trip.convertToActiveCurrency(share.amount).toFixed(2).toString()} {trip.activeCurrency}</Text>
                             <Button transparent onPress={() => this.removeShare(this.props.tripId, expense.id, share.id)}>
                                 <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>

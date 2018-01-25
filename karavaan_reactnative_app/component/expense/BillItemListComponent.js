@@ -40,6 +40,7 @@ export class BillItemListComponent extends React.Component {
 
     render() {
 
+        let trip = global.service.getTripById(this.props.tripId);
         let expense = global.service.getExpenseById(this.props.tripId, this.props.expenseId);
 
         //Convert map to array
@@ -57,7 +58,7 @@ export class BillItemListComponent extends React.Component {
                         <Text>{billItem.description} - {billItem.debtor.firstName}</Text>
                         </Body>
                         <Right>
-                            <Text>{billItem.amount.toFixed(2).toString()}</Text>
+                            <Text>{trip.convertToActiveCurrency(billItem.amount).toFixed(2).toString()} {trip.activeCurrency}</Text>
                             <Button transparent onPress={() => this.removeBillItem(this.props.tripId, expense.id, billItem.id)}>
                                 <Icon style={{color:'rgba(0,0,0,0.4)'}} name="trash"/>
                             </Button>

@@ -53,8 +53,9 @@ export class AddPaymentComponent extends React.Component {
             if (this.state.amount === 0) {
                 throw "Amount may not be 0";
             }
+            let convertedAmount = global.service.getTripById(tripId).convertFromActiveCurrency(this.state.amount);
             global.service.addNewPaymentToExpenseById(tripId, expenseId,
-                this.state.creditorId, this.state.amount);
+                this.state.creditorId, convertedAmount);
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {
