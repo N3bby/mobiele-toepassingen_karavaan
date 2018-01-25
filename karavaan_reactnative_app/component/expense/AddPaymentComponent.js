@@ -1,5 +1,4 @@
 import React from "react";
-import CurrencyInputComponent from "../currency/TripCurrencyPickerComponent";
 import {
     Body,
     Button,
@@ -19,6 +18,7 @@ import {
 } from "native-base";
 import {TouchableHighlight} from "react-native";
 import {Platform} from "react-native";
+import CurrencyInputComponent from "../CurrencyInputComponent";
 
 const PickerItem = Picker.Item;
 

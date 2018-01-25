@@ -30,8 +30,13 @@ class Trip {
         this.participants = participants;
         this.date = date;
     }
+
+    /**
+     *
+     * @param amount (in euro)
+     */
     convertToActiveCurrency(amount) {
-        
+
     }
     /**
     * Get or set the ID of the Trip.

@@ -3,7 +3,6 @@ import {
     Title
 } from "native-base";
 import React from "react";
-import CurrencyInputComponent from "../CurrencyInputComponent";
 
 export default class TripCurrencyPickerComponent extends React.Component {
 
