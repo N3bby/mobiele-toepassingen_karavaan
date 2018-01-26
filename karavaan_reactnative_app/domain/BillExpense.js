@@ -185,9 +185,10 @@ class BillExpense {
 
         }
 
+
         for(let medialDebt of medialDebts.values()) {
             //Debts cannot be resolved, show no debts (the user is most likely creating the expense atm)
-            if(medialDebt !== 0) {
+            if(Math.abs(medialDebt) >=  0.01) {
                 this._debts = new Map();
             }
         }
