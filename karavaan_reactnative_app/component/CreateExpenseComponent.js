@@ -39,13 +39,11 @@ export default class CreateExpenseComponent extends React.Component {
 
     addExpense(tripId: number) {
         try {
-            // Check if the expense description is not too long
-            //if (this.state.expenseDescription.length == 0 || this.state.expenseDescription.length > 100)
-              //  throw "Expense description should be between 1 and 100 characters.";
+            if (this.state.expenseDescription.trim().length === 0)
+               throw "Please enter a description for the expense";
 
-            // Check if the category is not too long
-            //if (this.state.expenseCategory.length == 0 || this.state.expenseCategory.length > 50)
-              //  throw "Expense category should be between 1 and 50 characters.";
+            if (this.state.expenseCategory.trim().length === 0)
+               throw "Please enter a category for the expense";
 
             let expenseType;
             switch(this.state.expenseType) {

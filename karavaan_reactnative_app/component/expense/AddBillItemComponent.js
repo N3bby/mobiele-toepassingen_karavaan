@@ -43,6 +43,9 @@ export class AddBillItemComponent extends React.Component {
             if (this.state.amount === 0) {
                 throw "Amount may not be 0";
             }
+            if (this.state.description.trim().length === 0) {
+                throw "Enter a description";
+            }
             let convertedAmount = global.service.getTripById(tripId).convertFromActiveCurrency(this.state.amount);
             global.service.addNewBillItemToExpenseById(tripId, expenseId,
                 this.state.debtorId, this.state.description, convertedAmount);
@@ -93,7 +96,7 @@ export class AddBillItemComponent extends React.Component {
 
                     <Item regular>
                         <Input placeholder='Description' placeholderTextColor='green'
-                               onChangeText={this.onValueChangeDescription.bind(this)}/>
+                               onChangeText={this.onValueChangeDescription.bind(this)} maxLength={30}/>
                     </Item>
 
                     <Item regular>

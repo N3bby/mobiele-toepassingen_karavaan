@@ -23,7 +23,7 @@ export default class CurrencyInputComponent extends React.Component {
         this.setState({currencyRaw: value});
 
         //Forward event
-        if(this.props.onValueChange !== undefined) {
+        if (this.props.onValueChange !== undefined) {
             this.props.onValueChange(this.stringToFloat(value));
         }
 
@@ -35,13 +35,13 @@ export default class CurrencyInputComponent extends React.Component {
     }
 
     stringToFloatFormatted(value) {
-        if(value === "") value = "0";
+        if (value === "") value = "0";
         value = (parseFloat(value) / 100).toFixed(2).toString();
         return value;
     }
 
     stringToFloat(value) {
-        if(value === "") value = 0;
+        if (value === "") value = 0;
         value = (parseFloat(value) / 100);
         return value;
     }
@@ -58,9 +58,10 @@ export default class CurrencyInputComponent extends React.Component {
 
                 <Input value={this.state.currencyRaw}
                        ref='rawInput'
-                       style={{height:0, margin: 0, padding: 0}}
+                       style={{height: 0, margin: 0, padding: 0}}
                        onChangeText={this.onCurrencyRawChange.bind(this)}
-                       keyboardType='numeric'/>
+                       keyboardType='numeric'
+                       maxLength={9}/>
             </Content>
         );
 
