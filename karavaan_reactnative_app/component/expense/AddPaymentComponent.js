@@ -33,6 +33,7 @@ export class AddPaymentComponent extends React.Component {
             creditorId: undefined,
             amount: 0
         };
+        this.used = false;
     }
 
     onValueChangeAmount(value) {
@@ -42,6 +43,10 @@ export class AddPaymentComponent extends React.Component {
     }
 
     add() {
+        if(this.used) {
+            return;
+        }
+        this.used = true;
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);

@@ -35,9 +35,14 @@ export default class CreateExpenseComponent extends React.Component {
             expenseCategory: "",
             expenseType: "EvenExpense"
         };
+        this.used = false;
     }
 
     addExpense(tripId: number) {
+        if(this.used) {
+            return;
+        }
+        this.used = true;
         try {
             if (this.state.expenseDescription.trim().length === 0)
                throw "Please enter a description for the expense";

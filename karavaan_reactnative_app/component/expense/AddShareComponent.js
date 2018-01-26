@@ -16,6 +16,7 @@ export class AddShareComponent extends React.Component {
             participantId: undefined,
             amount: 0
         };
+        this.used = false;
     }
 
     onValueChangeAmount(value) {
@@ -25,6 +26,10 @@ export class AddShareComponent extends React.Component {
     }
 
     add() {
+        if(this.used) {
+            return;
+        }
+        this.used = true;
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);

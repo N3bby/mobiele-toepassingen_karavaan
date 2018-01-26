@@ -35,6 +35,7 @@ export default class CreateTripComponent extends React.Component {
             tripName: "",
             tripDescription: ""
         };
+        this.used = false;
     }
 
     onValueChange(value) {
@@ -55,8 +56,11 @@ export default class CreateTripComponent extends React.Component {
         });
     }
 
-
     add() {
+        if(this.used) {
+            return;
+        }
+        this.used = true;
         if (this.state.tripName.trim().length === 0 ) {
             alert("Please enter a name for the trip");
         } else if (this.state.tripDescription.trim().length === 0) {

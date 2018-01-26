@@ -21,9 +21,15 @@ export default class TripsListComponent extends React.Component {
     constructor() {
         super();
         global.observerService.addTripMapCallback(() => this.forceUpdate());
+        this.used = false;
     }
 
     navigateToTrip(tripId) {
+        if(this.used) {
+            return;
+        }
+        this.used = true;
+        setTimeout(()=>this.used=false, 1500);
         this.props.navigation.navigate("TripOverview", {
             tripId: tripId,
             onBack: () => this.forceUpdate()

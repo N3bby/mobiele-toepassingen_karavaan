@@ -28,6 +28,7 @@ export default class CreateUserComponent extends React.Component {
             firstName:"",
             lastName:""
       };
+        this.used = false;
     }
 
     onValueChangeFName(value){
@@ -43,6 +44,10 @@ export default class CreateUserComponent extends React.Component {
     }
 
     add(){
+        if(this.used) {
+            return;
+        }
+        this.used = true;
         if (this.state.firstName.trim().length === 0)
         {
             alert("Please enter a first name");
