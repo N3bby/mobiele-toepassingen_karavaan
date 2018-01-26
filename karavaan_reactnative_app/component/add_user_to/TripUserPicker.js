@@ -29,7 +29,7 @@ export class TripUserPicker extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Add to expense</Title>
+                    <Title>Pick a user</Title>
                     </Body>
                     <Right/>
                 </Header>
