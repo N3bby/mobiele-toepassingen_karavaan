@@ -81,7 +81,7 @@ export default class CurrencyEditComponent extends React.Component {
 
                     <Text style={{color: 'rgba(0,0,0,0.7)', marginBottom: 5}}>Old</Text>
                     <Item regular>
-                        <Input disabled value={currency.rateComparedToEUR.toFixed(2).toString()}/>
+                        <Input disabled value={(1/currency.rateComparedToEUR).toFixed(4).toString()}/>
                     </Item>
 
                     <Text style={{color: 'rgba(0,0,0,0.7)', marginBottom: 5, marginTop: 5}}>New</Text>
