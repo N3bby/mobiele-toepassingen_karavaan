@@ -29,7 +29,7 @@ export class TripUserPicker extends React.Component {
                         </Button>
                     </Left>
                     <Body>
-                    <Title>Pick a user</Title>
+                    <Title>Users of trip</Title>
                     </Body>
                     <Right/>
                 </Header>

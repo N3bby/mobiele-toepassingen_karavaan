@@ -38,10 +38,44 @@ class CurrencyService {
     getMockData() {
         let mockMap = new Map();
         mockMap.set("EUR", new Currency_1.Currency("EUR", 1));
-        mockMap.set("USD", new Currency_1.Currency("USD", 1.184));
-        mockMap.set("AUD", new Currency_1.Currency("AUD", 1.5582));
-        mockMap.set("GBP", new Currency_1.Currency("GBP", 0.8991));
+
+        this.addToMap(mockMap, "AUD", 1.5358);
+        this.addToMap(mockMap, "BGN", 1.9558);
+        this.addToMap(mockMap, "BRL", 3.9063);
+        this.addToMap(mockMap, "CAD", 1.5289);
+        this.addToMap(mockMap, "CHF", 1.168);
+        this.addToMap(mockMap, "CNY", 7.8549);
+        this.addToMap(mockMap, "CZK", 25.381);
+        this.addToMap(mockMap, "DKK", 7.4444);
+        this.addToMap(mockMap, "GBP", 0.87038);
+        this.addToMap(mockMap, "HKD", 9.6996);
+        this.addToMap(mockMap, "HRK", 7.4245);
+        this.addToMap(mockMap, "HUF", 309.35);
+        this.addToMap(mockMap, "IDR", 16493.0);
+        this.addToMap(mockMap, "ILS", 4.2229);
+        this.addToMap(mockMap, "INR", 78.865);
+        this.addToMap(mockMap, "JPY", 135.12);
+        this.addToMap(mockMap, "KRW", 1314.4);
+        this.addToMap(mockMap, "MXN", 22.881);
+        this.addToMap(mockMap, "MYR", 4.8207);
+        this.addToMap(mockMap, "NOK", 9.5858);
+        this.addToMap(mockMap, "NZD", 1.6823);
+        this.addToMap(mockMap, "PHP", 63.189);
+        this.addToMap(mockMap, "PLN", 4.1469);
+        this.addToMap(mockMap, "RON", 4.6693);
+        this.addToMap(mockMap, "RUB", 69.282);
+        this.addToMap(mockMap, "SEK", 9.8188);
+        this.addToMap(mockMap, "SGD", 1.6202);
+        this.addToMap(mockMap, "THB", 38.983);
+        this.addToMap(mockMap, "TRY", 4.641);
+        this.addToMap(mockMap, "USD", 1.2407);
+        this.addToMap(mockMap, "ZAR", 14.761);
+
         return mockMap;
+    }
+
+    addToMap(map, name, rate) {
+        map.set(name, new Currency_1.Currency(name, rate));
     }
     /**
     * Pull a list of Currencies from a remote rest api and convert the response into a Map of Currencies that will be returned.

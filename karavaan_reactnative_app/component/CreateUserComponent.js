@@ -19,8 +19,6 @@ import {
     Form,
     Picker
 }from 'native-base';
-import { KaravaanService } from '../domain/KaravaanService';
-import '../ServiceWrapper.js';
 
 export default class CreateUserComponent extends React.Component {
 
@@ -80,7 +78,7 @@ export default class CreateUserComponent extends React.Component {
                     <Input placeholder='First Name' placeholderTextColor='green' value={this.state.firstName} onChangeText={this.onValueChangeFName.bind(this)} maxLength={30} />
                 </Item>
                 <Item regular>
-                     <Input placeholder='Last Name' placeholderTextColor='green' value={this.state.LastName} onChangeText={this.onValueChangeLName.bind(this)} maxLength={30} />
+                     <Input placeholder='Last Name' placeholderTextColor='green' value={this.state.lastName} onChangeText={this.onValueChangeLName.bind(this)} maxLength={30} />
                  </Item>
 
                 <Button success style={{ alignSelf: "center", margin:10 }} onPress={() => this.add()}>
