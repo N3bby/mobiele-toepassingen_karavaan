@@ -42,7 +42,6 @@ export default class CreateExpenseComponent extends React.Component {
         if(this.used) {
             return;
         }
-        this.used = true;
         try {
             if (this.state.expenseDescription.trim().length === 0)
                throw "Please enter a description for the expense";
@@ -67,6 +66,7 @@ export default class CreateExpenseComponent extends React.Component {
 
             //TODO Might have to add currency selection here
             global.service.addNewExpenseByTripId(tripId, expenseType, this.state.expenseDescription, this.state.expenseCategory);
+            this.used = true;
 
             global.saveService();
             this.props.navigation.goBack();

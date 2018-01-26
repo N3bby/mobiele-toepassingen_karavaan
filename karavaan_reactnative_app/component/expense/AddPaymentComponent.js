@@ -46,12 +46,11 @@ export class AddPaymentComponent extends React.Component {
         if(this.used) {
             return;
         }
-        this.used = true;
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
         try {
-            //don't know how to pass id to of user to variable creditorID 
+            //don't know how to pass id to of user to variable creditorID
             if (this.state.creditorId === undefined) {
                 throw "You must select a participant";
             }
@@ -61,6 +60,7 @@ export class AddPaymentComponent extends React.Component {
             let convertedAmount = global.service.getTripById(tripId).convertFromActiveCurrency(this.state.amount);
             global.service.addNewPaymentToExpenseById(tripId, expenseId,
                 this.state.creditorId, convertedAmount);
+            this.used = true;
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {

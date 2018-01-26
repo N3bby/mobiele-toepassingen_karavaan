@@ -47,7 +47,6 @@ export default class CreateUserComponent extends React.Component {
         if(this.used) {
             return;
         }
-        this.used = true;
         if (this.state.firstName.trim().length === 0)
         {
             alert("Please enter a first name");
@@ -57,6 +56,7 @@ export default class CreateUserComponent extends React.Component {
         else
         {
             global.service.addNewPerson(this.state.firstName,this.state.lastName);
+            this.used = true;
             global.saveService();
             this.props.navigation.goBack();
         }

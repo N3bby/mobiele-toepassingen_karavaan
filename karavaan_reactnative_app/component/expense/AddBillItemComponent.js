@@ -36,7 +36,6 @@ export class AddBillItemComponent extends React.Component {
         if(this.used) {
             return;
         }
-        this.used = true;
         let tripId = this.props.navigation.state.params.tripId;
         let expenseId = this.props.navigation.state.params.expenseId;
         let expense = global.service.getExpenseById(tripId, expenseId);
@@ -54,6 +53,7 @@ export class AddBillItemComponent extends React.Component {
             let convertedAmount = global.service.getTripById(tripId).convertFromActiveCurrency(this.state.amount);
             global.service.addNewBillItemToExpenseById(tripId, expenseId,
                 this.state.debtorId, this.state.description, convertedAmount);
+            this.used = true;
             global.saveService();
             this.props.navigation.goBack();
         } catch (e) {

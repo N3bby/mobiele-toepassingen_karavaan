@@ -60,7 +60,6 @@ export default class CreateTripComponent extends React.Component {
         if(this.used) {
             return;
         }
-        this.used = true;
         if (this.state.tripName.trim().length === 0 ) {
             alert("Please enter a name for the trip");
         } else if (this.state.tripDescription.trim().length === 0) {
@@ -75,6 +74,7 @@ export default class CreateTripComponent extends React.Component {
                 //global.service.addTrip(trip);
                 global.service.addNewTrip(this.state.tripName, this.state.tripDescription);
             }
+            this.used = true;
             global.saveService();
             this.props.navigation.goBack();
         }
